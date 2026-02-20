@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsche Deklination B2 - Interaktive Übungen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 3px solid #667eea;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: #e0e0e0;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: -3px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .table-section {
+            margin-bottom: 40px;
+        }
+
+        .table-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .table-section h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.3em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            background: white;
+        }
+
+        tr:nth-child(even) td {
+            background: #f9f9f9;
+        }
+
+        tr:hover td {
+            background: #f0f0ff;
+        }
+
+        .case-label {
+            font-weight: bold;
+            background: #e8eaf6 !important;
+            color: #667eea;
+        }
+
+        .exercise-container {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .exercise-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: border 0.3s;
+        }
+
+        .exercise-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+            display: block;
+        }
+
+        .score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        .gender-color-m { color: #2196F3; font-weight: bold; }
+        .gender-color-f { color: #E91E63; font-weight: bold; }
+        .gender-color-n { color: #4CAF50; font-weight: bold; }
+        .gender-color-p { color: #FF9800; font-weight: bold; }
+
+        .example-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tab {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇩🇪 Deutsche Deklination B2</h1>
+            <p>Interaktive Übungen für Artikel, Adjektive und Pronomen</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('tablas')">📊 Tablas de Referencia</button>
+            <button class="nav-tab" onclick="showTab('artikeln')">📝 Artikel</button>
+            <button class="nav-tab" onclick="showTab('adjektive')">✨ Adjektive</button>
+            <button class="nav-tab" onclick="showTab('possessiv')">👥 Possessivpronomen</button>
+            <button class="nav-tab" onclick="showTab('demonstrativ')">👉 Demonstrativpronomen</button>
+            <button class="nav-tab" onclick="showTab('passiv')">🔄 Aktiv/Passiv</button>
+        </div>
+
+        <div class="content">
+            <!-- TABLAS DE REFERENCIA -->
+            <div id="tablas" class="tab-content active">
+                <div class="table-section">
+                    <h2>📚 Tablas Completas de Declinación</h2>
+
+                    <h3>1. Artículos Definidos (der, die, das)</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>der</td>
+                            <td>die</td>
+                            <td>das</td>
+                            <td>die</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>den</td>
+                            <td>die</td>
+                            <td>das</td>
+                            <td>die</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>dem</td>
+                            <td>der</td>
+                            <td>dem</td>
+                            <td>den</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>des</td>
+                            <td>der</td>
+                            <td>des</td>
+                            <td>der</td>
+                        </tr>
+                    </table>
+
+                    <h3>2. Artículos Indefinidos (ein, eine, ein)</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>ein</td>
+                            <td>eine</td>
+                            <td>ein</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>einen</td>
+                            <td>eine</td>
+                            <td>ein</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>einem</td>
+                            <td>einer</td>
+                            <td>einem</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>eines</td>
+                            <td>einer</td>
+                            <td>eines</td>
+                            <td>—</td>
+                        </tr>
+                    </table>
+
+                    <h3>3. Declinación de Adjetivos con Artículo Definido</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>der gut<strong>e</strong> Mann</td>
+                            <td>die gut<strong>e</strong> Frau</td>
+                            <td>das gut<strong>e</strong> Kind</td>
+                            <td>die gut<strong>en</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>den gut<strong>en</strong> Mann</td>
+                            <td>die gut<strong>e</strong> Frau</td>
+                            <td>das gut<strong>e</strong> Kind</td>
+                            <td>die gut<strong>en</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>dem gut<strong>en</strong> Mann</td>
+                            <td>der gut<strong>en</strong> Frau</td>
+                            <td>dem gut<strong>en</strong> Kind</td>
+                            <td>den gut<strong>en</strong> Leuten</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>des gut<strong>en</strong> Mannes</td>
+                            <td>der gut<strong>en</strong> Frau</td>
+                            <td>des gut<strong>en</strong> Kindes</td>
+                            <td>der gut<strong>en</strong> Leute</td>
+                        </tr>
+                    </table>
+
+                    <h3>4. Declinación de Adjetivos con Artículo Indefinido</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>ein gut<strong>er</strong> Mann</td>
+                            <td>eine gut<strong>e</strong> Frau</td>
+                            <td>ein gut<strong>es</strong> Kind</td>
+                            <td>— gut<strong>e</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>einen gut<strong>en</strong> Mann</td>
+                            <td>eine gut<strong>e</strong> Frau</td>
+                            <td>ein gut<strong>es</strong> Kind</td>
+                            <td>— gut<strong>e</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>einem gut<strong>en</strong> Mann</td>
+                            <td>einer gut<strong>en</strong> Frau</td>
+                            <td>einem gut<strong>en</strong> Kind</td>
+                            <td>— gut<strong>en</strong> Leuten</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>eines gut<strong>en</strong> Mannes</td>
+                            <td>einer gut<strong>en</strong> Frau</td>
+                            <td>eines gut<strong>en</strong> Kindes</td>
+                            <td>— gut<strong>er</strong> Leute</td>
+                        </tr>
+                    </table>
+
+                    <h3>5. Declinación de Adjetivos sin Artículo</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>gut<strong>er</strong> Mann</td>
+                            <td>gut<strong>e</strong> Frau</td>
+                            <td>gut<strong>es</strong> Kind</td>
+                            <td>gut<strong>e</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>gut<strong>en</strong> Mann</td>
+                            <td>gut<strong>e</strong> Frau</td>
+                            <td>gut<strong>es</strong> Kind</td>
+                            <td>gut<strong>e</strong> Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>gut<strong>em</strong> Mann</td>
+                            <td>gut<strong>er</strong> Frau</td>
+                            <td>gut<strong>em</strong> Kind</td>
+                            <td>gut<strong>en</strong> Leuten</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>gut<strong>en</strong> Mannes</td>
+                            <td>gut<strong>er</strong> Frau</td>
+                            <td>gut<strong>en</strong> Kindes</td>
+                            <td>gut<strong>er</strong> Leute</td>
+                        </tr>
+                    </table>
+
+                    <h3>6. Pronombres Posesivos (mein, dein, sein, ihr, unser, euer, ihr, Ihr)</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>mein Vater</td>
+                            <td>meine Mutter</td>
+                            <td>mein Kind</td>
+                            <td>meine Eltern</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>meinen Vater</td>
+                            <td>meine Mutter</td>
+                            <td>mein Kind</td>
+                            <td>meine Eltern</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>meinem Vater</td>
+                            <td>meiner Mutter</td>
+                            <td>meinem Kind</td>
+                            <td>meinen Eltern</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>meines Vaters</td>
+                            <td>meiner Mutter</td>
+                            <td>meines Kindes</td>
+                            <td>meiner Eltern</td>
+                        </tr>
+                    </table>
+
+                    <div class="note">
+                        <strong>Nota:</strong> Los pronombres posesivos se declinan igual que el artículo indefinido "ein". 
+                        Todos siguen el mismo patrón: mein, dein, sein, ihr, unser, euer, ihr, Ihr.
+                    </div>
+
+                    <h3>7. Pronombres Demostrativos (dieser, jener, solcher)</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>dieser Mann</td>
+                            <td>diese Frau</td>
+                            <td>dieses Kind</td>
+                            <td>diese Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>diesen Mann</td>
+                            <td>diese Frau</td>
+                            <td>dieses Kind</td>
+                            <td>diese Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>diesem Mann</td>
+                            <td>dieser Frau</td>
+                            <td>diesem Kind</td>
+                            <td>diesen Leuten</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>dieses Mannes</td>
+                            <td>dieser Frau</td>
+                            <td>dieses Kindes</td>
+                            <td>dieser Leute</td>
+                        </tr>
+                    </table>
+
+                    <h3>8. Artículo Negativo (kein)</h3>
+                    <table>
+                        <tr>
+                            <th>Kasus</th>
+                            <th class="gender-color-m">Maskulin</th>
+                            <th class="gender-color-f">Feminin</th>
+                            <th class="gender-color-n">Neutrum</th>
+                            <th class="gender-color-p">Plural</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nominativ</td>
+                            <td>kein Mann</td>
+                            <td>keine Frau</td>
+                            <td>kein Kind</td>
+                            <td>keine Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akkusativ</td>
+                            <td>keinen Mann</td>
+                            <td>keine Frau</td>
+                            <td>kein Kind</td>
+                            <td>keine Leute</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dativ</td>
+                            <td>keinem Mann</td>
+                            <td>keiner Frau</td>
+                            <td>keinem Kind</td>
+                            <td>keinen Leuten</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Genitiv</td>
+                            <td>keines Mannes</td>
+                            <td>keiner Frau</td>
+                            <td>keines Kindes</td>
+                            <td>keiner Leute</td>
+                        </tr>
+                    </table>
+
+                    <h3>9. Tabla de Terminaciones de Adjetivos (Resumen)</h3>
+                    <table>
+                        <tr>
+                            <th rowspan="2">Kasus</th>
+                            <th colspan="4">Con Artículo Definido</th>
+                            <th colspan="4">Con Artículo Indefinido</th>
+                            <th colspan="4">Sin Artículo</th>
+                        </tr>
+                        <tr>
+                            <th>M</th><th>F</th><th>N</th><th>Pl</th>
+                            <th>M</th><th>F</th><th>N</th><th>Pl</th>
+                            <th>M</th><th>F</th><th>N</th><th>Pl</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Nom</td>
+                            <td>-e</td><td>-e</td><td>-e</td><td>-en</td>
+                            <td>-er</td><td>-e</td><td>-es</td><td>-e</td>
+                            <td>-er</td><td>-e</td><td>-es</td><td>-e</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Akk</td>
+                            <td>-en</td><td>-e</td><td>-e</td><td>-en</td>
+                            <td>-en</td><td>-e</td><td>-es</td><td>-e</td>
+                            <td>-en</td><td>-e</td><td>-es</td><td>-e</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Dat</td>
+                            <td>-en</td><td>-en</td><td>-en</td><td>-en</td>
+                            <td>-en</td><td>-en</td><td>-en</td><td>-en</td>
+                            <td>-em</td><td>-er</td><td>-em</td><td>-en</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Gen</td>
+                            <td>-en</td><td>-en</td><td>-en</td><td>-en</td>
+                            <td>-en</td><td>-en</td><td>-en</td><td>-er</td>
+                            <td>-en</td><td>-er</td><td>-en</td><td>-er</td>
+                        </tr>
+                    </table>
+
+                    <h3>10. Voz Pasiva - Formación</h3>
+                    <table>
+                        <tr>
+                            <th>Tiempo</th>
+                            <th>Activa</th>
+                            <th>Pasiva</th>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Präsens</td>
+                            <td>Der Arzt untersucht den Patienten.</td>
+                            <td>Der Patient wird (vom Arzt) untersucht.</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Präteritum</td>
+                            <td>Der Arzt untersuchte den Patienten.</td>
+                            <td>Der Patient wurde (vom Arzt) untersucht.</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Perfekt</td>
+                            <td>Der Arzt hat den Patienten untersucht.</td>
+                            <td>Der Patient ist (vom Arzt) untersucht worden.</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Plusquam.</td>
+                            <td>Der Arzt hatte den Patienten untersucht.</td>
+                            <td>Der Patient war (vom Arzt) untersucht worden.</td>
+                        </tr>
+                        <tr>
+                            <td class="case-label">Futur I</td>
+                            <td>Der Arzt wird den Patienten untersuchen.</td>
+                            <td>Der Patient wird (vom Arzt) untersucht werden.</td>
+                        </tr>
+                    </table>
+
+                    <div class="example-box">
+                        <strong>🎯 Regla de oro:</strong> En voz pasiva, el objeto directo (Akkusativ) de la voz activa 
+                        se convierte en el sujeto (Nominativ) de la voz pasiva. El sujeto original puede aparecer con "von + Dativ" o "durch + Akkusativ".
+                    </div>
+
+                    <h3>11. Preposiciones que Rigen Casos</h3>
+                    <table>
+                        <tr>
+                            <th>Dativ</th>
+                            <th>Akkusativ</th>
+                            <th>Genitiv</th>
+                            <th>Wechselpräpositionen</th>
+                        </tr>
+                        <tr>
+                            <td>aus, bei, mit, nach, seit, von, zu, gegenüber</td>
+                            <td>durch, für, gegen, ohne, um, bis, entlang</td>
+                            <td>während, wegen, trotz, statt, außerhalb, innerhalb</td>
+                            <td>an, auf, hinter, in, neben, über, unter, vor, zwischen</td>
+                        </tr>
+                    </table>
+
+                    <div class="note">
+                        <strong>Wechselpräpositionen:</strong> Usan Dativ para ubicación (wo?) y Akkusativ para dirección (wohin?)
+                    </div>
+                </div>
+            </div>
+
+            <!-- EJERCICIOS ARTIKEL -->
+            <div id="artikeln" class="tab-content">
+                <div class="score">
+                    <span id="score-artikeln">Puntuación: 0/0</span>
+                </div>
+                <div id="exercise-artikeln" class="exercise-container"></div>
+                <button class="btn btn-primary" onclick="checkAnswer('artikeln')">Überprüfen</button>
+                <button class="btn btn-secondary" onclick="nextExercise('artikeln')">Nächste Übung</button>
+                <div id="feedback-artikeln" class="feedback"></div>
+            </div>
+
+            <!-- EJERCICIOS ADJEKTIVE -->
+            <div id="adjektive" class="tab-content">
+                <div class="score">
+                    <span id="score-adjektive">Puntuación: 0/0</span>
+                </div>
+                <div id="exercise-adjektive" class="exercise-container"></div>
+                <button class="btn btn-primary" onclick="checkAnswer('adjektive')">Überprüfen</button>
+                <button class="btn btn-secondary" onclick="nextExercise('adjektive')">Nächste Übung</button>
+                <div id="feedback-adjektive" class="feedback"></div>
+            </div>
+
+            <!-- EJERCICIOS POSSESSIV -->
+            <div id="possessiv" class="tab-content">
+                <div class="score">
+                    <span id="score-possessiv">Puntuación: 0/0</span>
+                </div>
+                <div id="exercise-possessiv" class="exercise-container"></div>
+                <button class="btn btn-primary" onclick="checkAnswer('possessiv')">Überprüfen</button>
+                <button class="btn btn-secondary" onclick="nextExercise('possessiv')">Nächste Übung</button>
+                <div id="feedback-possessiv" class="feedback"></div>
+            </div>
+
+            <!-- EJERCICIOS DEMONSTRATIV -->
+            <div id="demonstrativ" class="tab-content">
+                <div class="score">
+                    <span id="score-demonstrativ">Puntuación: 0/0</span>
+                </div>
+                <div id="exercise-demonstrativ" class="exercise-container"></div>
+                <button class="btn btn-primary" onclick="checkAnswer('demonstrativ')">Überprüfen</button>
+                <button class="btn btn-secondary" onclick="nextExercise('demonstrativ')">Nächste Übung</button>
+                <div id="feedback-demonstrativ" class="feedback"></div>
+            </div>
+
+            <!-- EJERCICIOS PASSIV -->
+            <div id="passiv" class="tab-content">
+                <div class="score">
+                    <span id="score-passiv">Puntuación: 0/0</span>
+                </div>
+                <div id="exercise-passiv" class="exercise-container"></div>
+                <button class="btn btn-primary" onclick="checkAnswer('passiv')">Überprüfen</button>
+                <button class="btn btn-secondary" onclick="nextExercise('passiv')">Nächste Übung</button>
+                <div id="feedback-passiv" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado global
+        const state = {
+            artikeln: { correct: 0, total: 0, currentAnswer: '' },
+            adjektive: { correct: 0, total: 0, currentAnswer: '' },
+            possessiv: { correct: 0, total: 0, currentAnswer: '' },
+            demonstrativ: { correct: 0, total: 0, currentAnswer: '' },
+            passiv: { correct: 0, total: 0, currentAnswer: '' }
+        };
+
+        // Datos para ejercicios - ENFOQUE EN CONJUGACIONES COMPUESTAS DE 3 ELEMENTOS - EXPANDIDO
+        const exercises = {
+            artikeln: [
+                // ARTÍCULO + ADJETIVO + SUSTANTIVO (3 elementos) - 50 EJERCICIOS
+                { question: "_____ _____ _____ (der/alt/Mann) spricht mit mir.", answer: "Der alte Mann", case: "Nominativ", elements: 3 },
+                { question: "Ich sehe _____ _____ _____. (der/groß/Hund)", answer: "den großen Hund", case: "Akkusativ", elements: 3 },
+                { question: "Wir helfen _____ _____ _____. (die/freundlich/Nachbarin)", answer: "der freundlichen Nachbarin", case: "Dativ", elements: 3 },
+                { question: "Das Auto _____ _____ _____ ist teuer. (der/reich/Geschäftsmann)", answer: "des reichen Geschäftsmannes", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (das/modern/Gebäude) wurde renoviert.", answer: "Das moderne Gebäude", case: "Nominativ", elements: 3 },
+                { question: "Sie kauft _____ _____ _____. (ein/neu/Computer)", answer: "einen neuen Computer", case: "Akkusativ", elements: 3 },
+                { question: "Er wohnt in _____ _____ _____. (ein/klein/Wohnung)", answer: "einer kleinen Wohnung", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (die/intelligent/Studenten) lernen viel.", answer: "Die intelligenten Studenten", case: "Nominativ", elements: 3 },
+                { question: "Wir besuchen _____ _____ _____. (die/historisch/Museen)", answer: "die historischen Museen", case: "Akkusativ", elements: 3 },
+                { question: "Das Büro _____ _____ _____ ist groß. (die/neu/Direktorin)", answer: "der neuen Direktorin", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (ein/schwierig/Aufgabe) wartet auf uns.", answer: "Eine schwierige Aufgabe", case: "Nominativ", elements: 3 },
+                { question: "Ich trinke _____ _____ _____. (der/heiß/Kaffee)", answer: "den heißen Kaffee", case: "Akkusativ", elements: 3 },
+                { question: "Sie gibt _____ _____ _____ das Geld. (der/arm/Bettler)", answer: "dem armen Bettler", case: "Dativ", elements: 3 },
+                { question: "Die Meinung _____ _____ _____ ist wichtig. (der/erfahren/Anwalt)", answer: "des erfahrenen Anwalts", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (die/bunt/Blumen) blühen im Garten.", answer: "Die bunten Blumen", case: "Nominativ", elements: 3 },
+                { question: "Er repariert _____ _____ _____. (das/kaputt/Fenster)", answer: "das kaputte Fenster", case: "Akkusativ", elements: 3 },
+                { question: "_____ _____ _____ (der/berühmt/Schriftsteller) schreibt Romane.", answer: "Der berühmte Schriftsteller", case: "Nominativ", elements: 3 },
+                { question: "Sie tanzt mit _____ _____ _____. (ein/gutaussehend/Partner)", answer: "einem gutaussehenden Partner", case: "Dativ", elements: 3 },
+                { question: "Die Tochter _____ _____ _____ studiert Medizin. (der/stolz/Vater)", answer: "des stolzen Vaters", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (die/teuer/Autos) stehen dort.", answer: "Die teuren Autos", case: "Nominativ", elements: 3 },
+                { question: "Wir essen _____ _____ _____. (der/frisch/Fisch)", answer: "den frischen Fisch", case: "Akkusativ", elements: 3 },
+                { question: "Er arbeitet in _____ _____ _____. (ein/international/Unternehmen)", answer: "einem internationalen Unternehmen", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (das/interessant/Buch) liegt auf dem Tisch.", answer: "Das interessante Buch", case: "Nominativ", elements: 3 },
+                { question: "Ich besuche _____ _____ _____. (die/krank/Oma)", answer: "die kranke Oma", case: "Akkusativ", elements: 3 },
+                { question: "Das Ende _____ _____ _____ war überraschend. (der/spannend/Film)", answer: "des spannenden Films", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (ein/lang/Straße) führt zum Zentrum.", answer: "Eine lange Straße", case: "Nominativ", elements: 3 },
+                { question: "Sie sucht _____ _____ _____. (ein/passend/Kleid)", answer: "ein passendes Kleid", case: "Akkusativ", elements: 3 },
+                { question: "Wir sprechen von _____ _____ _____. (die/schwierig/Situation)", answer: "der schwierigen Situation", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (der/klug/Schüler) antwortet richtig.", answer: "Der kluge Schüler", case: "Nominativ", elements: 3 },
+                { question: "Er kennt _____ _____ _____. (die/kompliziert/Regel)", answer: "die komplizierte Regel", case: "Akkusativ", elements: 3 },
+                { question: "Die Farbe _____ _____ _____ gefällt mir. (das/elegant/Kleid)", answer: "des eleganten Kleides", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (die/schnell/Züge) fahren nach Berlin.", answer: "Die schnellen Züge", case: "Nominativ", elements: 3 },
+                { question: "Ich höre _____ _____ _____. (die/laut/Musik)", answer: "die laute Musik", case: "Akkusativ", elements: 3 },
+                { question: "Sie hilft _____ _____ _____. (der/hilflos/Mann)", answer: "dem hilflosen Mann", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (ein/schön/Tag) beginnt.", answer: "Ein schöner Tag", case: "Nominativ", elements: 3 },
+                { question: "Wir fotografieren _____ _____ _____. (das/alt/Schloss)", answer: "das alte Schloss", case: "Akkusativ", elements: 3 },
+                { question: "Das Haus _____ _____ _____ wurde verkauft. (die/reich/Familie)", answer: "der reichen Familie", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (der/fleißig/Arbeiter) verdient viel.", answer: "Der fleißige Arbeiter", case: "Nominativ", elements: 3 },
+                { question: "Er liest _____ _____ _____. (ein/dick/Roman)", answer: "einen dicken Roman", case: "Akkusativ", elements: 3 },
+                { question: "Sie dankt _____ _____ _____. (die/nett/Lehrerin)", answer: "der netten Lehrerin", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (die/warm/Sonne) scheint.", answer: "Die warme Sonne", case: "Nominativ", elements: 3 },
+                { question: "Ich mag _____ _____ _____. (der/kühl/Wind)", answer: "den kühlen Wind", case: "Akkusativ", elements: 3 },
+                { question: "Die Idee _____ _____ _____ ist brillant. (der/kreativ/Designer)", answer: "des kreativen Designers", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (ein/ruhig/Park) liegt in der Nähe.", answer: "Ein ruhiger Park", case: "Nominativ", elements: 3 },
+                { question: "Wir brauchen _____ _____ _____. (ein/stark/Team)", answer: "ein starkes Team", case: "Akkusativ", elements: 3 },
+                { question: "Er vertraut _____ _____ _____. (sein/gut/Freund)", answer: "seinem guten Freund", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (die/hübsch/Blumen) duften wunderbar.", answer: "Die hübschen Blumen", case: "Nominativ", elements: 3 },
+                { question: "Sie pflückt _____ _____ _____. (eine/rot/Rose)", answer: "eine rote Rose", case: "Akkusativ", elements: 3 },
+                { question: "Das Zimmer _____ _____ _____ ist sauber. (das/neu/Hotel)", answer: "des neuen Hotels", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (der/jung/Mann) sucht Arbeit.", answer: "Der junge Mann", case: "Nominativ", elements: 3 }
+            ],
+            adjektive: [
+                // ARTÍCULO + ADJETIVO + ADJETIVO + SUSTANTIVO (4 elementos - más complejo) - 50 EJERCICIOS
+                { question: "_____ _____ _____ _____ (der/jung/intelligent/Wissenschaftler) arbeitet hier.", answer: "Der junge intelligente Wissenschaftler", elements: 4 },
+                { question: "Ich lese _____ _____ _____ _____. (ein/lang/spannend/Roman)", answer: "einen langen spannenden Roman", elements: 4 },
+                { question: "Wir sprechen mit _____ _____ _____ _____. (die/alt/weise/Professorin)", answer: "der alten weisen Professorin", elements: 4 },
+                { question: "_____ _____ _____ _____ (das/klein/süß/Baby) schläft.", answer: "Das kleine süße Baby", elements: 4 },
+                { question: "Sie bewundert _____ _____ _____ _____. (die/schön/elegant/Dame)", answer: "die schöne elegante Dame", elements: 4 },
+                { question: "Das Haus _____ _____ _____ _____ gefällt mir. (der/bekannt/französisch/Architekt)", answer: "des bekannten französischen Architekten", elements: 4 },
+                { question: "_____ _____ _____ _____ (ein/frisch/grün/Salat) schmeckt gut.", answer: "Ein frischer grüner Salat", elements: 4 },
+                { question: "Er hilft _____ _____ _____ _____. (die/müd/erschöpft/Wanderer)", answer: "den müden erschöpften Wanderern", elements: 4 },
+                { question: "Ich mag _____ _____ _____ _____. (der/warm/sonnig/Tag)", answer: "den warmen sonnigen Tag", elements: 4 },
+                { question: "_____ _____ _____ _____ (die/neu/modern/Technologien) entwickeln sich schnell.", answer: "Die neuen modernen Technologien", elements: 4 },
+                { question: "Sie kaufen _____ _____ _____ _____. (ein/groß/luxuriös/Auto)", answer: "ein großes luxuriöses Auto", elements: 4 },
+                { question: "Die Tür _____ _____ _____ _____ ist geschlossen. (das/alt/historisch/Gebäude)", answer: "des alten historischen Gebäudes", elements: 4 },
+                { question: "_____ _____ _____ _____ (ein/interessant/kompliziert/Fall) wird untersucht.", answer: "Ein interessanter komplizierter Fall", elements: 4 },
+                { question: "Wir bewundern _____ _____ _____ _____. (die/hoch/imposant/Berge)", answer: "die hohen imposanten Berge", elements: 4 },
+                { question: "Er spricht von _____ _____ _____ _____. (ein/gefährlich/schwierig/Situation)", answer: "einer gefährlichen schwierigen Situation", elements: 4 },
+                { question: "_____ _____ _____ _____ (der/gut/erfahren/Lehrer) unterrichtet uns.", answer: "Der gute erfahrene Lehrer", elements: 4 },
+                { question: "Ich kenne _____ _____ _____ _____. (ein/reich/mächtig/Unternehmer)", answer: "einen reichen mächtigen Unternehmer", elements: 4 },
+                { question: "Sie arbeitet mit _____ _____ _____ _____. (die/kreativ/talentiert/Designer)", answer: "den kreativen talentierten Designern", elements: 4 },
+                { question: "_____ _____ _____ _____ (das/rot/italienisch/Auto) fährt schnell.", answer: "Das rote italienische Auto", elements: 4 },
+                { question: "Wir probieren _____ _____ _____ _____. (der/süß/lecker/Kuchen)", answer: "den süßen leckeren Kuchen", elements: 4 },
+                { question: "Die Meinung _____ _____ _____ _____ zählt. (der/alt/klug/Professor)", answer: "des alten klugen Professors", elements: 4 },
+                { question: "_____ _____ _____ _____ (eine/schwer/wichtig/Entscheidung) steht an.", answer: "Eine schwere wichtige Entscheidung", elements: 4 },
+                { question: "Er trägt _____ _____ _____ _____. (ein/schwarz/elegant/Anzug)", answer: "einen schwarzen eleganten Anzug", elements: 4 },
+                { question: "Sie tanzt mit _____ _____ _____ _____. (der/groß/stark/Tänzer)", answer: "dem großen starken Tänzer", elements: 4 },
+                { question: "_____ _____ _____ _____ (die/bunt/fröhlich/Kinder) spielen draußen.", answer: "Die bunten fröhlichen Kinder", elements: 4 },
+                { question: "Ich sehe _____ _____ _____ _____. (das/weiß/majestätisch/Schloss)", answer: "das weiße majestätische Schloss", elements: 4 },
+                { question: "Das Büro _____ _____ _____ _____ ist renoviert. (die/jung/dynamisch/Chefin)", answer: "der jungen dynamischen Chefin", elements: 4 },
+                { question: "_____ _____ _____ _____ (ein/kurz/intensiv/Kurs) beginnt morgen.", answer: "Ein kurzer intensiver Kurs", elements: 4 },
+                { question: "Wir besuchen _____ _____ _____ _____. (die/berühmt/alt/Kirchen)", answer: "die berühmten alten Kirchen", elements: 4 },
+                { question: "Er vertraut _____ _____ _____ _____. (sein/best/treu/Freund)", answer: "seinem besten treuen Freund", elements: 4 },
+                { question: "_____ _____ _____ _____ (der/kalt/stürmisch/Winter) ist vorbei.", answer: "Der kalte stürmische Winter", elements: 4 },
+                { question: "Sie liebt _____ _____ _____ _____. (die/klassisch/schön/Musik)", answer: "die klassische schöne Musik", elements: 4 },
+                { question: "Die Wohnung _____ _____ _____ _____ ist teuer. (der/berühmt/reich/Schauspieler)", answer: "des berühmten reichen Schauspielers", elements: 4 },
+                { question: "_____ _____ _____ _____ (eine/neu/spannend/Serie) läuft im Fernsehen.", answer: "Eine neue spannende Serie", elements: 4 },
+                { question: "Ich kaufe _____ _____ _____ _____. (ein/praktisch/modern/Smartphone)", answer: "ein praktisches modernes Smartphone", elements: 4 },
+                { question: "Sie spricht mit _____ _____ _____ _____. (die/nett/hilfsbereit/Verkäuferin)", answer: "der netten hilfsbereiten Verkäuferin", elements: 4 },
+                { question: "_____ _____ _____ _____ (das/teuer/exklusiv/Restaurant) ist ausgebucht.", answer: "Das teure exklusive Restaurant", elements: 4 },
+                { question: "Er studiert _____ _____ _____ _____. (die/komplex/schwierig/Mathematik)", answer: "die komplexe schwierige Mathematik", elements: 4 },
+                { question: "Das Ergebnis _____ _____ _____ _____ ist positiv. (die/lang/gründlich/Untersuchung)", answer: "der langen gründlichen Untersuchung", elements: 4 },
+                { question: "_____ _____ _____ _____ (ein/hell/gemütlich/Zimmer) steht zur Verfügung.", answer: "Ein helles gemütliches Zimmer", elements: 4 },
+                { question: "Wir folgen _____ _____ _____ _____. (der/breit/gut/Weg)", answer: "dem breiten guten Weg", elements: 4 },
+                { question: "Sie bewundert _____ _____ _____ _____. (die/stark/mutig/Frauen)", answer: "die starken mutigen Frauen", elements: 4 },
+                { question: "_____ _____ _____ _____ (der/heiß/trocken/Sommer) war unerträglich.", answer: "Der heiße trockene Sommer", elements: 4 },
+                { question: "Ich höre _____ _____ _____ _____. (die/laut/wild/Musik)", answer: "die laute wilde Musik", elements: 4 },
+                { question: "Die Struktur _____ _____ _____ _____ ist kompliziert. (das/groß/alt/System)", answer: "des großen alten Systems", elements: 4 },
+                { question: "_____ _____ _____ _____ (eine/klar/einfach/Antwort) wird erwartet.", answer: "Eine klare einfache Antwort", elements: 4 },
+                { question: "Er zeigt _____ _____ _____ _____. (sein/neu/toll/Projekt)", answer: "sein neues tolles Projekt", elements: 4 },
+                { question: "Sie arbeitet in _____ _____ _____ _____. (ein/klein/gemütlich/Café)", answer: "einem kleinen gemütlichen Café", elements: 4 },
+                { question: "_____ _____ _____ _____ (die/jung/hoffnungsvoll/Studenten) arbeiten hart.", answer: "Die jungen hoffnungsvollen Studenten", elements: 4 },
+                { question: "Wir essen _____ _____ _____ _____. (das/frisch/gesund/Gemüse)", answer: "das frische gesunde Gemüse", elements: 4 }
+            ],
+            possessiv: [
+                // POSESIVO + ADJETIVO + SUSTANTIVO (3 elementos) - 50 EJERCICIOS
+                { question: "_____ _____ _____ (mein/älter/Bruder) wohnt in Berlin.", answer: "Mein älterer Bruder", case: "Nominativ", elements: 3 },
+                { question: "Ich besuche _____ _____ _____. (dein/neu/Wohnung)", answer: "deine neue Wohnung", case: "Akkusativ", elements: 3 },
+                { question: "Er spricht mit _____ _____ _____. (sein/best/Freund)", answer: "seinem besten Freund", case: "Dativ", elements: 3 },
+                { question: "Das Auto _____ _____ _____ ist kaputt. (unser/jung/Nachbar)", answer: "unseres jungen Nachbarn", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (ihr/klein/Kinder) spielen draußen.", answer: "Ihre kleinen Kinder", case: "Nominativ", elements: 3 },
+                { question: "Sie liebt _____ _____ _____. (ihr/alt/Großmutter)", answer: "ihre alte Großmutter", case: "Akkusativ", elements: 3 },
+                { question: "Wir helfen _____ _____ _____. (euer/freundlich/Kollegen)", answer: "euren freundlichen Kollegen", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (mein/neu/Chef) ist sehr nett.", answer: "Mein neuer Chef", case: "Nominativ", elements: 3 },
+                { question: "Du kennst _____ _____ _____. (sein/jünger/Schwester)", answer: "seine jüngere Schwester", case: "Akkusativ", elements: 3 },
+                { question: "Die Meinung _____ _____ _____ ist wichtig. (unser/erfahren/Anwalt)", answer: "unseres erfahrenen Anwalts", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dein/weiß/Katze) ist sehr süß.", answer: "Deine weiße Katze", case: "Nominativ", elements: 3 },
+                { question: "Er repariert _____ _____ _____. (mein/alt/Fahrrad)", answer: "mein altes Fahrrad", case: "Akkusativ", elements: 3 },
+                { question: "Sie dankt _____ _____ _____. (ihr/lieb/Eltern)", answer: "ihren lieben Eltern", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (unser/groß/Haus) wurde verkauft.", answer: "Unser großes Haus", case: "Nominativ", elements: 3 },
+                { question: "Das Büro _____ _____ _____ ist renoviert. (sein/neu/Firma)", answer: "seiner neuen Firma", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (mein/intelligent/Tochter) studiert Physik.", answer: "Meine intelligente Tochter", case: "Nominativ", elements: 3 },
+                { question: "Ich liebe _____ _____ _____. (dein/süß/Hund)", answer: "deinen süßen Hund", case: "Akkusativ", elements: 3 },
+                { question: "Wir gratulieren _____ _____ _____. (sein/erfolgreich/Sohn)", answer: "seinem erfolgreichen Sohn", case: "Dativ", elements: 3 },
+                { question: "Die Farbe _____ _____ _____ ist schön. (ihr/neu/Auto)", answer: "ihres neuen Autos", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (unser/fleißig/Studenten) lernen viel.", answer: "Unsere fleißigen Studenten", case: "Nominativ", elements: 3 },
+                { question: "Sie sucht _____ _____ _____. (euer/rot/Ball)", answer: "euren roten Ball", case: "Akkusativ", elements: 3 },
+                { question: "Er gibt _____ _____ _____ Geld. (mein/arm/Cousin)", answer: "meinem armen Cousin", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (dein/stark/Vater) arbeitet schwer.", answer: "Dein starker Vater", case: "Nominativ", elements: 3 },
+                { question: "Ich besuche _____ _____ _____. (sein/krank/Mutter)", answer: "seine kranke Mutter", case: "Akkusativ", elements: 3 },
+                { question: "Das Leben _____ _____ _____ ist kompliziert. (unser/alt/Großvater)", answer: "unseres alten Großvaters", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (ihr/neu/Lehrer) unterrichtet gut.", answer: "Ihr neuer Lehrer", case: "Nominativ", elements: 3 },
+                { question: "Wir sehen _____ _____ _____. (mein/klein/Neffe)", answer: "meinen kleinen Neffen", case: "Akkusativ", elements: 3 },
+                { question: "Sie vertraut _____ _____ _____. (dein/best/Freundin)", answer: "deiner besten Freundin", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (sein/groß/Familie) lebt in München.", answer: "Seine große Familie", case: "Nominativ", elements: 3 },
+                { question: "Er mag _____ _____ _____. (ihr/lecker/Kuchen)", answer: "ihren leckeren Kuchen", case: "Akkusativ", elements: 3 },
+                { question: "Die Wohnung _____ _____ _____ ist teuer. (euer/reich/Onkel)", answer: "eures reichen Onkels", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (mein/neu/Kollegin) ist kompetent.", answer: "Meine neue Kollegin", case: "Nominativ", elements: 3 },
+                { question: "Ich rufe _____ _____ _____ an. (unser/gut/Arzt)", answer: "unseren guten Arzt", case: "Akkusativ", elements: 3 },
+                { question: "Wir schreiben _____ _____ _____. (sein/lieb/Großeltern)", answer: "seinen lieben Großeltern", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (dein/blau/Augen) sind wunderschön.", answer: "Deine blauen Augen", case: "Nominativ", elements: 3 },
+                { question: "Sie liest _____ _____ _____. (ihr/spannend/Buch)", answer: "ihr spannendes Buch", case: "Akkusativ", elements: 3 },
+                { question: "Das Zimmer _____ _____ _____ ist aufgeräumt. (mein/ordentlich/Sohn)", answer: "meines ordentlichen Sohnes", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (euer/neu/Haus) ist schön.", answer: "Euer neues Haus", case: "Nominativ", elements: 3 },
+                { question: "Er findet _____ _____ _____. (dein/verloren/Schlüssel)", answer: "deinen verlorenen Schlüssel", case: "Akkusativ", elements: 3 },
+                { question: "Sie folgt _____ _____ _____. (unser/klug/Rat)", answer: "unserem klugen Rat", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (sein/schwarz/Hund) bellt laut.", answer: "Sein schwarzer Hund", case: "Nominativ", elements: 3 },
+                { question: "Wir treffen _____ _____ _____. (ihr/nett/Nachbarn)", answer: "eure netten Nachbarn", case: "Akkusativ", elements: 3 },
+                { question: "Die Idee _____ _____ _____ ist kreativ. (mein/talentiert/Mitarbeiter)", answer: "meines talentierten Mitarbeiters", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dein/lang/Haare) sehen toll aus.", answer: "Deine langen Haare", case: "Nominativ", elements: 3 },
+                { question: "Ich höre _____ _____ _____. (sein/schön/Stimme)", answer: "seine schöne Stimme", case: "Akkusativ", elements: 3 },
+                { question: "Er glaubt _____ _____ _____. (unser/erfahren/Experten)", answer: "unseren erfahrenen Experten", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (ihr/alt/Tradition) wird bewahrt.", answer: "Ihre alte Tradition", case: "Nominativ", elements: 3 },
+                { question: "Sie kauft _____ _____ _____. (mein/jung/Bruder)", answer: "meinem jungen Bruder", case: "Dativ", elements: 3 },
+                { question: "Das Ergebnis _____ _____ _____ ist positiv. (euer/hart/Arbeit)", answer: "eurer harten Arbeit", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dein/neu/Job) gefällt dir.", answer: "Dein neuer Job", case: "Nominativ", elements: 3 }
+            ],
+            demonstrativ: [
+                // DEMOSTRATIVO + ADJETIVO + SUSTANTIVO (3 elementos) - 50 EJERCICIOS
+                { question: "_____ _____ _____ (dieser/freundlich/Mann) hilft mir immer.", answer: "Dieser freundliche Mann", case: "Nominativ", elements: 3 },
+                { question: "Ich kaufe _____ _____ _____. (jener/teuer/Laptop)", answer: "jenen teuren Laptop", case: "Akkusativ", elements: 3 },
+                { question: "Wir arbeiten mit _____ _____ _____. (dieser/erfahren/Ingenieur)", answer: "diesem erfahrenen Ingenieur", case: "Dativ", elements: 3 },
+                { question: "Die Idee _____ _____ _____ ist brillant. (jener/jung/Designer)", answer: "jenes jungen Designers", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dieses/modern/Gerät) funktioniert perfekt.", answer: "Dieses moderne Gerät", case: "Nominativ", elements: 3 },
+                { question: "Sie mag _____ _____ _____. (dieser/schön/Park)", answer: "diesen schönen Park", case: "Akkusativ", elements: 3 },
+                { question: "Er wohnt in _____ _____ _____. (jenes/alt/Haus)", answer: "jenem alten Haus", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (diese/intelligent/Studentin) studiert Medizin.", answer: "Diese intelligente Studentin", case: "Nominativ", elements: 3 },
+                { question: "Ich kenne _____ _____ _____. (jener/berühmt/Schauspieler)", answer: "jenen berühmten Schauspieler", case: "Akkusativ", elements: 3 },
+                { question: "Das Dach _____ _____ _____ ist rot. (dieses/hoch/Gebäude)", answer: "dieses hohen Gebäudes", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (jene/kompliziert/Aufgaben) sind schwierig.", answer: "Jene komplizierten Aufgaben", case: "Nominativ", elements: 3 },
+                { question: "Wir besuchen _____ _____ _____. (diese/interessant/Ausstellung)", answer: "diese interessante Ausstellung", case: "Akkusativ", elements: 3 },
+                { question: "Sie spricht mit _____ _____ _____. (jener/nett/Verkäuferin)", answer: "jener netten Verkäuferin", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (dieses/wunderschön/Bild) hängt an der Wand.", answer: "Dieses wunderschöne Bild", case: "Nominativ", elements: 3 },
+                { question: "Die Meinung _____ _____ _____ zählt. (dieser/klug/Wissenschaftler)", answer: "dieser klugen Wissenschaftler", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dieser/neu/Film) ist spannend.", answer: "Dieser neue Film", case: "Nominativ", elements: 3 },
+                { question: "Ich lese _____ _____ _____. (jenes/dick/Buch)", answer: "jenes dicke Buch", case: "Akkusativ", elements: 3 },
+                { question: "Er fährt mit _____ _____ _____. (dieser/schnell/Zug)", answer: "diesem schnellen Zug", case: "Dativ", elements: 3 },
+                { question: "Das Ende _____ _____ _____ war überraschend. (jener/lang/Geschichte)", answer: "jener langen Geschichte", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (diese/warm/Tage) sind angenehm.", answer: "Diese warmen Tage", case: "Nominativ", elements: 3 },
+                { question: "Sie trägt _____ _____ _____. (dieser/elegant/Mantel)", answer: "diesen eleganten Mantel", case: "Akkusativ", elements: 3 },
+                { question: "Wir danken _____ _____ _____. (jener/hilfsbereit/Person)", answer: "jener hilfsbereiten Person", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (dieses/groß/Problem) muss gelöst werden.", answer: "Dieses große Problem", case: "Nominativ", elements: 3 },
+                { question: "Er erklärt _____ _____ _____. (jene/schwierig/Regel)", answer: "jene schwierige Regel", case: "Akkusativ", elements: 3 },
+                { question: "Die Farbe _____ _____ _____ ist schön. (dieser/neu/Vorhang)", answer: "dieses neuen Vorhangs", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (jene/alt/Bäume) werden gefällt.", answer: "Jene alten Bäume", case: "Nominativ", elements: 3 },
+                { question: "Ich höre _____ _____ _____. (diese/laut/Musik)", answer: "diese laute Musik", case: "Akkusativ", elements: 3 },
+                { question: "Sie glaubt _____ _____ _____. (jener/erfahren/Experte)", answer: "jenem erfahrenen Experten", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (dieser/kalt/Winter) ist hart.", answer: "Dieser kalte Winter", case: "Nominativ", elements: 3 },
+                { question: "Wir fotografieren _____ _____ _____. (jenes/majestätisch/Schloss)", answer: "jenes majestätische Schloss", case: "Akkusativ", elements: 3 },
+                { question: "Das Zimmer _____ _____ _____ ist groß. (dieses/teuer/Hotel)", answer: "dieses teuren Hotels", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (diese/bunt/Blumen) duften herrlich.", answer: "Diese bunten Blumen", case: "Nominativ", elements: 3 },
+                { question: "Er sucht _____ _____ _____. (jener/wichtig/Dokument)", answer: "jenes wichtige Dokument", case: "Akkusativ", elements: 3 },
+                { question: "Sie arbeitet in _____ _____ _____. (dieser/klein/Firma)", answer: "dieser kleinen Firma", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (jenes/modern/System) ist effizient.", answer: "Jenes moderne System", case: "Nominativ", elements: 3 },
+                { question: "Ich bewundere _____ _____ _____. (diese/stark/Frau)", answer: "diese starke Frau", case: "Akkusativ", elements: 3 },
+                { question: "Die Tür _____ _____ _____ ist offen. (jener/alt/Kirche)", answer: "jener alten Kirche", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dieser/freundlich/Leute) helfen uns.", answer: "Diese freundlichen Leute", case: "Nominativ", elements: 3 },
+                { question: "Wir essen _____ _____ _____. (jenes/lecker/Essen)", answer: "jenes leckere Essen", case: "Akkusativ", elements: 3 },
+                { question: "Er spielt mit _____ _____ _____. (dieser/neu/Ball)", answer: "diesem neuen Ball", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (jene/jung/Generation) ist digital.", answer: "Jene junge Generation", case: "Nominativ", elements: 3 },
+                { question: "Sie liebt _____ _____ _____. (dieser/ruhig/Ort)", answer: "diesen ruhigen Ort", case: "Akkusativ", elements: 3 },
+                { question: "Das Ergebnis _____ _____ _____ ist positiv. (jener/lang/Untersuchung)", answer: "jener langen Untersuchung", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (diese/schwer/Aufgabe) ist gelöst.", answer: "Diese schwere Aufgabe", case: "Nominativ", elements: 3 },
+                { question: "Ich mag _____ _____ _____. (jener/hell/Raum)", answer: "jenen hellen Raum", case: "Akkusativ", elements: 3 },
+                { question: "Wir folgen _____ _____ _____. (dieser/klar/Anweisung)", answer: "dieser klaren Anweisung", case: "Dativ", elements: 3 },
+                { question: "_____ _____ _____ (jenes/gefährlich/Tier) ist wild.", answer: "Jenes gefährliche Tier", case: "Nominativ", elements: 3 },
+                { question: "Er zeigt _____ _____ _____. (diese/interessant/Fotos)", answer: "diese interessanten Fotos", case: "Akkusativ", elements: 3 },
+                { question: "Die Struktur _____ _____ _____ ist komplex. (jener/groß/Organisation)", answer: "jener großen Organisation", case: "Genitiv", elements: 3 },
+                { question: "_____ _____ _____ (dieser/süß/Hund) gehört mir.", answer: "Dieser süße Hund", case: "Nominativ", elements: 3 }
+            ],
+            passiv: [
+                // VOZ PASIVA CON ESTRUCTURAS COMPLEJAS - 50 EJERCICIOS
+                { question: "Der erfahrene Arzt untersucht den kranken Patienten. → _____ _____ _____ wird vom erfahrenen Arzt untersucht.", answer: "Der kranke Patient", tense: "Präsens" },
+                { question: "Die bekannte Firma stellte viele neue Mitarbeiter ein. → Viele neue Mitarbeiter _____ von der bekannten Firma _____.", answer: "wurden eingestellt", tense: "Präteritum" },
+                { question: "Mein bester Freund hat dieses schöne Bild gemalt. → _____ _____ _____ ist von meinem besten Freund gemalt worden.", answer: "Dieses schöne Bild", tense: "Perfekt" },
+                { question: "Der junge Koch bereitet die köstliche Suppe zu. → Die köstliche Suppe _____ vom jungen Koch _____.", answer: "wird zubereitet", tense: "Präsens" },
+                { question: "Seine neue Assistentin hatte den wichtigen Brief geschrieben. → _____ _____ _____ war von seiner neuen Assistentin geschrieben worden.", answer: "Der wichtige Brief", tense: "Plusquamperfekt" },
+                { question: "Der talentierte Musiker wird das berühmte Konzert spielen. → Das berühmte Konzert _____ vom talentierten Musiker _____ _____.", answer: "wird gespielt werden", tense: "Futur I" },
+                { question: "Unsere fleißigen Schüler lesen diese interessanten Bücher. → _____ _____ _____ werden von unseren fleißigen Schülern gelesen.", answer: "Diese interessanten Bücher", tense: "Präsens" },
+                { question: "Jener bekannte Regisseur drehte den spannenden Film. → Der spannende Film _____ von jenem bekannten Regisseur _____.", answer: "wurde gedreht", tense: "Präteritum" },
+                { question: "Die moderne Technologie hat unser tägliches Leben verändert. → _____ _____ _____ ist durch die moderne Technologie verändert worden.", answer: "Unser tägliches Leben", tense: "Perfekt" },
+                { question: "Dieser erfahrene Mechaniker repariert mein altes Auto. → _____ _____ _____ wird von diesem erfahrenen Mechaniker repariert.", answer: "Mein altes Auto", tense: "Präsens" },
+                { question: "Die deutsche Regierung hatte neue Gesetze eingeführt. → Neue Gesetze _____ von der deutschen Regierung _____ _____.", answer: "waren eingeführt worden", tense: "Plusquamperfekt" },
+                { question: "Sein jüngerer Bruder wird die schwierige Prüfung bestehen. → _____ _____ _____ wird von seinem jüngeren Bruder bestanden werden.", answer: "Die schwierige Prüfung", tense: "Futur I" },
+                { question: "Jene freundlichen Nachbarn helfen der alten Dame. → Der alten Dame _____ von jenen freundlichen Nachbarn _____.", answer: "wird geholfen", tense: "Präsens" },
+                { question: "Der erfolgreiche Autor hat seinen neuesten Roman veröffentlicht. → _____ _____ _____ ist vom erfolgreichen Autor veröffentlicht worden.", answer: "Sein neuester Roman", tense: "Perfekt" },
+                { question: "Diese große Firma produziert hochwertige Produkte. → Hochwertige Produkte _____ von dieser großen Firma _____.", answer: "werden produziert", tense: "Präsens" },
+                { question: "Der kluge Architekt entwarf das moderne Gebäude. → _____ _____ _____ wurde vom klugen Architekten entworfen.", answer: "Das moderne Gebäude", tense: "Präteritum" },
+                { question: "Unsere besten Ingenieure haben diese komplexe Maschine entwickelt. → _____ _____ _____ ist von unseren besten Ingenieuren entwickelt worden.", answer: "Diese komplexe Maschine", tense: "Perfekt" },
+                { question: "Die professionelle Reinigungsfirma säubert das große Büro. → Das große Büro _____ von der professionellen Reinigungsfirma _____.", answer: "wird gesäubert", tense: "Präsens" },
+                { question: "Meine hilfsbereite Kollegin hatte den schwierigen Bericht korrigiert. → Der schwierige Bericht _____ von meiner hilfsbereiten Kollegin _____ _____.", answer: "war korrigiert worden", tense: "Plusquamperfekt" },
+                { question: "Der berühmte Maler wird ein neues Kunstwerk schaffen. → _____ _____ _____ wird vom berühmten Maler geschaffen werden.", answer: "Ein neues Kunstwerk", tense: "Futur I" },
+                { question: "Diese jungen Wissenschaftler erforschen wichtige Fragen. → Wichtige Fragen _____ von diesen jungen Wissenschaftlern _____.", answer: "werden erforscht", tense: "Präsens" },
+                { question: "Der erfahrene Lehrer erklärte die komplizierte Grammatik. → _____ _____ _____ wurde vom erfahrenen Lehrer erklärt.", answer: "Die komplizierte Grammatik", tense: "Präteritum" },
+                { question: "Mein neuer Chef hat den wichtigen Vertrag unterschrieben. → Der wichtige Vertrag _____ von meinem neuen Chef _____ _____.", answer: "ist unterschrieben worden", tense: "Perfekt" },
+                { question: "Die fleißigen Arbeiter bauen eine moderne Brücke. → _____ _____ _____ wird von den fleißigen Arbeitern gebaut.", answer: "Eine moderne Brücke", tense: "Präsens" },
+                { question: "Jener talentierte Gärtner hatte den schönen Garten angelegt. → Der schöne Garten _____ von jenem talentierten Gärtner _____ _____.", answer: "war angelegt worden", tense: "Plusquamperfekt" },
+                { question: "Unser kompetentes Team wird das komplexe Projekt abschließen. → _____ _____ _____ wird von unserem kompetenten Team abgeschlossen werden.", answer: "Das komplexe Projekt", tense: "Futur I" },
+                { question: "Diese kreativen Designer gestalten innovative Produkte. → Innovative Produkte _____ von diesen kreativen Designern _____.", answer: "werden gestaltet", tense: "Präsens" },
+                { question: "Der freundliche Verkäufer beriet meinen älteren Bruder. → _____ _____ _____ wurde vom freundlichen Verkäufer beraten.", answer: "Mein älterer Bruder", tense: "Präteritum" },
+                { question: "Seine intelligente Assistentin hat die umfangreiche Präsentation vorbereitet. → Die umfangreiche Präsentation _____ von seiner intelligenten Assistentin _____ _____.", answer: "ist vorbereitet worden", tense: "Perfekt" },
+                { question: "Der neue Direktor führt strenge Regeln ein. → Strenge Regeln _____ vom neuen Direktor _____.", answer: "werden eingeführt", tense: "Präsens" },
+                { question: "Ihre beste Freundin hatte den wertvollen Ring gefunden. → _____ _____ _____ war von ihrer besten Freundin gefunden worden.", answer: "Der wertvolle Ring", tense: "Plusquamperfekt" },
+                { question: "Der motivierte Student wird die schwierige Aufgabe lösen. → Die schwierige Aufgabe _____ vom motivierten Studenten _____ _____.", answer: "wird gelöst werden", tense: "Futur I" },
+                { question: "Dieser berühmte Journalist schreibt kritische Artikel. → Kritische Artikel _____ von diesem berühmten Journalisten _____.", answer: "werden geschrieben", tense: "Präsens" },
+                { question: "Die qualifizierte Ärztin behandelte den verletzten Sportler. → _____ _____ _____ wurde von der qualifizierten Ärztin behandelt.", answer: "Der verletzte Sportler", tense: "Präteritum" },
+                { question: "Mein jüngerer Cousin hat das teure Geschenk gekauft. → Das teure Geschenk _____ von meinem jüngeren Cousin _____ _____.", answer: "ist gekauft worden", tense: "Perfekt" },
+                { question: "Die engagierten Mitarbeiter organisieren ein großes Fest. → _____ _____ _____ wird von den engagierten Mitarbeitern organisiert.", answer: "Ein großes Fest", tense: "Präsens" },
+                { question: "Ihr neuer Assistent hatte die wichtigen Dokumente archiviert. → Die wichtigen Dokumente _____ von ihrem neuen Assistenten _____ _____.", answer: "waren archiviert worden", tense: "Plusquamperfekt" },
+                { question: "Der ehrgeizige Manager wird ein innovatives Konzept präsentieren. → _____ _____ _____ wird vom ehrgeizigen Manager präsentiert werden.", answer: "Ein innovatives Konzept", tense: "Futur I" },
+                { question: "Jene erfahrenen Köche kochen exquisite Gerichte. → Exquisite Gerichte _____ von jenen erfahrenen Köchen _____.", answer: "werden gekocht", tense: "Präsens" },
+                { question: "Der aufmerksame Nachbar bemerkte das seltsame Geräusch. → _____ _____ _____ wurde vom aufmerksamen Nachbarn bemerkt.", answer: "Das seltsame Geräusch", tense: "Präteritum" },
+                { question: "Unsere neue Praktikantin hat den ausführlichen Bericht geschrieben. → Der ausführliche Bericht _____ von unserer neuen Praktikantin _____ _____.", answer: "ist geschrieben worden", tense: "Perfekt" },
+                { question: "Die begabten Musiker spielen klassische Symphonien. → Klassische Symphonien _____ von den begabten Musikern _____.", answer: "werden gespielt", tense: "Präsens" },
+                { question: "Sein älterer Kollege hatte die technische Lösung gefunden. → _____ _____ _____ war von seinem älteren Kollegen gefunden worden.", answer: "Die technische Lösung", tense: "Plusquamperfekt" },
+                { question: "Der zuverlässige Handwerker wird das kaputte Fenster reparieren. → Das kaputte Fenster _____ vom zuverlässigen Handwerker _____ _____.", answer: "wird repariert werden", tense: "Futur I" },
+                { question: "Diese motivierten Studenten diskutieren aktuelle Themen. → Aktuelle Themen _____ von diesen motivierten Studenten _____.", answer: "werden diskutiert", tense: "Präsens" },
+                { question: "Die geduldige Lehrerin erklärte den schwierigen Stoff. → _____ _____ _____ wurde von der geduldigen Lehrerin erklärt.", answer: "Der schwierige Stoff", tense: "Präteritum" },
+                { question: "Mein kreativer Mitarbeiter hat den originellen Vorschlag gemacht. → Der originelle Vorschlag _____ von meinem kreativen Mitarbeiter _____ _____.", answer: "ist gemacht worden", tense: "Perfekt" },
+                { question: "Der ambitionierte Künstler malt abstrakte Bilder. → Abstrakte Bilder _____ vom ambitionierten Künstler _____.", answer: "werden gemalt", tense: "Präsens" },
+                { question: "Ihre kompetente Beraterin hatte einen guten Rat gegeben. → _____ _____ _____ war von ihrer kompetenten Beraterin gegeben worden.", answer: "Ein guter Rat", tense: "Plusquamperfekt" },
+                { question: "Der erfolgreiche Geschäftsmann wird neue Filialen eröffnen. → Neue Filialen _____ vom erfolgreichen Geschäftsmann _____ _____.", answer: "werden eröffnet werden", tense: "Futur I" }
+            ]
+        };
+
+        // Funciones principales
+        function showTab(tabName) {
+            // Ocultar todos los tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostrar el tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            // Generar primer ejercicio si no es la pestaña de tablas
+            if (tabName !== 'tablas' && !state[tabName].currentAnswer) {
+                nextExercise(tabName);
+            }
+        }
+
+        function nextExercise(type) {
+            const exerciseList = exercises[type];
+            const randomExercise = exerciseList[Math.floor(Math.random() * exerciseList.length)];
+            
+            state[type].currentAnswer = randomExercise.answer;
+            
+            const container = document.getElementById(`exercise-${type}`);
+            container.innerHTML = `
+                <div class="exercise-question">
+                    <strong>Füllen Sie die Lücke aus:</strong><br><br>
+                    ${randomExercise.question}
+                </div>
+                <input type="text" class="exercise-input" id="input-${type}" placeholder="Ihre Antwort...">
+            `;
+
+            // Limpiar feedback
+            const feedback = document.getElementById(`feedback-${type}`);
+            feedback.className = 'feedback';
+            feedback.textContent = '';
+
+            // Focus en el input
+            document.getElementById(`input-${type}`).focus();
+
+            // Permitir Enter para verificar
+            document.getElementById(`input-${type}`).addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnswer(type);
+                }
+            });
+        }
+
+        function checkAnswer(type) {
+            const userAnswer = document.getElementById(`input-${type}`).value.trim();
+            const correctAnswer = state[type].currentAnswer;
+            const feedback = document.getElementById(`feedback-${type}`);
+
+            state[type].total++;
+
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                state[type].correct++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✅ <strong>Richtig!</strong> Die korrekte Antwort ist: <strong>${correctAnswer}</strong>`;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `❌ <strong>Falsch!</strong> Die korrekte Antwort ist: <strong>${correctAnswer}</strong><br>Ihre Antwort war: <strong>${userAnswer || '(leer)'}</strong>`;
+            }
+
+            // Actualizar puntuación
+            document.getElementById(`score-${type}`).textContent = 
+                `Puntuación: ${state[type].correct}/${state[type].total}`;
+        }
+
+        // Inicializar primer ejercicio al cargar
+        window.onload = function() {
+            // No generamos ejercicios automáticamente, esperamos a que el usuario cambie de tab
+        };
+    </script>
+</body>
+</html>

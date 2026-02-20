@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeutschHub — Recursos de Alemán</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e; --surface: #161616; --surface2: #1e1e1e;
+    --border: #2a2a2a; --accent: #e8c547; --text: #f0ece0; --muted: #7a7670;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  header { position: relative; padding: 50px 40px 36px; border-bottom: 1px solid var(--border); overflow: hidden; }
+  header::before { content: 'DE'; position: absolute; right: -20px; top: -30px; font-family: 'Playfair Display', serif; font-size: 280px; font-weight: 900; color: rgba(232,197,71,0.04); line-height: 1; pointer-events: none; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .logo { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; letter-spacing: -1px; }
+  .logo span { color: var(--accent); }
+  .subtitle { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; }
+  .stats { display: flex; gap: 28px; }
+  .stat { text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--accent); display: block; }
+  .stat-l { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+  .search-bar { margin-top: 28px; position: relative; max-width: 500px; }
+  .search-bar input { width: 100%; padding: 13px 18px 13px 46px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .search-bar input:focus { border-color: var(--accent); }
+  .search-bar input::placeholder { color: var(--muted); }
+  .search-bar svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+
+  .filters { display: flex; gap: 8px; padding: 18px 40px; border-bottom: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+  .filter-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-right: 4px; }
+  .filter-btn { padding: 5px 13px; border-radius: 2px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; letter-spacing: 1px; text-transform: uppercase; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,197,71,0.06); }
+
+  .main { padding: 30px 40px; }
+  .section { margin-bottom: 46px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .section-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 20px; transition: all 0.2s; position: relative; overflow: hidden; text-decoration: none; display: block; color: inherit; animation: fadeUp 0.3s ease both; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); opacity: 0; transition: opacity 0.2s; }
+  .card:hover { border-color: rgba(232,197,71,0.3); transform: translateY(-2px); background: var(--surface2); }
+  .card:hover::before { opacity: 1; }
+
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 11px; }
+  .card-icon { width: 36px; height: 36px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: var(--surface2); }
+  .tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+  .tag-app  { background: #2a2a3d; color: #8888ef; }
+  .tag-pdf  { background: #3d2a1a; color: #ef9f5f; }
+  .tag-xlsx { background: #1a3d2a; color: #5fcf9f; }
+  .tag-docx { background: #2a2a3d; color: #9f9fef; }
+
+  .card-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
+  .card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .card-meta { display: flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+  .card-level { color: var(--accent); }
+
+  .note-bar { background: rgba(232,197,71,0.07); border: 1px solid rgba(232,197,71,0.15); border-radius: 4px; padding: 12px 18px; margin-bottom: 20px; font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .note-bar span { color: var(--accent); }
+
+  .empty { text-align: center; padding: 60px; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 13px; display: none; }
+
+  footer { padding: 22px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  footer span { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+  @media (max-width: 600px) {
+    header, .main, footer, .filters { padding-left: 18px; padding-right: 18px; }
+    .logo { font-size: 28px; } header::before { font-size: 140px; }
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="logo">Deutsch<span>Hub</span></div>
+      <div class="subtitle">Portal de recursos · Alemán B1–C1</div>
+    </div>
+    <div class="stats">
+      <span class="stat"><span class="stat-n" id="cnt-app">0</span><span class="stat-l">Apps</span></span>
+      <span class="stat"><span class="stat-n" id="cnt-doc">0</span><span class="stat-l">Docs</span></span>
+      <span class="stat"><span class="stat-n" id="cnt-total">0</span><span class="stat-l">Total</span></span>
+    </div>
+  </div>
+  <div class="search-bar">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Buscar por título, tema, nivel…">
+  </div>
+</header>
+
+<div class="filters">
+  <span class="filter-label">Filtrar</span>
+  <button class="filter-btn active" data-f="all">Todo</button>
+  <button class="filter-btn" data-f="app">Apps</button>
+  <button class="filter-btn" data-f="doc">Docs</button>
+  <button class="filter-btn" data-f="B2">B2</button>
+  <button class="filter-btn" data-f="C1">C1</button>
+  <button class="filter-btn" data-f="gramática">Gramática</button>
+  <button class="filter-btn" data-f="vocabulario">Vocabulario</button>
+</div>
+
+<div class="main">
+  <div class="section" id="sec-apps">
+    <div class="section-header">
+      <div class="section-title">Aplicaciones interactivas</div>
+      <div class="section-line"></div>
+      <div class="section-count" id="lbl-apps"></div>
+    </div>
+    <div class="grid" id="grid-apps"></div>
+  </div>
+
+  <div class="section" id="sec-docs">
+    <div class="section-header">
+      <div class="section-title">Documentos y referencias</div>
+      <div class="section-line"></div>
+      <div class="section-count" id="lbl-docs"></div>
+    </div>
+    <div class="note-bar"><span>ℹ</span> Los archivos .docx, .xlsx y .pdf se descargan al hacer clic. Ábrelos con Word, Excel o tu lector PDF.</div>
+    <div class="grid" id="grid-docs"></div>
+  </div>
+
+  <div class="empty" id="empty">No hay resultados para esa búsqueda.</div>
+</div>
+
+<footer>
+  <span>DeutschHub · uso personal</span>
+  <span id="foot-date"></span>
+</footer>
+
+<script>
+// ── CAMBIA ESTA LÍNEA con tu usuario GitHub y nombre de repositorio ──────────
+const BASE = 'https://pepetecnita.github.io/DeutschHub';
+// ─────────────────────────────────────────────────────────────────────────────
+
+const RESOURCES = [
+  // ── APLICACIONES (se abren en el navegador) ────────────────────────────────
+  { type:'app', level:'B2',    tema:'gramática',   icon:'🔗', tag:'app',
+    name:'Konnektoren II',
+    desc:'Práctica avanzada de conectores. Modos: elección múltiple, completar huecos, construcción de frases.',
+    file:'Aplicacion_konnektoren_II_app.html' },
+
+  { type:'app', level:'B1-B2', tema:'gramática',   icon:'📝', tag:'app',
+    name:'Verbos Irregulares',
+    desc:'Entrenador de verbos irregulares. Repaso de Präteritum y Partizip II con corrección automática.',
+    file:'Aplicacion_Unregelmasige_Verben.html' },
+
+  { type:'app', level:'B2',    tema:'gramática',   icon:'⚙️', tag:'app',
+    name:'Verbos con Prefijo + Preposición (mixto)',
+    desc:'Ejercicios mixtos de verbos con prefijo y preposición. Combinaciones más frecuentes B2.',
+    file:'Aplicacion_Verben_mit_Prefix_und_Prpos_mixed.html' },
+
+  { type:'app', level:'B1-B2', tema:'gramática',   icon:'🧩', tag:'app',
+    name:'Verbos con Prefijo',
+    desc:'Práctica de verbos separables e inseparables con ejemplos contextualizados.',
+    file:'Aplicacion_Verben_Prefix.html' },
+
+  { type:'app', level:'B2',    tema:'gramática',   icon:'🏛️', tag:'app',
+    name:'Declinación Alemana',
+    desc:'Entrenador completo de declinaciones: artículos y adjetivos en todos los casos.',
+    file:'Aplicacion_deutsche-deklination.html' },
+
+  { type:'app', level:'B2',    tema:'gramática',   icon:'🔄', tag:'app',
+    name:'Verbos con Preposición',
+    desc:'Trainer de verbos que rigen preposición fija. Las combinaciones más difíciles.',
+    file:'Aplicacion_verben-mit-praepos-trainer.html' },
+
+  { type:'app', level:'B2-C1', tema:'vocabulario', icon:'📚', tag:'app',
+    name:'B2 Training',
+    desc:'Ejercicios de entrenamiento B2 en formato web interactivo. Comprensión y vocabulario.',
+    file:'B2_Training___PDF.html' },
+
+  { type:'app', level:'B1-C1', tema:'gramática',   icon:'📖', tag:'app',
+    name:'Resúmenes de Gramática',
+    desc:'Compendio completo de gramática alemana en formato web. Referencia rápida por tema.',
+    file:'Resumenes_completos_de_gramatica.html' },
+
+  // ── DOCUMENTOS (descarga) ──────────────────────────────────────────────────
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Adverbios Direccionales',
+    desc:'Guía de adverbios direccionales: hin/her y combinaciones. Con ejemplos.',
+    file:'Adverbios_Direccionales_en_alem%C3%A1n.docx' },
+
+  { type:'doc', level:'B2',    tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Der Genitiv',
+    desc:'Resumen completo del genitivo alemán. Uso, formación y casos frecuentes.',
+    file:'Der_Genitiv_im_Deutschen.docx' },
+
+  { type:'doc', level:'B2',    tema:'gramática',   icon:'📄', tag:'docx',
+    name:'erst / kein / noch / doch / nicht…',
+    desc:'Partículas y negaciones comparadas. Tabla de uso con contexto.',
+    file:'erst_kein_noch_doch_nicht_nichts_y_otros.docx' },
+
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Konnektoren I',
+    desc:'Primera parte de conectores: causales, consecutivos, adversativos con ejemplos.',
+    file:'konektoren_I.docx' },
+
+  { type:'doc', level:'B2',    tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Konjunktiv II',
+    desc:'Formación, usos y expresiones frecuentes del Konjunktiv II.',
+    file:'Konjuntive_II.docx' },
+
+  { type:'doc', level:'B2-C1', tema:'vocabulario', icon:'📑', tag:'pdf',
+    name:'Konnektoren — Expresiones (PDF)',
+    desc:'PDF con conectores y expresiones fijas B2-C1 para argumentar, opinar y contrastar.',
+    file:'Konnektoren_y_expresiones.pdf' },
+
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Pasiv',
+    desc:'Vorgangspassiv y Zustandspassiv: formación y usos con ejemplos.',
+    file:'Pasiv.docx' },
+
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Präpositionen',
+    desc:'Guía completa de preposiciones por caso: Akk, Dat, Gen.',
+    file:'PR%C3%84POSITIONEN.docx' },
+
+  { type:'doc', level:'B2',    tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Temporalsätze',
+    desc:'Oraciones temporales: als, wenn, während, nachdem, bevor, bis, seit.',
+    file:'Temporal_SAtze.docx' },
+
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Verben + Präposition',
+    desc:'Lista de verbos que rigen preposición fija con ejemplos de uso.',
+    file:'Verben__prep.docx' },
+
+  { type:'doc', level:'B1-B2', tema:'gramática',   icon:'📄', tag:'docx',
+    name:'Verben mit Präfix',
+    desc:'Verbos con prefijo separable e inseparable. Lista completa con significados.',
+    file:'Verben_mit_Pr%C3%A4fix.docx' },
+
+  { type:'doc', level:'B2',    tema:'gramática',   icon:'📊', tag:'xlsx',
+    name:'Declinación de Adjetivos (Excel)',
+    desc:'Tabla Excel de declinación adjetival. Todos los casos y géneros.',
+    file:'Adjetive_Declination.xlsx' },
+];
+
+// ── RENDER ──────────────────────────────────────────────────────────────────
+let activeF = 'all', searchQ = '';
+
+const tagLabels = { app:'App', pdf:'PDF', xlsx:'Excel', docx:'Word' };
+
+function cardHTML(r) {
+  return `
+  <a class="card" href="${BASE}/${r.file}" target="_blank" rel="noopener"
+     data-type="${r.type}" data-level="${r.level}" data-tema="${r.tema}"
+     data-name="${r.name.toLowerCase()}" data-desc="${r.desc.toLowerCase()}">
+    <div class="card-top">
+      <div class="card-icon">${r.icon}</div>
+      <span class="tag tag-${r.tag}">${tagLabels[r.tag]||r.tag}</span>
+    </div>
+    <div class="card-title">${r.name}</div>
+    <div class="card-desc">${r.desc}</div>
+    <div class="card-meta">
+      <span class="card-level">${r.level}</span><span>·</span><span>${r.tema}</span>
+    </div>
+  </a>`;
+}
+
+function render() {
+  const q = searchQ.toLowerCase();
+  let apps = '', docs = '', na = 0, nd = 0;
+  RESOURCES.forEach(r => {
+    const mF = activeF==='all' || activeF===r.type || r.level.includes(activeF) || r.tema===activeF;
+    const mS = !q || r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.level.toLowerCase().includes(q) || r.tema.includes(q);
+    if (!mF || !mS) return;
+    if (r.type==='app') { apps += cardHTML(r); na++; } else { docs += cardHTML(r); nd++; }
+  });
+  document.getElementById('grid-apps').innerHTML = apps;
+  document.getElementById('grid-docs').innerHTML = docs;
+  document.getElementById('lbl-apps').textContent = na + ' recursos';
+  document.getElementById('lbl-docs').textContent = nd + ' recursos';
+  document.getElementById('cnt-app').textContent = RESOURCES.filter(r=>r.type==='app').length;
+  document.getElementById('cnt-doc').textContent = RESOURCES.filter(r=>r.type==='doc').length;
+  document.getElementById('cnt-total').textContent = RESOURCES.length;
+  document.getElementById('sec-apps').style.display = na===0 ? 'none' : '';
+  document.getElementById('sec-docs').style.display = nd===0 ? 'none' : '';
+  document.getElementById('empty').style.display = (na+nd===0) ? 'block' : 'none';
+  document.getElementById('foot-date').textContent =
+    'Actualizado ' + new Date().toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+}
+
+document.getElementById('search').addEventListener('input', e => { searchQ = e.target.value; render(); });
+document.querySelectorAll('.filter-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); activeF = b.dataset.f; render();
+  });
+});
+render();
+</script>
+</body>
+</html>

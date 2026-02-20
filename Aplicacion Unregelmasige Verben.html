@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbos Irregulares Alemanes B2 - Completo</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.5em; margin-bottom: 10px; }
+.tabs { display: flex; background: #f5f5f5; border-bottom: 2px solid #ddd; }
+.tab { flex: 1; padding: 20px; background: #f5f5f5; border: none; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: all 0.3s; }
+.tab:hover { background: #e0e0e0; }
+.tab.active { background: white; color: #667eea; border-bottom: 3px solid #667eea; }
+.content { padding: 30px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.view-control { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 10px; }
+.toggle-btn { padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+.toggle-btn:hover { background: #5568d3; transform: translateY(-2px); }
+.verb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.verb-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.3s; position: relative; color: white; }
+.verb-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5); }
+.verb-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.verb-card-title { font-size: 1.3em; font-weight: bold; }
+.verb-badge { background: rgba(255,255,255,0.3); padding: 3px 8px; border-radius: 5px; font-size: 0.7em; font-weight: bold; }
+.verb-card-subtitle { font-size: 0.9em; opacity: 0.9; }
+.verb-tooltip { position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%) scale(0.8); background: #2d3748; color: white; padding: 15px; border-radius: 10px; width: 280px; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.verb-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 10px solid transparent; border-top-color: #2d3748; }
+.verb-card:hover .verb-tooltip { opacity: 1; transform: translateX(-50%) scale(1); pointer-events: auto; }
+.tooltip-title { font-size: 1.1em; font-weight: bold; color: #fbbf24; margin-bottom: 10px; }
+.tooltip-conjugacion { background: #4a5568; padding: 10px; border-radius: 5px; font-family: 'Courier New', monospace; font-size: 0.85em; text-align: center; margin-top: 8px; }
+.tooltip-section { margin: 8px 0; font-size: 0.85em; }
+.tooltip-label { color: #fbbf24; font-weight: bold; }
+.verb-list-extended { display: none; }
+.verb-item-extended { background: #f9f9f9; border: 2px solid #e0e0e0; border-radius: 15px; padding: 25px; margin-bottom: 20px; transition: all 0.3s; }
+.verb-item-extended:hover { border-color: #667eea; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2); }
+.verb-item-extended.focused { border-color: #667eea; background: white; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); transform: scale(1.02); }
+.extended-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #667eea; }
+.extended-title { font-size: 2em; color: #667eea; font-weight: bold; }
+.extended-badge { background: #667eea; color: white; padding: 8px 15px; border-radius: 8px; font-size: 0.9em; font-weight: bold; }
+.conjugacion-display { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 1.2em; text-align: center; font-weight: bold; color: #1565c0; margin: 15px 0; }
+.presente-irregular-box { background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0; }
+.presente-irregular-box strong { color: #e65100; font-size: 1.1em; }
+.significado-box { background: #e8f5e9; padding: 15px; border-radius: 10px; margin: 10px 0; }
+.significado-ordinario { margin-bottom: 10px; font-size: 1.1em; }
+.significado-prepo { padding-top: 10px; border-top: 1px solid #c8e6c9; font-size: 1.05em; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
+.info-box { background: white; padding: 15px; border-radius: 10px; border-left: 4px solid #667eea; }
+.info-label { font-weight: bold; color: #667eea; margin-bottom: 5px; font-size: 0.9em; }
+.info-value { color: #333; font-size: 1.1em; }
+.ejemplo-section { background: #fce4ec; padding: 15px; border-radius: 10px; margin: 15px 0; }
+.ejemplo-de { color: #c62828; font-weight: bold; margin: 5px 0; font-size: 1.05em; }
+.ejemplo-es { color: #1565c0; font-weight: bold; margin: 5px 0; font-size: 1.05em; }
+.navigation-hint { position: fixed; bottom: 20px; right: 20px; background: #667eea; color: white; padding: 15px 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); font-weight: bold; z-index: 100; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.exercise-container { max-width: 900px; margin: 0 auto; }
+.exercise-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+.exercise-type-btn { padding: 20px; background: #f5f5f5; border: 3px solid #ddd; border-radius: 10px; cursor: pointer; font-weight: bold; transition: all 0.3s; text-align: center; font-size: 1em; }
+.exercise-type-btn:hover { background: #e0e0e0; transform: translateY(-2px); }
+.exercise-type-btn.active { background: #667eea; color: white; border-color: #667eea; }
+.score-board { display: flex; justify-content: space-around; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+.score-item { text-align: center; }
+.score-number { font-size: 2.5em; font-weight: bold; }
+.score-label { margin-top: 5px; opacity: 0.9; }
+.question-box { background: #f9f9f9; padding: 30px; border-radius: 15px; margin-bottom: 20px; border: 2px solid #e0e0e0; }
+.question-title { font-size: 1.5em; color: #667eea; margin-bottom: 20px; font-weight: bold; }
+.question-text { font-size: 1.4em; color: #333; margin-bottom: 20px; padding: 20px; background: white; border-radius: 10px; text-align: center; }
+.answer-input { width: 100%; padding: 15px; font-size: 1.2em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 15px; transition: border-color 0.3s; }
+.answer-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+.answer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+.answer-field { display: flex; flex-direction: column; }
+.answer-label { font-weight: bold; color: #666; margin-bottom: 8px; font-size: 0.95em; }
+.answer-input-small { padding: 12px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 8px; text-align: center; }
+.answer-input-small:focus { outline: none; border-color: #667eea; }
+.btn { padding: 15px 30px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; width: 100%; }
+.btn-primary { background: #667eea; color: white; }
+.btn-primary:hover { background: #5568d3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+.btn-success { background: #4caf50; color: white; }
+.btn-success:hover { background: #45a049; }
+.result-box { padding: 25px; border-radius: 10px; margin-bottom: 20px; font-size: 1.1em; }
+.result-correct { background: #c8e6c9; border: 3px solid #4caf50; color: #2e7d32; }
+.result-incorrect { background: #ffcdd2; border: 3px solid #f44336; color: #c62828; }
+.result-title { font-size: 1.4em; font-weight: bold; margin-bottom: 15px; }
+.result-detail { margin: 10px 0; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 5px; font-size: 1.05em; }
+@media (max-width: 768px) {
+    .verb-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .info-grid { grid-template-columns: 1fr; }
+    .answer-grid { grid-template-columns: 1fr; }
+    .exercise-selector { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Verbos Irregulares Alemanes - B2</h1>
+            <p>183 verbos esenciales con ejercicios interactivos</p>
+        </div>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('lista')">📋 Lista de Verbos</button>
+            <button class="tab" onclick="switchTab('ejercicios')">✍️ Ejercicios</button>
+        </div>
+        <div class="content">
+            <div id="lista" class="tab-content active">
+                <div class="view-control">
+                    <h2>Lista de Verbos</h2>
+                    <button class="toggle-btn" onclick="toggleView()">
+                        <span id="viewToggleText">📋 Ver Lista Extensa</span>
+                    </button>
+                </div>
+                <div id="compactView" class="verb-grid"></div>
+                <div id="extendedView" class="verb-list-extended"></div>
+                <div class="navigation-hint" id="navHint" style="display: none;">⌨️ Presiona ESPACIO</div>
+            </div>
+            <div id="ejercicios" class="tab-content">
+                <div class="exercise-container">
+                    <div class="exercise-selector">
+                        <button class="exercise-type-btn active" onclick="selectExerciseType('de-es')">🇩🇪 → 🇪🇸<br>Verbo → Significado</button>
+                        <button class="exercise-type-btn" onclick="selectExerciseType('es-de')">🇪🇸 → 🇩🇪<br>Significado → Verbo</button>
+                        <button class="exercise-type-btn" onclick="selectExerciseType('fehler-forma')">❌ Fehler<br>Adivinar Forma</button>
+                        <button class="exercise-type-btn" onclick="selectExerciseType('fehler-frase')">❌ Fehler<br>Corregir Frase</button>
+                    </div>
+                    <div class="score-board">
+                        <div class="score-item"><div class="score-number" id="correctas">0</div><div class="score-label">Correctas</div></div>
+                        <div class="score-item"><div class="score-number" id="total">0</div><div class="score-label">Total</div></div>
+                        <div class="score-item"><div class="score-number" id="porcentaje">0%</div><div class="score-label">Acierto</div></div>
+                    </div>
+                    <div id="exerciseContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+const verbos = [
+    {
+        infinitivo: "backen", traduccion: "hornear", conjugacion: "bäckt - buk - hat gebacken",
+        presente2: "du bäckst", presente3: "er/sie/es bäckt",
+        trennbar: "T", sustantivo: "der Bäcker (panadero)", preposicion: "etwas backen",
+        significadoPrepo: "hornear algo", ejemploDE: "Meine Mutter bäckt einen Kuchen.", ejemploES: "Mi madre hornea un pastel.",
+        fehlerFrase: "Gestern backte meine Mutter einen Kuchen.", fehlerCorreccion: "buk"
+    },
+    {
+        infinitivo: "befehlen", traduccion: "ordenar", conjugacion: "befiehlt - befahl - hat befohlen",
+        presente2: "du befiehlst", presente3: "er/sie/es befiehlt",
+        trennbar: "UT", sustantivo: "der Befehl (orden)", preposicion: "jemandem etwas befehlen",
+        significadoPrepo: "ordenar algo a alguien", ejemploDE: "Der Offizier befiehlt anzugreifen.", ejemploES: "El oficial ordena atacar.",
+        fehlerFrase: "Er befiehlt mir das zu tun.", fehlerCorreccion: "befahl"
+    },
+    {
+        infinitivo: "beginnen", traduccion: "comenzar", conjugacion: "beginnt - begann - hat begonnen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "der Beginn (comienzo)", preposicion: "mit etwas beginnen",
+        significadoPrepo: "comenzar con algo", ejemploDE: "Der Unterricht beginnt um 9 Uhr.", ejemploES: "La clase comienza a las 9.",
+        fehlerFrase: "Gestern beginnte der Film um 8.", fehlerCorreccion: "begann"
+    },
+    {
+        infinitivo: "beißen", traduccion: "morder", conjugacion: "beißt - biss - hat gebissen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Biss (mordisco)", preposicion: "in etwas beißen",
+        significadoPrepo: "morder algo", ejemploDE: "Der Hund beißt in den Ball.", ejemploES: "El perro muerde la pelota.",
+        fehlerFrase: "Der Hund beisste den Postboten.", fehlerCorreccion: "biss"
+    },
+    {
+        infinitivo: "bergen", traduccion: "rescatar", conjugacion: "birgt - barg - hat geborgen",
+        presente2: "du birgst", presente3: "er/sie/es birgt",
+        trennbar: "T", sustantivo: "die Bergung (rescate)", preposicion: "aus etwas bergen",
+        significadoPrepo: "rescatar de algo", ejemploDE: "Die Feuerwehr birgt die Verletzten.", ejemploES: "Los bomberos rescatan heridos.",
+        fehlerFrase: "Sie bargen die Schätze.", fehlerCorreccion: "bargen"
+    },
+    {
+        infinitivo: "bersten", traduccion: "estallar", conjugacion: "birst - barst - ist geborsten",
+        presente2: "du birst", presente3: "er/sie/es birst",
+        trennbar: "T", sustantivo: "das Bersten (estallido)", preposicion: "vor etwas bersten",
+        significadoPrepo: "reventar de algo", ejemploDE: "Das Glas birst vor Hitze.", ejemploES: "El vaso revienta de calor.",
+        fehlerFrase: "Die Mauer berste unter Druck.", fehlerCorreccion: "barst"
+    },
+    {
+        infinitivo: "betrügen", traduccion: "engañar", conjugacion: "betrügt - betrog - hat betrogen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "der Betrug (estafa)", preposicion: "jemanden um etwas betrügen",
+        significadoPrepo: "estafar algo", ejemploDE: "Er betrog mich um 500 Euro.", ejemploES: "Me estafó 500 euros.",
+        fehlerFrase: "Er betrügte seine Frau.", fehlerCorreccion: "betrog"
+    },
+    {
+        infinitivo: "bewegen", traduccion: "conmover", conjugacion: "bewegt - bewog - hat bewogen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "die Bewegung (movimiento)", preposicion: "zu etwas bewegen",
+        significadoPrepo: "convencer a hacer", ejemploDE: "Was bewog dich dazu?", ejemploES: "¿Qué te convenció?",
+        fehlerFrase: "Seine Worte bewogten mich.", fehlerCorreccion: "bewogen"
+    },
+    {
+        infinitivo: "beweisen", traduccion: "demostrar", conjugacion: "beweist - bewies - hat bewiesen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "der Beweis (prueba)", preposicion: "jemandem etwas beweisen",
+        significadoPrepo: "demostrar algo", ejemploDE: "Er bewies seine Unschuld.", ejemploES: "Demostró su inocencia.",
+        fehlerFrase: "Sie beweiste ihre Theorie.", fehlerCorreccion: "bewies"
+    },
+    {
+        infinitivo: "bewerben (sich)", traduccion: "solicitar", conjugacion: "bewirbt sich - bewarb sich - hat sich beworben",
+        presente2: "du bewirbst dich", presente3: "er/sie/es bewirbt sich",
+        trennbar: "UT", sustantivo: "die Bewerbung (solicitud)", preposicion: "sich um etwas bewerben",
+        significadoPrepo: "solicitar algo", ejemploDE: "Ich bewerbe mich um die Stelle.", ejemploES: "Solicito el puesto.",
+        fehlerFrase: "Er bewerbte sich um den Job.", fehlerCorreccion: "bewarb"
+    },
+    {
+        infinitivo: "biegen", traduccion: "doblar", conjugacion: "biegt - bog - hat gebogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Biegung (curva)", preposicion: "um etwas biegen",
+        significadoPrepo: "doblar por algo", ejemploDE: "Das Auto biegt um die Ecke.", ejemploES: "El coche dobla la esquina.",
+        fehlerFrase: "Wir biegten nach links ab.", fehlerCorreccion: "bogen"
+    },
+    {
+        infinitivo: "bieten", traduccion: "ofrecer", conjugacion: "bietet - bot - hat geboten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Angebot (oferta)", preposicion: "jemandem etwas bieten",
+        significadoPrepo: "ofrecer algo", ejemploDE: "Die Firma bietet gute Bedingungen.", ejemploES: "La empresa ofrece buenas condiciones.",
+        fehlerFrase: "Er biette mir viel Geld.", fehlerCorreccion: "bot"
+    },
+    {
+        infinitivo: "binden", traduccion: "atar", conjugacion: "bindet - band - hat gebunden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Bindung (vínculo)", preposicion: "an etwas binden",
+        significadoPrepo: "atar a algo", ejemploDE: "Er bindet das Boot an den Pfahl.", ejemploES: "Ata el barco al poste.",
+        fehlerFrase: "Sie bindete das Paket.", fehlerCorreccion: "band"
+    },
+    {
+        infinitivo: "bitten", traduccion: "pedir", conjugacion: "bittet - bat - hat gebeten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Bitte (petición)", preposicion: "um etwas bitten",
+        significadoPrepo: "pedir algo", ejemploDE: "Ich bitte dich um einen Gefallen.", ejemploES: "Te pido un favor.",
+        fehlerFrase: "Er bittete mich um Hilfe.", fehlerCorreccion: "bat"
+    },
+    {
+        infinitivo: "blasen", traduccion: "soplar", conjugacion: "bläst - blies - hat geblasen",
+        presente2: "du bläst", presente3: "er/sie/es bläst",
+        trennbar: "T", sustantivo: "der Atem (aliento)", preposicion: "in etwas blasen",
+        significadoPrepo: "soplar en algo", ejemploDE: "Der Wind bläst stark.", ejemploES: "El viento sopla fuerte.",
+        fehlerFrase: "Gestern blaste der Wind.", fehlerCorreccion: "blies"
+    },
+    {
+        infinitivo: "bleiben", traduccion: "quedarse", conjugacion: "bleibt - blieb - ist geblieben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Aufenthalt (estancia)", preposicion: "bei etwas bleiben",
+        significadoPrepo: "quedarse con", ejemploDE: "Ich bleibe bei meiner Meinung.", ejemploES: "Mantengo mi opinión.",
+        fehlerFrase: "Er bleibte zu Hause.", fehlerCorreccion: "blieb"
+    },
+    {
+        infinitivo: "braten", traduccion: "asar", conjugacion: "brät - briet - hat gebraten",
+        presente2: "du brätst", presente3: "er/sie/es brät",
+        trennbar: "T", sustantivo: "der Braten (asado)", preposicion: "etwas braten",
+        significadoPrepo: "freír algo", ejemploDE: "Meine Mutter brät das Fleisch.", ejemploES: "Mi madre fríe la carne.",
+        fehlerFrase: "Sie bratete das Steak.", fehlerCorreccion: "briet"
+    },
+    {
+        infinitivo: "brechen", traduccion: "romper", conjugacion: "bricht - brach - hat gebrochen",
+        presente2: "du brichst", presente3: "er/sie/es bricht",
+        trennbar: "T", sustantivo: "der Bruch (rotura)", preposicion: "mit jemandem brechen",
+        significadoPrepo: "romper con alguien", ejemploDE: "Sie brach mit ihm.", ejemploES: "Rompió con él.",
+        fehlerFrase: "Das Glas brechte.", fehlerCorreccion: "brach"
+    },
+    {
+        infinitivo: "brennen", traduccion: "arder", conjugacion: "brennt - brannte - hat gebrannt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Brand (incendio)", preposicion: "für etwas brennen",
+        significadoPrepo: "arder por algo", ejemploDE: "Das Haus brennt!", ejemploES: "¡La casa arde!",
+        fehlerFrase: "Gestern brennte das Gebäude.", fehlerCorreccion: "brannte"
+    },
+    {
+        infinitivo: "bringen", traduccion: "traer", conjugacion: "bringt - brachte - hat gebracht",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Bringschuld", preposicion: "jemandem etwas bringen",
+        significadoPrepo: "llevar algo", ejemploDE: "Ich bringe dich zum Bahnhof.", ejemploES: "Te llevo a la estación.",
+        fehlerFrase: "Er bringte mir ein Geschenk.", fehlerCorreccion: "brachte"
+    },
+    {
+        infinitivo: "denken", traduccion: "pensar", conjugacion: "denkt - dachte - hat gedacht",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Gedanke (pensamiento)", preposicion: "an etwas denken",
+        significadoPrepo: "pensar en algo", ejemploDE: "Ich denke oft an dich.", ejemploES: "Pienso en ti a menudo.",
+        fehlerFrase: "Ich denkete an meine Kindheit.", fehlerCorreccion: "dachte"
+    },
+    {
+        infinitivo: "dingen", traduccion: "contratar", conjugacion: "dingt - dang - hat gedungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Bedingung", preposicion: "jemanden dingen",
+        significadoPrepo: "contratar", ejemploDE: "Er dang einen Helfer.", ejemploES: "Contrató un ayudante.",
+        fehlerFrase: "Sie dingte einen Arbeiter.", fehlerCorreccion: "dang"
+    },
+    {
+        infinitivo: "dringen", traduccion: "penetrar", conjugacion: "dringt - drang - ist gedrungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Dringen", preposicion: "in etwas dringen",
+        significadoPrepo: "penetrar en", ejemploDE: "Wasser dringt in den Keller.", ejemploES: "El agua penetra.",
+        fehlerFrase: "Er dringte auf eine Antwort.", fehlerCorreccion: "drang"
+    },
+    {
+        infinitivo: "dürfen", traduccion: "poder (permiso)", conjugacion: "darf - durfte - hat gedurft",
+        presente2: "du darfst", presente3: "er/sie/es darf",
+        trennbar: "T", sustantivo: "die Erlaubnis (permiso)", preposicion: "etwas dürfen",
+        significadoPrepo: "tener permiso", ejemploDE: "Ich darf heute ausgehen.", ejemploES: "Puedo salir hoy.",
+        fehlerFrase: "Er dürfte nicht kommen.", fehlerCorreccion: "durfte"
+    },
+    {
+        infinitivo: "empfangen", traduccion: "recibir", conjugacion: "empfängt - empfing - hat empfangen",
+        presente2: "du empfängst", presente3: "er/sie/es empfängt",
+        trennbar: "UT", sustantivo: "der Empfang (recepción)", preposicion: "von jemandem empfangen",
+        significadoPrepo: "recibir de", ejemploDE: "Sie empfängt ihre Gäste.", ejemploES: "Recibe a sus invitados.",
+        fehlerFrase: "Wir empfangten die Nachricht.", fehlerCorreccion: "empfingen"
+    },
+    {
+        infinitivo: "empfehlen", traduccion: "recomendar", conjugacion: "empfiehlt - empfahl - hat empfohlen",
+        presente2: "du empfiehlst", presente3: "er/sie/es empfiehlt",
+        trennbar: "UT", sustantivo: "die Empfehlung", preposicion: "jemandem etwas empfehlen",
+        significadoPrepo: "recomendar algo", ejemploDE: "Der Arzt empfiehlt mir Sport.", ejemploES: "El médico me recomienda deporte.",
+        fehlerFrase: "Sie empfehlte mir das Restaurant.", fehlerCorreccion: "empfahl"
+    },
+    {
+        infinitivo: "empfinden", traduccion: "sentir", conjugacion: "empfindet - empfand - hat empfunden",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "das Empfinden", preposicion: "als etwas empfinden",
+        significadoPrepo: "percibir como", ejemploDE: "Ich empfinde das als Beleidigung.", ejemploES: "Percibo eso como insulto.",
+        fehlerFrase: "Sie empfindete große Freude.", fehlerCorreccion: "empfand"
+    },
+    {
+        infinitivo: "entscheiden", traduccion: "decidir", conjugacion: "entscheidet - entschied - hat entschieden",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "die Entscheidung", preposicion: "sich für etwas entscheiden",
+        significadoPrepo: "decidirse por", ejemploDE: "Ich entschied mich für das Auto.", ejemploES: "Me decidí por el coche.",
+        fehlerFrase: "Wir entscheideten uns anders.", fehlerCorreccion: "entschieden"
+    },
+    {
+        infinitivo: "erlöschen", traduccion: "extinguirse", conjugacion: "erlischt - erlosch - ist erloschen",
+        presente2: "du erlischst", presente3: "er/sie/es erlischt",
+        trennbar: "UT", sustantivo: "das Erlöschen", preposicion: "erlöschen",
+        significadoPrepo: "extinguirse", ejemploDE: "Das Feuer ist erloschen.", ejemploES: "El fuego se apagó.",
+        fehlerFrase: "Die Kerze erlischte schnell.", fehlerCorreccion: "erlosch"
+    },
+    {
+        infinitivo: "erschrecken", traduccion: "asustarse", conjugacion: "erschrickt - erschrak - ist erschrocken",
+        presente2: "du erschrickst", presente3: "er/sie/es erschrickt",
+        trennbar: "UT", sustantivo: "der Schrecken (susto)", preposicion: "vor etwas erschrecken",
+        significadoPrepo: "asustarse de", ejemploDE: "Ich erschrak vor dem Geräusch.", ejemploES: "Me asusté del ruido.",
+        fehlerFrase: "Sie erschreckte vor der Spinne.", fehlerCorreccion: "erschrak"
+    },
+    {
+        infinitivo: "essen", traduccion: "comer", conjugacion: "isst - aß - hat gegessen",
+        presente2: "du isst", presente3: "er/sie/es isst",
+        trennbar: "T", sustantivo: "das Essen (comida)", preposicion: "etwas essen",
+        significadoPrepo: "comer algo", ejemploDE: "Was isst du gern?", ejemploES: "¿Qué te gusta comer?",
+        fehlerFrase: "Gestern esste ich Pizza.", fehlerCorreccion: "aß"
+    },
+    {
+        infinitivo: "fahren", traduccion: "conducir", conjugacion: "fährt - fuhr - ist gefahren",
+        presente2: "du fährst", presente3: "er/sie/es fährt",
+        trennbar: "T", sustantivo: "die Fahrt (viaje)", preposicion: "nach/zu etwas fahren",
+        significadoPrepo: "ir a", ejemploDE: "Ich fahre morgen nach Berlin.", ejemploES: "Mañana voy a Berlín.",
+        fehlerFrase: "Wir fahrete mit dem Auto.", fehlerCorreccion: "fuhren"
+    },
+    {
+        infinitivo: "fallen", traduccion: "caer", conjugacion: "fällt - fiel - ist gefallen",
+        presente2: "du fällst", presente3: "er/sie/es fällt",
+        trennbar: "T", sustantivo: "der Fall (caída)", preposicion: "auf etwas fallen",
+        significadoPrepo: "caer sobre", ejemploDE: "Die Blätter fallen vom Baum.", ejemploES: "Las hojas caen del árbol.",
+        fehlerFrase: "Er fallte auf den Boden.", fehlerCorreccion: "fiel"
+    },
+    {
+        infinitivo: "fangen", traduccion: "atrapar", conjugacion: "fängt - fing - hat gefangen",
+        presente2: "du fängst", presente3: "er/sie/es fängt",
+        trennbar: "T", sustantivo: "der Fang (captura)", preposicion: "etwas fangen",
+        significadoPrepo: "atrapar algo", ejemploDE: "Der Torwart fängt den Ball.", ejemploES: "El portero atrapa el balón.",
+        fehlerFrase: "Sie fangten den Dieb.", fehlerCorreccion: "fingen"
+    },
+    {
+        infinitivo: "fechten", traduccion: "practicar esgrima", conjugacion: "ficht - focht - hat gefochten",
+        presente2: "du fichtst", presente3: "er/sie/es ficht",
+        trennbar: "T", sustantivo: "das Fechten (esgrima)", preposicion: "um etwas fechten",
+        significadoPrepo: "luchar por", ejemploDE: "Er ficht um die Medaille.", ejemploES: "Lucha por la medalla.",
+        fehlerFrase: "Sie fechtete im Wettkampf.", fehlerCorreccion: "focht"
+    },
+    {
+        infinitivo: "finden", traduccion: "encontrar", conjugacion: "findet - fand - hat gefunden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Fund (hallazgo)", preposicion: "etwas finden",
+        significadoPrepo: "encontrar algo", ejemploDE: "Hast du deinen Schlüssel gefunden?", ejemploES: "¿Has encontrado tu llave?",
+        fehlerFrase: "Ich findete das Buch.", fehlerCorreccion: "fand"
+    },
+    {
+        infinitivo: "flechten", traduccion: "trenzar", conjugacion: "flicht - flocht - hat geflochten",
+        presente2: "du flichtst", presente3: "er/sie/es flicht",
+        trennbar: "T", sustantivo: "die Flechte (trenza)", preposicion: "zu etwas flechten",
+        significadoPrepo: "trenzar en", ejemploDE: "Sie flicht ihre Haare.", ejemploES: "Se trenza el pelo.",
+        fehlerFrase: "Meine Schwester flechtete mir.", fehlerCorreccion: "flocht"
+    },
+    {
+        infinitivo: "fliegen", traduccion: "volar", conjugacion: "fliegt - flog - ist geflogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Flug (vuelo)", preposicion: "nach etwas fliegen",
+        significadoPrepo: "volar a", ejemploDE: "Das Flugzeug fliegt nach Paris.", ejemploES: "El avión vuela a París.",
+        fehlerFrase: "Wir fliegten nach Spanien.", fehlerCorreccion: "flogen"
+    },
+    {
+        infinitivo: "fliehen", traduccion: "huir", conjugacion: "flieht - floh - ist geflohen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Flucht (huida)", preposicion: "vor etwas fliehen",
+        significadoPrepo: "huir de", ejemploDE: "Die Gefangenen flohen.", ejemploES: "Los prisioneros huyeron.",
+        fehlerFrase: "Er fliehte vor der Polizei.", fehlerCorreccion: "floh"
+    },
+    {
+        infinitivo: "fließen", traduccion: "fluir", conjugacion: "fließt - floss - ist geflossen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Fluss (río)", preposicion: "durch etwas fließen",
+        significadoPrepo: "fluir por", ejemploDE: "Der Rhein fließt durch Deutschland.", ejemploES: "El Rin fluye por Alemania.",
+        fehlerFrase: "Das Wasser fliesste schnell.", fehlerCorreccion: "floss"
+    },
+    {
+        infinitivo: "fressen", traduccion: "comer (animales)", conjugacion: "frisst - fraß - hat gefressen",
+        presente2: "du frisst", presente3: "er/sie/es frisst",
+        trennbar: "T", sustantivo: "das Fressen", preposicion: "etwas fressen",
+        significadoPrepo: "comer (animales)", ejemploDE: "Die Katze frisst Fisch.", ejemploES: "El gato come pescado.",
+        fehlerFrase: "Der Hund fresste das Fleisch.", fehlerCorreccion: "fraß"
+    },
+    {
+        infinitivo: "frieren", traduccion: "tener frío", conjugacion: "friert - fror - hat gefroren",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Kälte (frío)", preposicion: "frieren",
+        significadoPrepo: "tener frío", ejemploDE: "Mir ist kalt, ich friere.", ejemploES: "Tengo frío.",
+        fehlerFrase: "Gestern frorte es.", fehlerCorreccion: "fror"
+    },
+    {
+        infinitivo: "gären", traduccion: "fermentar", conjugacion: "gärt - gor - hat gegoren",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Gärung", preposicion: "gären",
+        significadoPrepo: "fermentar", ejemploDE: "Der Wein gärt im Fass.", ejemploES: "El vino fermenta.",
+        fehlerFrase: "Der Most gärte im Keller.", fehlerCorreccion: "gor"
+    },
+    {
+        infinitivo: "gebären", traduccion: "dar a luz", conjugacion: "gebärt - gebar - hat geboren",
+        presente2: "du gebärst", presente3: "er/sie/es gebärt",
+        trennbar: "T", sustantivo: "die Geburt (nacimiento)", preposicion: "ein Kind gebären",
+        significadoPrepo: "dar a luz", ejemploDE: "Sie gebar ein gesundes Kind.", ejemploES: "Dio a luz un niño sano.",
+        fehlerFrase: "Sie gebirete ihr Kind.", fehlerCorreccion: "gebar"
+    },
+    {
+        infinitivo: "geben", traduccion: "dar", conjugacion: "gibt - gab - hat gegeben",
+        presente2: "du gibst", presente3: "er/sie/es gibt",
+        trennbar: "T", sustantivo: "die Gabe (don)", preposicion: "jemandem etwas geben",
+        significadoPrepo: "dar algo", ejemploDE: "Ich gebe dir das Buch.", ejemploES: "Te doy el libro.",
+        fehlerFrase: "Er gabte mir das Geld.", fehlerCorreccion: "gab"
+    },
+    {
+        infinitivo: "gedeihen", traduccion: "prosperar", conjugacion: "gedeiht - gedieh - ist gediehen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Gedeihen", preposicion: "gedeihen",
+        significadoPrepo: "prosperar", ejemploDE: "Die Pflanzen gedeihen gut.", ejemploES: "Las plantas prosperan.",
+        fehlerFrase: "Die Wirtschaft gediehte.", fehlerCorreccion: "gedieh"
+    },
+    {
+        infinitivo: "gehen", traduccion: "ir", conjugacion: "geht - ging - ist gegangen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Gang (marcha)", preposicion: "zu/nach etwas gehen",
+        significadoPrepo: "ir a", ejemploDE: "Ich gehe zum Arzt.", ejemploES: "Voy al médico.",
+        fehlerFrase: "Wir gehten ins Kino.", fehlerCorreccion: "gingen"
+    },
+    {
+        infinitivo: "gelingen", traduccion: "lograr", conjugacion: "gelingt - gelang - ist gelungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Gelingen (éxito)", preposicion: "jemandem gelingt etwas",
+        significadoPrepo: "lograr algo", ejemploDE: "Mir gelang das Experiment.", ejemploES: "Logré el experimento.",
+        fehlerFrase: "Ihm gelangte der Kuchen.", fehlerCorreccion: "gelang"
+    },
+    {
+        infinitivo: "gelten", traduccion: "valer", conjugacion: "gilt - galt - hat gegolten",
+        presente2: "du giltst", presente3: "er/sie/es gilt",
+        trennbar: "T", sustantivo: "die Geltung (validez)", preposicion: "als etwas gelten",
+        significadoPrepo: "valer como", ejemploDE: "Er gilt als Experte.", ejemploES: "Vale como experto.",
+        fehlerFrase: "Das Ticket galtete nur einen Tag.", fehlerCorreccion: "galt"
+    },
+    {
+        infinitivo: "genesen", traduccion: "recuperarse", conjugacion: "genest - genas - ist genesen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Genesung", preposicion: "von etwas genesen",
+        significadoPrepo: "recuperarse de", ejemploDE: "Er genas von der Krankheit.", ejemploES: "Se recuperó de la enfermedad.",
+        fehlerFrase: "Sie genesete schnell.", fehlerCorreccion: "genas"
+    },
+    {
+        infinitivo: "genießen", traduccion: "disfrutar", conjugacion: "genießt - genoss - hat genossen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Genuss (disfrute)", preposicion: "etwas genießen",
+        significadoPrepo: "disfrutar algo", ejemploDE: "Wir genießen das Wetter.", ejemploES: "Disfrutamos del tiempo.",
+        fehlerFrase: "Sie geniesste ihren Urlaub.", fehlerCorreccion: "genoss"
+    },
+    {
+        infinitivo: "geraten", traduccion: "acabar en", conjugacion: "gerät - geriet - ist geraten",
+        presente2: "du gerätst", presente3: "er/sie/es gerät",
+        trennbar: "T", sustantivo: "das Gerät (aparato)", preposicion: "in etwas geraten",
+        significadoPrepo: "acabar en", ejemploDE: "Er geriet in Schwierigkeiten.", ejemploES: "Se metió en problemas.",
+        fehlerFrase: "Wir geräteten in einen Stau.", fehlerCorreccion: "gerieten"
+    },
+    {
+        infinitivo: "geschehen", traduccion: "suceder", conjugacion: "geschieht - geschah - ist geschehen",
+        presente2: null, presente3: "es geschieht",
+        trennbar: "T", sustantivo: "das Geschehen (suceso)", preposicion: "mit jemandem geschehen",
+        significadoPrepo: "pasarle a", ejemploDE: "Was geschah mit dir?", ejemploES: "¿Qué te pasó?",
+        fehlerFrase: "Es geschehte ein Unfall.", fehlerCorreccion: "geschah"
+    },
+    {
+        infinitivo: "gewinnen", traduccion: "ganar", conjugacion: "gewinnt - gewann - hat gewonnen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Gewinn (ganancia)", preposicion: "etwas gewinnen",
+        significadoPrepo: "ganar algo", ejemploDE: "Wir gewannen das Spiel.", ejemploES: "Ganamos el partido.",
+        fehlerFrase: "Sie gewinnten die Meisterschaft.", fehlerCorreccion: "gewannen"
+    },
+    {
+        infinitivo: "gießen", traduccion: "regar", conjugacion: "gießt - goss - hat gegossen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Gießkanne", preposicion: "etwas gießen",
+        significadoPrepo: "regar algo", ejemploDE: "Sie gießt die Blumen.", ejemploES: "Riega las flores.",
+        fehlerFrase: "Er giesste Wasser ins Glas.", fehlerCorreccion: "goss"
+    },
+    {
+        infinitivo: "gleichen", traduccion: "parecerse", conjugacion: "gleicht - glich - hat geglichen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Gleichheit", preposicion: "jemandem gleichen",
+        significadoPrepo: "parecerse a", ejemploDE: "Er gleicht seinem Vater.", ejemploES: "Se parece a su padre.",
+        fehlerFrase: "Sie gleichte ihrer Mutter.", fehlerCorreccion: "glich"
+    },
+    {
+        infinitivo: "gleiten", traduccion: "deslizarse", conjugacion: "gleitet - glitt - ist geglitten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Gleiten", preposicion: "über etwas gleiten",
+        significadoPrepo: "deslizarse sobre", ejemploDE: "Das Boot gleitet über das Wasser.", ejemploES: "El barco se desliza.",
+        fehlerFrase: "Sie gleitete auf dem Eis.", fehlerCorreccion: "glitt"
+    },
+    {
+        infinitivo: "glimmen", traduccion: "arder sin llama", conjugacion: "glimmt - glomm - hat geglommen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Glimmen", preposicion: "glimmen",
+        significadoPrepo: "arder", ejemploDE: "Die Zigarette glimmt noch.", ejemploES: "El cigarrillo aún arde.",
+        fehlerFrase: "Die Kohle glimmte.", fehlerCorreccion: "glomm"
+    },
+    {
+        infinitivo: "graben", traduccion: "cavar", conjugacion: "gräbt - grub - hat gegraben",
+        presente2: "du gräbst", presente3: "er/sie/es gräbt",
+        trennbar: "T", sustantivo: "der Graben (zanja)", preposicion: "in etwas graben",
+        significadoPrepo: "cavar en", ejemploDE: "Sie graben ein Loch.", ejemploES: "Cavan un hoyo.",
+        fehlerFrase: "Er grabte nach Schätzen.", fehlerCorreccion: "grub"
+    },
+    {
+        infinitivo: "greifen", traduccion: "agarrar", conjugacion: "greift - griff - hat gegriffen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Griff (agarre)", preposicion: "nach etwas greifen",
+        significadoPrepo: "agarrar algo", ejemploDE: "Er greift nach meiner Hand.", ejemploES: "Agarra mi mano.",
+        fehlerFrase: "Sie greiften zur Waffe.", fehlerCorreccion: "griffen"
+    },
+    {
+        infinitivo: "haben", traduccion: "tener", conjugacion: "hat - hatte - hat gehabt",
+        presente2: "du hast", presente3: "er/sie/es hat",
+        trennbar: "T", sustantivo: "der Besitz (posesión)", preposicion: "etwas haben",
+        significadoPrepo: "tener algo", ejemploDE: "Ich habe ein Auto.", ejemploES: "Tengo un coche.",
+        fehlerFrase: "Er hatte viel Arbeit.", fehlerCorreccion: "hatte"
+    },
+    {
+        infinitivo: "halten", traduccion: "sostener", conjugacion: "hält - hielt - hat gehalten",
+        presente2: "du hältst", presente3: "er/sie/es hält",
+        trennbar: "T", sustantivo: "der Halt (parada)", preposicion: "für etwas halten",
+        significadoPrepo: "considerar como", ejemploDE: "Ich halte ihn für ehrlich.", ejemploES: "Lo considero honesto.",
+        fehlerFrase: "Sie haltete das Buch.", fehlerCorreccion: "hielt"
+    },
+    {
+        infinitivo: "hängen", traduccion: "colgar", conjugacion: "hängt - hing - hat gehangen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Hänger (percha)", preposicion: "an etwas hängen",
+        significadoPrepo: "estar colgado", ejemploDE: "Das Bild hängt an der Wand.", ejemploES: "El cuadro está colgado.",
+        fehlerFrase: "Der Mantel hangte am Haken.", fehlerCorreccion: "hing"
+    },
+    {
+        infinitivo: "hauen", traduccion: "golpear", conjugacion: "haut - hieb - hat gehauen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Hieb (golpe)", preposicion: "auf etwas hauen",
+        significadoPrepo: "golpear algo", ejemploDE: "Er hieb auf den Tisch.", ejemploES: "Golpeó la mesa.",
+        fehlerFrase: "Sie hauete ihm ins Gesicht.", fehlerCorreccion: "hieb"
+    },
+    {
+        infinitivo: "heben", traduccion: "levantar", conjugacion: "hebt - hob - hat gehoben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Hebung", preposicion: "etwas heben",
+        significadoPrepo: "levantar algo", ejemploDE: "Er hebt den Koffer.", ejemploES: "Levanta la maleta.",
+        fehlerFrase: "Sie hebte die Hand.", fehlerCorreccion: "hob"
+    },
+    {
+        infinitivo: "heißen", traduccion: "llamarse", conjugacion: "heißt - hieß - hat geheißen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Name (nombre)", preposicion: "heißen",
+        significadoPrepo: "llamarse", ejemploDE: "Ich heiße Maria.", ejemploES: "Me llamo María.",
+        fehlerFrase: "Er heisste Hans.", fehlerCorreccion: "hieß"
+    },
+    {
+        infinitivo: "helfen", traduccion: "ayudar", conjugacion: "hilft - half - hat geholfen",
+        presente2: "du hilfst", presente3: "er/sie/es hilft",
+        trennbar: "T", sustantivo: "die Hilfe (ayuda)", preposicion: "jemandem helfen",
+        significadoPrepo: "ayudar a alguien", ejemploDE: "Ich helfe dir.", ejemploES: "Te ayudo.",
+        fehlerFrase: "Sie halften mir.", fehlerCorreccion: "halfen"
+    },
+    {
+        infinitivo: "kennen", traduccion: "conocer", conjugacion: "kennt - kannte - hat gekannt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Kenntnis", preposicion: "jemanden kennen",
+        significadoPrepo: "conocer a alguien", ejemploDE: "Ich kenne diesen Mann nicht.", ejemploES: "No conozco a este hombre.",
+        fehlerFrase: "Wir kennten ihn gut.", fehlerCorreccion: "kannten"
+    },
+    {
+        infinitivo: "klimmen", traduccion: "trepar", conjugacion: "klimmt - klomm - ist geklommen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Klettern", preposicion: "auf etwas klimmen",
+        significadoPrepo: "trepar a", ejemploDE: "Sie klommen auf den Berg.", ejemploES: "Escalaron la montaña.",
+        fehlerFrase: "Er klimmte auf den Baum.", fehlerCorreccion: "klomm"
+    },
+    {
+        infinitivo: "klingen", traduccion: "sonar", conjugacion: "klingt - klang - hat geklungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Klang (sonido)", preposicion: "nach etwas klingen",
+        significadoPrepo: "sonar a", ejemploDE: "Das klingt gut.", ejemploES: "Eso suena bien.",
+        fehlerFrase: "Die Glocke klingte laut.", fehlerCorreccion: "klang"
+    },
+    {
+        infinitivo: "kneifen", traduccion: "pellizcar", conjugacion: "kneift - kniff - hat gekniffen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Kniff (pellizco)", preposicion: "in etwas kneifen",
+        significadoPrepo: "pellizcar en", ejemploDE: "Er kneift mich in den Arm.", ejemploES: "Me pellizca el brazo.",
+        fehlerFrase: "Sie kneiften mich.", fehlerCorreccion: "kniffen"
+    },
+    {
+        infinitivo: "kommen", traduccion: "venir", conjugacion: "kommt - kam - ist gekommen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Ankunft (llegada)", preposicion: "aus/von etwas kommen",
+        significadoPrepo: "venir de", ejemploDE: "Ich komme aus Spanien.", ejemploES: "Vengo de España.",
+        fehlerFrase: "Wir kommten gestern an.", fehlerCorreccion: "kamen"
+    },
+    {
+        infinitivo: "können", traduccion: "poder", conjugacion: "kann - konnte - hat gekonnt",
+        presente2: "du kannst", presente3: "er/sie/es kann",
+        trennbar: "T", sustantivo: "die Fähigkeit", preposicion: "etwas können",
+        significadoPrepo: "poder hacer", ejemploDE: "Ich kann Deutsch sprechen.", ejemploES: "Puedo hablar alemán.",
+        fehlerFrase: "Er kannnte gut schwimmen.", fehlerCorreccion: "konnte"
+    },
+    {
+        infinitivo: "kriechen", traduccion: "arrastrarse", conjugacion: "kriecht - kroch - ist gekrochen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Kriechen", preposicion: "in etwas kriechen",
+        significadoPrepo: "arrastrarse", ejemploDE: "Die Schlange kriecht.", ejemploES: "La serpiente se arrastra.",
+        fehlerFrase: "Das Baby kriechte.", fehlerCorreccion: "kroch"
+    },
+    {
+        infinitivo: "laden", traduccion: "cargar", conjugacion: "lädt - lud - hat geladen",
+        presente2: "du lädst", presente3: "er/sie/es lädt",
+        trennbar: "T", sustantivo: "die Einladung", preposicion: "zu etwas laden",
+        significadoPrepo: "invitar a", ejemploDE: "Ich lade dich zu meiner Party ein.", ejemploES: "Te invito a mi fiesta.",
+        fehlerFrase: "Er ladete mich ein.", fehlerCorreccion: "lud"
+    },
+    {
+        infinitivo: "lassen", traduccion: "dejar", conjugacion: "lässt - ließ - hat gelassen",
+        presente2: "du lässt", presente3: "er/sie/es lässt",
+        trennbar: "T", sustantivo: "die Erlaubnis", preposicion: "jemanden etwas lassen",
+        significadoPrepo: "dejar hacer", ejemploDE: "Ich lasse mein Auto reparieren.", ejemploES: "Mando reparar mi coche.",
+        fehlerFrase: "Er liesste mich gehen.", fehlerCorreccion: "ließ"
+    },
+    {
+        infinitivo: "laufen", traduccion: "correr", conjugacion: "läuft - lief - ist gelaufen",
+        presente2: "du läufst", presente3: "er/sie/es läuft",
+        trennbar: "T", sustantivo: "der Lauf (carrera)", preposicion: "zu etwas laufen",
+        significadoPrepo: "correr hacia", ejemploDE: "Ich laufe zum Bahnhof.", ejemploES: "Corro hacia la estación.",
+        fehlerFrase: "Wir lieften schnell.", fehlerCorreccion: "liefen"
+    },
+    {
+        infinitivo: "leiden", traduccion: "sufrir", conjugacion: "leidet - litt - hat gelitten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Leiden", preposicion: "an etwas leiden",
+        significadoPrepo: "sufrir de", ejemploDE: "Er leidet an Kopfschmerzen.", ejemploES: "Sufre de dolores de cabeza.",
+        fehlerFrase: "Sie lidete unter der Hitze.", fehlerCorreccion: "litt"
+    },
+    {
+        infinitivo: "leihen", traduccion: "prestar", conjugacion: "leiht - lieh - hat geliehen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Leihe (préstamo)", preposicion: "von jemandem leihen",
+        significadoPrepo: "pedir prestado", ejemploDE: "Ich leihe mir das Buch.", ejemploES: "Pido prestado el libro.",
+        fehlerFrase: "Er liehte mir Geld.", fehlerCorreccion: "lieh"
+    },
+    {
+        infinitivo: "lesen", traduccion: "leer", conjugacion: "liest - las - hat gelesen",
+        presente2: "du liest", presente3: "er/sie/es liest",
+        trennbar: "T", sustantivo: "die Lesung (lectura)", preposicion: "in etwas lesen",
+        significadoPrepo: "leer en", ejemploDE: "Ich lese in einem Roman.", ejemploES: "Leo una novela.",
+        fehlerFrase: "Sie lesete das Buch.", fehlerCorreccion: "las"
+    },
+    {
+        infinitivo: "liegen", traduccion: "estar tumbado", conjugacion: "liegt - lag - hat gelegen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Lage (situación)", preposicion: "an etwas liegen",
+        significadoPrepo: "depender de", ejemploDE: "Es liegt an dir.", ejemploES: "Depende de ti.",
+        fehlerFrase: "Das Buch legete auf dem Tisch.", fehlerCorreccion: "lag"
+    },
+    {
+        infinitivo: "lügen", traduccion: "mentir", conjugacion: "lügt - log - hat gelogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Lüge (mentira)", preposicion: "über etwas lügen",
+        significadoPrepo: "mentir sobre", ejemploDE: "Er lügt über sein Alter.", ejemploES: "Miente sobre su edad.",
+        fehlerFrase: "Sie lügte mich an.", fehlerCorreccion: "log"
+    },
+    {
+        infinitivo: "mahlen", traduccion: "moler", conjugacion: "mahlt - mahlte - hat gemahlen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Mühle (molino)", preposicion: "etwas mahlen",
+        significadoPrepo: "moler algo", ejemploDE: "Sie mahlt den Kaffee.", ejemploES: "Muele el café.",
+        fehlerFrase: "Er mahlte das Getreide.", fehlerCorreccion: "mahlte"
+    },
+    {
+        infinitivo: "meiden", traduccion: "evitar", conjugacion: "meidet - mied - hat gemieden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Meidung", preposicion: "etwas meiden",
+        significadoPrepo: "evitar algo", ejemploDE: "Er meidet Konflikte.", ejemploES: "Evita los conflictos.",
+        fehlerFrase: "Sie meideten den Weg.", fehlerCorreccion: "mieden"
+    },
+    {
+        infinitivo: "melken", traduccion: "ordeñar", conjugacion: "melkt - molk - hat gemolken",
+        presente2: "du melkst", presente3: "er/sie/es melkt",
+        trennbar: "T", sustantivo: "die Milch (leche)", preposicion: "etwas melken",
+        significadoPrepo: "ordeñar algo", ejemploDE: "Der Bauer melkt die Kühe.", ejemploES: "El granjero ordeña las vacas.",
+        fehlerFrase: "Sie melkten die Ziege.", fehlerCorreccion: "molken"
+    },
+    {
+        infinitivo: "messen", traduccion: "medir", conjugacion: "misst - maß - hat gemessen",
+        presente2: "du misst", presente3: "er/sie/es misst",
+        trennbar: "T", sustantivo: "die Messung", preposicion: "etwas messen",
+        significadoPrepo: "medir algo", ejemploDE: "Ich messe die Temperatur.", ejemploES: "Mido la temperatura.",
+        fehlerFrase: "Er messte die Länge.", fehlerCorreccion: "maß"
+    },
+    {
+        infinitivo: "misslingen", traduccion: "fracasar", conjugacion: "misslingt - misslang - ist misslungen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "das Misslingen", preposicion: "jemandem misslingt etwas",
+        significadoPrepo: "fracasar", ejemploDE: "Das Experiment misslang mir.", ejemploES: "El experimento me salió mal.",
+        fehlerFrase: "Der Kuchen misslingete.", fehlerCorreccion: "misslang"
+    },
+    {
+        infinitivo: "mögen", traduccion: "gustar", conjugacion: "mag - mochte - hat gemocht",
+        presente2: "du magst", presente3: "er/sie/es mag",
+        trennbar: "T", sustantivo: "die Zuneigung", preposicion: "etwas mögen",
+        significadoPrepo: "gustar algo", ejemploDE: "Ich mag Schokolade.", ejemploES: "Me gusta el chocolate.",
+        fehlerFrase: "Er mögete Musik.", fehlerCorreccion: "mochte"
+    },
+    {
+        infinitivo: "müssen", traduccion: "deber", conjugacion: "muss - musste - hat gemusst",
+        presente2: "du musst", presente3: "er/sie/es muss",
+        trennbar: "T", sustantivo: "die Pflicht (deber)", preposicion: "etwas müssen",
+        significadoPrepo: "deber hacer", ejemploDE: "Ich muss arbeiten.", ejemploES: "Debo trabajar.",
+        fehlerFrase: "Sie mussten früh aufstehen.", fehlerCorreccion: "mussten"
+    },
+    {
+        infinitivo: "nehmen", traduccion: "tomar", conjugacion: "nimmt - nahm - hat genommen",
+        presente2: "du nimmst", presente3: "er/sie/es nimmt",
+        trennbar: "T", sustantivo: "die Nahme (toma)", preposicion: "von etwas nehmen",
+        significadoPrepo: "tomar de", ejemploDE: "Nimm dir ein Stück Kuchen!", ejemploES: "¡Coge un trozo de tarta!",
+        fehlerFrase: "Er nahmte das Buch.", fehlerCorreccion: "nahm"
+    },
+    {
+        infinitivo: "nennen", traduccion: "nombrar", conjugacion: "nennt - nannte - hat genannt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Nennung", preposicion: "nach jemandem nennen",
+        significadoPrepo: "nombrar en honor de", ejemploDE: "Sie nennen das Kind nach dem Opa.", ejemploES: "Nombran al niño por el abuelo.",
+        fehlerFrase: "Er nennete alle Namen.", fehlerCorreccion: "nannte"
+    },
+    {
+        infinitivo: "pfeifen", traduccion: "silbar", conjugacion: "pfeift - pfiff - hat gepfiffen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Pfeife (silbato)", preposicion: "pfeifen",
+        significadoPrepo: "silbar", ejemploDE: "Der Schiedsrichter pfeift.", ejemploES: "El árbitro silba.",
+        fehlerFrase: "Er pfeifete ein Lied.", fehlerCorreccion: "pfiff"
+    },
+    {
+        infinitivo: "preisen", traduccion: "elogiar", conjugacion: "preist - pries - hat gepriesen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Preis (elogio)", preposicion: "etwas preisen",
+        significadoPrepo: "elogiar algo", ejemploDE: "Sie priesen seine Arbeit.", ejemploES: "Elogiaron su trabajo.",
+        fehlerFrase: "Man preisete seine Leistungen.", fehlerCorreccion: "pries"
+    },
+    {
+        infinitivo: "quellen", traduccion: "manar", conjugacion: "quillt - quoll - ist gequollen",
+        presente2: "du quillst", presente3: "er/sie/es quillt",
+        trennbar: "T", sustantivo: "die Quelle (fuente)", preposicion: "aus etwas quellen",
+        significadoPrepo: "brotar de", ejemploDE: "Wasser quillt aus der Quelle.", ejemploES: "El agua brota.",
+        fehlerFrase: "Tränen quellten aus ihren Augen.", fehlerCorreccion: "quollen"
+    },
+    {
+        infinitivo: "raten", traduccion: "aconsejar", conjugacion: "rät - riet - hat geraten",
+        presente2: "du rätst", presente3: "er/sie/es rät",
+        trennbar: "T", sustantivo: "der Rat (consejo)", preposicion: "zu etwas raten",
+        significadoPrepo: "aconsejar algo", ejemploDE: "Ich rate dir zu diesem Hotel.", ejemploES: "Te aconsejo este hotel.",
+        fehlerFrase: "Sie ratete mir davon ab.", fehlerCorreccion: "riet"
+    },
+    {
+        infinitivo: "reiben", traduccion: "frotar", conjugacion: "reibt - rieb - hat gerieben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Reibung", preposicion: "an etwas reiben",
+        significadoPrepo: "frotar contra", ejemploDE: "Sie reibt den Käse.", ejemploES: "Ralla el queso.",
+        fehlerFrase: "Er riebte sich die Hände.", fehlerCorreccion: "rieb"
+    },
+    {
+        infinitivo: "reißen", traduccion: "rasgar", conjugacion: "reißt - riss - hat gerissen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Riss (desgarro)", preposicion: "an etwas reißen",
+        significadoPrepo: "tirar de", ejemploDE: "Er reißt das Papier.", ejemploES: "Rasga el papel.",
+        fehlerFrase: "Das Seil reisste.", fehlerCorreccion: "riss"
+    },
+    {
+        infinitivo: "reiten", traduccion: "montar a caballo", conjugacion: "reitet - ritt - ist geritten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Ritt (cabalgata)", preposicion: "auf etwas reiten",
+        significadoPrepo: "montar en", ejemploDE: "Sie reitet auf ihrem Pferd.", ejemploES: "Cabalga en su caballo.",
+        fehlerFrase: "Wir reiteten durch den Wald.", fehlerCorreccion: "ritten"
+    },
+    {
+        infinitivo: "rennen", traduccion: "correr", conjugacion: "rennt - rannte - ist gerannt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Rennen (carrera)", preposicion: "zu etwas rennen",
+        significadoPrepo: "correr hacia", ejemploDE: "Er rennt zum Bus.", ejemploES: "Corre hacia el autobús.",
+        fehlerFrase: "Sie rennten schnell weg.", fehlerCorreccion: "rannten"
+    },
+    {
+        infinitivo: "riechen", traduccion: "oler", conjugacion: "riecht - roch - hat gerochen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Geruch (olor)", preposicion: "nach etwas riechen",
+        significadoPrepo: "oler a", ejemploDE: "Es riecht nach Kaffee.", ejemploES: "Huele a café.",
+        fehlerFrase: "Die Blumen riecheten gut.", fehlerCorreccion: "rochen"
+    },
+    {
+        infinitivo: "ringen", traduccion: "luchar", conjugacion: "ringt - rang - hat gerungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Ringen", preposicion: "um etwas ringen",
+        significadoPrepo: "luchar por", ejemploDE: "Er ringt um den Sieg.", ejemploES: "Lucha por la victoria.",
+        fehlerFrase: "Sie ringten mit dem Problem.", fehlerCorreccion: "rangen"
+    },
+    {
+        infinitivo: "rinnen", traduccion: "gotear", conjugacion: "rinnt - rann - ist geronnen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Rinnen (flujo)", preposicion: "aus etwas rinnen",
+        significadoPrepo: "fluir de", ejemploDE: "Wasser rinnt durch die Finger.", ejemploES: "El agua corre entre los dedos.",
+        fehlerFrase: "Blut rinnete aus der Wunde.", fehlerCorreccion: "rann"
+    },
+    {
+        infinitivo: "rufen", traduccion: "llamar", conjugacion: "ruft - rief - hat gerufen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Ruf (llamada)", preposicion: "nach jemandem rufen",
+        significadoPrepo: "llamar a", ejemploDE: "Sie ruft nach ihrem Hund.", ejemploES: "Llama a su perro.",
+        fehlerFrase: "Er rufete laut um Hilfe.", fehlerCorreccion: "rief"
+    },
+    {
+        infinitivo: "salzen", traduccion: "salar", conjugacion: "salzt - salzte - hat gesalzen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Salz (sal)", preposicion: "etwas salzen",
+        significadoPrepo: "salar algo", ejemploDE: "Sie salzt das Essen.", ejemploES: "Sala la comida.",
+        fehlerFrase: "Er salzte die Suppe.", fehlerCorreccion: "salzte"
+    },
+    {
+        infinitivo: "saufen", traduccion: "beber (animales)", conjugacion: "säuft - soff - hat gesoffen",
+        presente2: "du säufst", presente3: "er/sie/es säuft",
+        trennbar: "T", sustantivo: "der Säufer (borracho)", preposicion: "etwas saufen",
+        significadoPrepo: "beber", ejemploDE: "Das Pferd säuft Wasser.", ejemploES: "El caballo bebe agua.",
+        fehlerFrase: "Er soff zu viel Bier.", fehlerCorreccion: "soff"
+    },
+    {
+        infinitivo: "saugen", traduccion: "chupar", conjugacion: "saugt - sog - hat gesogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Sauger (chupete)", preposicion: "an etwas saugen",
+        significadoPrepo: "chupar de", ejemploDE: "Das Baby saugt am Daumen.", ejemploES: "El bebé chupa el pulgar.",
+        fehlerFrase: "Sie saugte den Boden.", fehlerCorreccion: "sog"
+    },
+    {
+        infinitivo: "schaffen", traduccion: "crear", conjugacion: "schafft - schuf - hat geschaffen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Schöpfung", preposicion: "etwas schaffen",
+        significadoPrepo: "crear algo", ejemploDE: "Gott schuf die Welt.", ejemploES: "Dios creó el mundo.",
+        fehlerFrase: "Der Künstler schaffte ein Werk.", fehlerCorreccion: "schuf"
+    },
+    {
+        infinitivo: "scheiden", traduccion: "separar", conjugacion: "scheidet - schied - hat geschieden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Scheidung", preposicion: "sich von jemandem scheiden",
+        significadoPrepo: "divorciarse de", ejemploDE: "Sie ließ sich von ihm scheiden.", ejemploES: "Se divorció de él.",
+        fehlerFrase: "Er schiedete sich von ihr.", fehlerCorreccion: "schied"
+    },
+    {
+        infinitivo: "scheinen", traduccion: "brillar", conjugacion: "scheint - schien - hat geschienen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schein (brillo)", preposicion: "scheinen",
+        significadoPrepo: "brillar/parecer", ejemploDE: "Die Sonne scheint.", ejemploES: "El sol brilla.",
+        fehlerFrase: "Es scheinete die ganze Zeit.", fehlerCorreccion: "schien"
+    },
+    {
+        infinitivo: "scheißen", traduccion: "cagar", conjugacion: "scheißt - schiss - hat geschissen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Scheiße (vulgar)", preposicion: "auf etwas scheißen",
+        significadoPrepo: "cagar en", ejemploDE: "Der Hund scheißt.", ejemploES: "El perro caga.",
+        fehlerFrase: "Der Hund scheißte auf die Straße.", fehlerCorreccion: "schiss"
+    },
+    {
+        infinitivo: "schelten", traduccion: "regañar", conjugacion: "schilt - schalt - hat gescholten",
+        presente2: "du schiltst", presente3: "er/sie/es schilt",
+        trennbar: "T", sustantivo: "die Schelte", preposicion: "jemanden schelten",
+        significadoPrepo: "regañar a", ejemploDE: "Die Mutter schilt das Kind.", ejemploES: "La madre regaña al niño.",
+        fehlerFrase: "Er scheltete mich.", fehlerCorreccion: "schalt"
+    },
+    {
+        infinitivo: "scheren", traduccion: "esquilar", conjugacion: "schert - schor - hat geschoren",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Schere (tijera)", preposicion: "sich um etwas scheren",
+        significadoPrepo: "preocuparse por", ejemploDE: "Der Bauer schert das Schaf.", ejemploES: "El granjero esquila la oveja.",
+        fehlerFrase: "Er schor sich den Bart ab.", fehlerCorreccion: "schor"
+    },
+    {
+        infinitivo: "schieben", traduccion: "empujar", conjugacion: "schiebt - schob - hat geschoben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schub (empujón)", preposicion: "etwas schieben",
+        significadoPrepo: "empujar algo", ejemploDE: "Er schiebt den Wagen.", ejemploES: "Empuja el carro.",
+        fehlerFrase: "Sie schiebte das Auto an.", fehlerCorreccion: "schob"
+    },
+    {
+        infinitivo: "schießen", traduccion: "disparar", conjugacion: "schießt - schoss - hat geschossen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schuss (disparo)", preposicion: "auf etwas schießen",
+        significadoPrepo: "disparar a", ejemploDE: "Er schießt auf das Tor.", ejemploES: "Dispara a la portería.",
+        fehlerFrase: "Der Jäger schiess auf den Hirsch.", fehlerCorreccion: "schoss"
+    },
+    {
+        infinitivo: "schinden", traduccion: "maltratar", conjugacion: "schindet - schund - hat geschunden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schinder", preposicion: "jemanden schinden",
+        significadoPrepo: "maltratar a", ejemploDE: "Sie schindet ihre Arbeiter.", ejemploES: "Explota a sus trabajadores.",
+        fehlerFrase: "Er schund seine Angestellten.", fehlerCorreccion: "schund"
+    },
+    {
+        infinitivo: "schlafen", traduccion: "dormir", conjugacion: "schläft - schlief - hat geschlafen",
+        presente2: "du schläfst", presente3: "er/sie/es schläft",
+        trennbar: "T", sustantivo: "der Schlaf (sueño)", preposicion: "bei jemandem schlafen",
+        significadoPrepo: "dormir en casa de", ejemploDE: "Ich schlafe bei meinem Freund.", ejemploES: "Duermo en casa de mi amigo.",
+        fehlerFrase: "Er schlafete bis 10 Uhr.", fehlerCorreccion: "schlief"
+    },
+    {
+        infinitivo: "schlagen", traduccion: "golpear", conjugacion: "schlägt - schlug - hat geschlagen",
+        presente2: "du schlägst", presente3: "er/sie/es schlägt",
+        trennbar: "T", sustantivo: "der Schlag (golpe)", preposicion: "auf etwas schlagen",
+        significadoPrepo: "golpear sobre", ejemploDE: "Er schlägt auf den Tisch.", ejemploES: "Golpea la mesa.",
+        fehlerFrase: "Sie schlagte die Tür zu.", fehlerCorreccion: "schlug"
+    },
+    {
+        infinitivo: "schleichen", traduccion: "deslizarse", conjugacion: "schleicht - schlich - ist geschlichen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Schleichen", preposicion: "durch etwas schleichen",
+        significadoPrepo: "deslizarse por", ejemploDE: "Die Katze schleicht durch das Haus.", ejemploES: "El gato se desliza.",
+        fehlerFrase: "Er schleichete ins Zimmer.", fehlerCorreccion: "schlich"
+    },
+    {
+        infinitivo: "schleifen", traduccion: "afilar", conjugacion: "schleift - schliff - hat geschliffen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schliff (pulido)", preposicion: "etwas schleifen",
+        significadoPrepo: "afilar algo", ejemploDE: "Er schleift das Messer.", ejemploES: "Afila el cuchillo.",
+        fehlerFrase: "Sie schleifete den Boden.", fehlerCorreccion: "schliff"
+    },
+    {
+        infinitivo: "schließen", traduccion: "cerrar", conjugacion: "schließt - schloss - hat geschlossen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schluss (final)", preposicion: "aus etwas schließen",
+        significadoPrepo: "concluir de", ejemploDE: "Ich schließe daraus...", ejemploES: "Concluyo de eso...",
+        fehlerFrase: "Er schliesse die Tür ab.", fehlerCorreccion: "schloss"
+    },
+    {
+        infinitivo: "schlingen", traduccion: "enrollar", conjugacion: "schlingt - schlang - hat geschlungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Schlinge (lazo)", preposicion: "um etwas schlingen",
+        significadoPrepo: "enrollar alrededor", ejemploDE: "Sie schlingt den Schal um.", ejemploES: "Enrolla la bufanda.",
+        fehlerFrase: "Er schlingete das Essen.", fehlerCorreccion: "schlang"
+    },
+    {
+        infinitivo: "schmeißen", traduccion: "tirar", conjugacion: "schmeißt - schmiss - hat geschmissen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schmiss", preposicion: "auf etwas schmeißen",
+        significadoPrepo: "tirar sobre", ejemploDE: "Er schmeißt den Ball.", ejemploES: "Lanza el balón.",
+        fehlerFrase: "Sie schmeisste das Buch weg.", fehlerCorreccion: "schmiss"
+    },
+    {
+        infinitivo: "schmelzen", traduccion: "derretir", conjugacion: "schmilzt - schmolz - ist geschmolzen",
+        presente2: "du schmilzt", presente3: "er/sie/es schmilzt",
+        trennbar: "T", sustantivo: "die Schmelze", preposicion: "schmelzen",
+        significadoPrepo: "derretirse", ejemploDE: "Das Eis schmilzt in der Sonne.", ejemploES: "El hielo se derrite al sol.",
+        fehlerFrase: "Der Schnee schmelzte schnell.", fehlerCorreccion: "schmolz"
+    },
+    {
+        infinitivo: "schneiden", traduccion: "cortar", conjugacion: "schneidet - schnitt - hat geschnitten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schnitt (corte)", preposicion: "in etwas schneiden",
+        significadoPrepo: "cortar en", ejemploDE: "Sie schneidet das Brot.", ejemploES: "Corta el pan.",
+        fehlerFrase: "Er schneidete sich.", fehlerCorreccion: "schnitt"
+    },
+    {
+        infinitivo: "schreiben", traduccion: "escribir", conjugacion: "schreibt - schrieb - hat geschrieben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Schrift", preposicion: "an jemanden schreiben",
+        significadoPrepo: "escribir a", ejemploDE: "Ich schreibe an meine Freundin.", ejemploES: "Escribo a mi amiga.",
+        fehlerFrase: "Sie schriebte einen Brief.", fehlerCorreccion: "schrieb"
+    },
+    {
+        infinitivo: "schreien", traduccion: "gritar", conjugacion: "schreit - schrie - hat geschrien",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schrei (grito)", preposicion: "nach jemandem schreien",
+        significadoPrepo: "gritar llamando", ejemploDE: "Das Kind schreit nach seiner Mutter.", ejemploES: "El niño grita.",
+        fehlerFrase: "Er schrierte laut.", fehlerCorreccion: "schrie"
+    },
+    {
+        infinitivo: "schreiten", traduccion: "avanzar", conjugacion: "schreitet - schritt - ist geschritten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schritt (paso)", preposicion: "durch etwas schreiten",
+        significadoPrepo: "atravesar", ejemploDE: "Er schreitet durch den Saal.", ejemploES: "Avanza por la sala.",
+        fehlerFrase: "Sie schreitete voran.", fehlerCorreccion: "schritt"
+    },
+    {
+        infinitivo: "schweigen", traduccion: "callar", conjugacion: "schweigt - schwieg - hat geschwiegen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Schweigen", preposicion: "zu etwas schweigen",
+        significadoPrepo: "callar sobre", ejemploDE: "Er schweigt zu diesem Thema.", ejemploES: "Guarda silencio.",
+        fehlerFrase: "Sie schwiegete plötzlich.", fehlerCorreccion: "schwieg"
+    },
+    {
+        infinitivo: "schwellen", traduccion: "hincharse", conjugacion: "schwillt - schwoll - ist geschwollen",
+        presente2: "du schwillst", presente3: "er/sie/es schwillt",
+        trennbar: "T", sustantivo: "die Schwellung", preposicion: "zu etwas schwellen",
+        significadoPrepo: "hincharse", ejemploDE: "Mein Finger schwillt an.", ejemploES: "Mi dedo se hincha.",
+        fehlerFrase: "Die Wunde schwellte stark.", fehlerCorreccion: "schwoll"
+    },
+    {
+        infinitivo: "schwimmen", traduccion: "nadar", conjugacion: "schwimmt - schwamm - ist geschwommen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Schwimmen", preposicion: "in etwas schwimmen",
+        significadoPrepo: "nadar en", ejemploDE: "Wir schwimmen im Meer.", ejemploES: "Nadamos en el mar.",
+        fehlerFrase: "Er schwimmte jeden Tag.", fehlerCorreccion: "schwamm"
+    },
+    {
+        infinitivo: "schwinden", traduccion: "desvanecerse", conjugacion: "schwindet - schwand - ist geschwunden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Schwinden", preposicion: "schwinden",
+        significadoPrepo: "desvanecerse", ejemploDE: "Seine Kraft schwindet.", ejemploES: "Su fuerza se desvanece.",
+        fehlerFrase: "Die Hoffnung schwindete.", fehlerCorreccion: "schwand"
+    },
+    {
+        infinitivo: "schwingen", traduccion: "balancear", conjugacion: "schwingt - schwang - hat geschwungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Schwingung", preposicion: "über etwas schwingen",
+        significadoPrepo: "balancear sobre", ejemploDE: "Er schwingt das Seil.", ejemploES: "Balancea la cuerda.",
+        fehlerFrase: "Sie schwingte die Fahne.", fehlerCorreccion: "schwang"
+    },
+    {
+        infinitivo: "schwören", traduccion: "jurar", conjugacion: "schwört - schwor - hat geschworen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Schwur (juramento)", preposicion: "auf etwas schwören",
+        significadoPrepo: "jurar por", ejemploDE: "Er schwört auf die Bibel.", ejemploES: "Jura por la Biblia.",
+        fehlerFrase: "Sie schwörte Rache.", fehlerCorreccion: "schwor"
+    },
+    {
+        infinitivo: "sehen", traduccion: "ver", conjugacion: "sieht - sah - hat gesehen",
+        presente2: "du siehst", presente3: "er/sie/es sieht",
+        trennbar: "T", sustantivo: "die Sicht (vista)", preposicion: "auf etwas sehen",
+        significadoPrepo: "mirar hacia", ejemploDE: "Sieh auf die Uhr!", ejemploES: "¡Mira el reloj!",
+        fehlerFrase: "Er sahte den Film.", fehlerCorreccion: "sah"
+    },
+    {
+        infinitivo: "sein", traduccion: "ser", conjugacion: "ist - war - ist gewesen",
+        presente2: "du bist", presente3: "er/sie/es ist",
+        trennbar: "T", sustantivo: "das Sein (el ser)", preposicion: "sein",
+        significadoPrepo: "ser/estar", ejemploDE: "Ich bin Lehrer.", ejemploES: "Soy profesor.",
+        fehlerFrase: "Gestern biste ich zu Hause.", fehlerCorreccion: "war"
+    },
+    {
+        infinitivo: "senden", traduccion: "enviar", conjugacion: "sendet - sandte - hat gesandt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Sendung (envío)", preposicion: "an jemanden senden",
+        significadoPrepo: "enviar a", ejemploDE: "Ich sende dir das Paket.", ejemploES: "Te envío el paquete.",
+        fehlerFrase: "Sie sendeten eine Nachricht.", fehlerCorreccion: "sandten"
+    },
+    {
+        infinitivo: "singen", traduccion: "cantar", conjugacion: "singt - sang - hat gesungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Gesang (canto)", preposicion: "etwas singen",
+        significadoPrepo: "cantar algo", ejemploDE: "Sie singt ein schönes Lied.", ejemploES: "Canta una canción bonita.",
+        fehlerFrase: "Er singete im Chor.", fehlerCorreccion: "sang"
+    },
+    {
+        infinitivo: "sinken", traduccion: "hundirse", conjugacion: "sinkt - sank - ist gesunken",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Sinken", preposicion: "in etwas sinken",
+        significadoPrepo: "hundirse en", ejemploDE: "Das Schiff sinkt.", ejemploES: "El barco se hunde.",
+        fehlerFrase: "Die Temperatur sinkete.", fehlerCorreccion: "sank"
+    },
+    {
+        infinitivo: "sinnen", traduccion: "meditar", conjugacion: "sinnt - sann - hat gesonnen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Sinn (sentido)", preposicion: "auf etwas sinnen",
+        significadoPrepo: "tramar algo", ejemploDE: "Er sinnt auf Rache.", ejemploES: "Trama venganza.",
+        fehlerFrase: "Sie sinnete über das Problem.", fehlerCorreccion: "sann"
+    },
+    {
+        infinitivo: "sitzen", traduccion: "estar sentado", conjugacion: "sitzt - saß - hat gesessen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Sitz (asiento)", preposicion: "auf etwas sitzen",
+        significadoPrepo: "estar sentado", ejemploDE: "Wir sitzen am Tisch.", ejemploES: "Estamos sentados.",
+        fehlerFrase: "Er sitzete auf dem Stuhl.", fehlerCorreccion: "saß"
+    },
+    {
+        infinitivo: "sollen", traduccion: "deber (moral)", conjugacion: "soll - sollte - hat gesollt",
+        presente2: "du sollst", presente3: "er/sie/es soll",
+        trennbar: "T", sustantivo: "die Pflicht (deber)", preposicion: "etwas sollen",
+        significadoPrepo: "deber hacer", ejemploDE: "Du sollst nicht lügen.", ejemploES: "No debes mentir.",
+        fehlerFrase: "Ich solle es tun.", fehlerCorreccion: "sollte"
+    },
+    {
+        infinitivo: "spalten", traduccion: "dividir", conjugacion: "spaltet - spaltete - hat gespalten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Spaltung", preposicion: "in etwas spalten",
+        significadoPrepo: "dividir en", ejemploDE: "Er spaltet das Holz.", ejemploES: "Parte la madera.",
+        fehlerFrase: "Die Gruppe spaltete sich.", fehlerCorreccion: "spaltete"
+    },
+    {
+        infinitivo: "speien", traduccion: "escupir", conjugacion: "speit - spie - hat gespie(e)n",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Speichel", preposicion: "auf etwas speien",
+        significadoPrepo: "escupir sobre", ejemploDE: "Er spie auf den Boden.", ejemploES: "Escupió al suelo.",
+        fehlerFrase: "Der Vulkan speiete Feuer.", fehlerCorreccion: "spie"
+    },
+    {
+        infinitivo: "spinnen", traduccion: "hilar", conjugacion: "spinnt - spann - hat gesponnen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Spinne (araña)", preposicion: "spinnen",
+        significadoPrepo: "hilar/estar loco", ejemploDE: "Du spinnst wohl!", ejemploES: "¡Estás loco!",
+        fehlerFrase: "Die Spinne spinnete ein Netz.", fehlerCorreccion: "spann"
+    },
+    {
+        infinitivo: "sprechen", traduccion: "hablar", conjugacion: "spricht - sprach - hat gesprochen",
+        presente2: "du sprichst", presente3: "er/sie/es spricht",
+        trennbar: "T", sustantivo: "die Sprache (idioma)", preposicion: "mit jemandem sprechen",
+        significadoPrepo: "hablar con", ejemploDE: "Ich spreche mit dem Chef.", ejemploES: "Hablo con el jefe.",
+        fehlerFrase: "Sie sprechte mit mir.", fehlerCorreccion: "sprach"
+    },
+    {
+        infinitivo: "springen", traduccion: "saltar", conjugacion: "springt - sprang - ist gesprungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Sprung (salto)", preposicion: "über etwas springen",
+        significadoPrepo: "saltar sobre", ejemploDE: "Er springt über den Zaun.", ejemploES: "Salta la valla.",
+        fehlerFrase: "Sie springte ins Wasser.", fehlerCorreccion: "sprang"
+    },
+    {
+        infinitivo: "stechen", traduccion: "picar", conjugacion: "sticht - stach - hat gestochen",
+        presente2: "du stichst", presente3: "er/sie/es sticht",
+        trennbar: "T", sustantivo: "der Stich (pinchazo)", preposicion: "in etwas stechen",
+        significadoPrepo: "pinchar en", ejemploDE: "Die Biene sticht mich.", ejemploES: "La abeja me pica.",
+        fehlerFrase: "Die Mücke stechte mich.", fehlerCorreccion: "stach"
+    },
+    {
+        infinitivo: "stehen", traduccion: "estar de pie", conjugacion: "steht - stand - hat gestanden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Stand (posición)", preposicion: "auf etwas stehen",
+        significadoPrepo: "estar sobre", ejemploDE: "Ich stehe zu meinem Wort.", ejemploES: "Mantengo mi palabra.",
+        fehlerFrase: "Er standete vor der Tür.", fehlerCorreccion: "stand"
+    },
+    {
+        infinitivo: "stehlen", traduccion: "robar", conjugacion: "stiehlt - stahl - hat gestohlen",
+        presente2: "du stiehlst", presente3: "er/sie/es stiehlt",
+        trennbar: "T", sustantivo: "der Diebstahl", preposicion: "von jemandem stehlen",
+        significadoPrepo: "robar de", ejemploDE: "Er stiehlt Geld.", ejemploES: "Roba dinero.",
+        fehlerFrase: "Jemand stehlte mein Fahrrad.", fehlerCorreccion: "stahl"
+    },
+    {
+        infinitivo: "steigen", traduccion: "subir", conjugacion: "steigt - stieg - ist gestiegen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Aufstieg", preposicion: "auf etwas steigen",
+        significadoPrepo: "subir a", ejemploDE: "Ich steige in den Bus ein.", ejemploES: "Me subo al autobús.",
+        fehlerFrase: "Die Preise steigten.", fehlerCorreccion: "stiegen"
+    },
+    {
+        infinitivo: "sterben", traduccion: "morir", conjugacion: "stirbt - starb - ist gestorben",
+        presente2: "du stirbst", presente3: "er/sie/es stirbt",
+        trennbar: "T", sustantivo: "der Tod (muerte)", preposicion: "an etwas sterben",
+        significadoPrepo: "morir de", ejemploDE: "Er starb an Krebs.", ejemploES: "Murió de cáncer.",
+        fehlerFrase: "Sie sterbte gestern.", fehlerCorreccion: "starb"
+    },
+    {
+        infinitivo: "stinken", traduccion: "apestar", conjugacion: "stinkt - stank - hat gestunken",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Gestank (hedor)", preposicion: "nach etwas stinken",
+        significadoPrepo: "apestar a", ejemploDE: "Es stinkt nach Rauch.", ejemploES: "Apesta a humo.",
+        fehlerFrase: "Der Müll stinkte.", fehlerCorreccion: "stank"
+    },
+    {
+        infinitivo: "stoßen", traduccion: "empujar", conjugacion: "stößt - stieß - hat gestoßen",
+        presente2: "du stößt", presente3: "er/sie/es stößt",
+        trennbar: "T", sustantivo: "der Stoß (empujón)", preposicion: "an etwas stoßen",
+        significadoPrepo: "chocar contra", ejemploDE: "Ich stieß gegen die Tür.", ejemploES: "Choqué contra la puerta.",
+        fehlerFrase: "Er stoßte mich.", fehlerCorreccion: "stieß"
+    },
+    {
+        infinitivo: "streichen", traduccion: "pintar", conjugacion: "streicht - strich - hat gestrichen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Strich (trazo)", preposicion: "über etwas streichen",
+        significadoPrepo: "acariciar", ejemploDE: "Sie streicht die Wand.", ejemploES: "Pinta la pared.",
+        fehlerFrase: "Er streichte das Wort durch.", fehlerCorreccion: "strich"
+    },
+    {
+        infinitivo: "streiten", traduccion: "discutir", conjugacion: "streitet - stritt - hat gestritten",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Streit (disputa)", preposicion: "mit jemandem streiten",
+        significadoPrepo: "discutir con", ejemploDE: "Sie streitet mit ihrem Bruder.", ejemploES: "Discute con su hermano.",
+        fehlerFrase: "Wir streiteten gestern.", fehlerCorreccion: "stritten"
+    },
+    {
+        infinitivo: "tragen", traduccion: "llevar", conjugacion: "trägt - trug - hat getragen",
+        presente2: "du trägst", presente3: "er/sie/es trägt",
+        trennbar: "T", sustantivo: "der Träger (portador)", preposicion: "zu etwas beitragen",
+        significadoPrepo: "contribuir a", ejemploDE: "Das trägt zum Erfolg bei.", ejemploES: "Eso contribuye al éxito.",
+        fehlerFrase: "Sie tragete eine Tasche.", fehlerCorreccion: "trug"
+    },
+    {
+        infinitivo: "treffen", traduccion: "encontrar", conjugacion: "trifft - traf - hat getroffen",
+        presente2: "du triffst", presente3: "er/sie/es trifft",
+        trennbar: "T", sustantivo: "das Treffen", preposicion: "sich mit jemandem treffen",
+        significadoPrepo: "quedar con", ejemploDE: "Ich treffe mich mit Freunden.", ejemploES: "Quedo con amigos.",
+        fehlerFrase: "Wir trefften uns gestern.", fehlerCorreccion: "trafen"
+    },
+    {
+        infinitivo: "treiben", traduccion: "impulsar", conjugacion: "treibt - trieb - hat getrieben",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Trieb (impulso)", preposicion: "zu etwas treiben",
+        significadoPrepo: "impulsar a", ejemploDE: "Ich treibe Sport.", ejemploES: "Practico deporte.",
+        fehlerFrase: "Er triebte mich zur Verzweiflung.", fehlerCorreccion: "trieb"
+    },
+    {
+        infinitivo: "treten", traduccion: "pisar", conjugacion: "tritt - trat - hat getreten",
+        presente2: "du trittst", presente3: "er/sie/es tritt",
+        trennbar: "T", sustantivo: "der Tritt (pisada)", preposicion: "in etwas treten",
+        significadoPrepo: "entrar en", ejemploDE: "Er tritt in den Raum.", ejemploES: "Entra en la habitación.",
+        fehlerFrase: "Sie tretete auf die Bremse.", fehlerCorreccion: "trat"
+    },
+    {
+        infinitivo: "trinken", traduccion: "beber", conjugacion: "trinkt - trank - hat getrunken",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Getränk (bebida)", preposicion: "auf jemanden trinken",
+        significadoPrepo: "brindar por", ejemploDE: "Wir trinken auf deine Gesundheit!", ejemploES: "¡Brindamos por tu salud!",
+        fehlerFrase: "Er trinkte zu viel Bier.", fehlerCorreccion: "trank"
+    },
+    {
+        infinitivo: "trügen", traduccion: "engañar", conjugacion: "trügt - trog - hat getrogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Trug (engaño)", preposicion: "trügen",
+        significadoPrepo: "engañar", ejemploDE: "Der Schein trügt.", ejemploES: "Las apariencias engañan.",
+        fehlerFrase: "Meine Augen trügten mich.", fehlerCorreccion: "trogen"
+    },
+    {
+        infinitivo: "tun", traduccion: "hacer", conjugacion: "tut - tat - hat getan",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Tat (acción)", preposicion: "für jemanden tun",
+        significadoPrepo: "hacer por", ejemploDE: "Was kann ich für dich tun?", ejemploES: "¿Qué puedo hacer por ti?",
+        fehlerFrase: "Er tüte mir einen Gefallen.", fehlerCorreccion: "tat"
+    },
+    {
+        infinitivo: "verbieten", traduccion: "prohibir", conjugacion: "verbietet - verbot - hat verboten",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "das Verbot", preposicion: "jemandem etwas verbieten",
+        significadoPrepo: "prohibir algo", ejemploDE: "Der Arzt verbietet mir das Rauchen.", ejemploES: "El médico me prohíbe fumar.",
+        fehlerFrase: "Sie verbietete es ihm.", fehlerCorreccion: "verbot"
+    },
+    {
+        infinitivo: "verderben", traduccion: "estropear", conjugacion: "verdirbt - verdarb - hat verdorben",
+        presente2: "du verdirbst", presente3: "er/sie/es verdirbt",
+        trennbar: "UT", sustantivo: "das Verderben", preposicion: "jemandem etwas verderben",
+        significadoPrepo: "estropear algo", ejemploDE: "Das Fleisch ist verdorben.", ejemploES: "La carne está estropeada.",
+        fehlerFrase: "Er verderbte mir die Stimmung.", fehlerCorreccion: "verdarb"
+    },
+    {
+        infinitivo: "vergessen", traduccion: "olvidar", conjugacion: "vergisst - vergaß - hat vergessen",
+        presente2: "du vergisst", presente3: "er/sie/es vergisst",
+        trennbar: "UT", sustantivo: "die Vergessenheit", preposicion: "etwas vergessen",
+        significadoPrepo: "olvidar algo", ejemploDE: "Ich habe deinen Geburtstag vergessen.", ejemploES: "He olvidado tu cumpleaños.",
+        fehlerFrase: "Sie vergessete ihren Schlüssel.", fehlerCorreccion: "vergaß"
+    },
+    {
+        infinitivo: "verlieren", traduccion: "perder", conjugacion: "verliert - verlor - hat verloren",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "der Verlust (pérdida)", preposicion: "etwas verlieren",
+        significadoPrepo: "perder algo", ejemploDE: "Ich habe meinen Schlüssel verloren.", ejemploES: "He perdido mi llave.",
+        fehlerFrase: "Wir verliereten das Spiel.", fehlerCorreccion: "verloren"
+    },
+    {
+        infinitivo: "verschwinden", traduccion: "desaparecer", conjugacion: "verschwindet - verschwand - ist verschwunden",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "das Verschwinden", preposicion: "aus etwas verschwinden",
+        significadoPrepo: "desaparecer de", ejemploDE: "Er verschwand aus meinem Leben.", ejemploES: "Desapareció de mi vida.",
+        fehlerFrase: "Das Geld verschwundete.", fehlerCorreccion: "verschwand"
+    },
+    {
+        infinitivo: "verzeihen", traduccion: "perdonar", conjugacion: "verzeiht - verzieh - hat verziehen",
+        presente2: null, presente3: null,
+        trennbar: "UT", sustantivo: "die Verzeihung", preposicion: "jemandem etwas verzeihen",
+        significadoPrepo: "perdonar algo", ejemploDE: "Ich verzeihe dir deinen Fehler.", ejemploES: "Te perdono tu error.",
+        fehlerFrase: "Er verzeihte ihr.", fehlerCorreccion: "verzieh"
+    },
+    {
+        infinitivo: "wachsen", traduccion: "crecer", conjugacion: "wächst - wuchs - ist gewachsen",
+        presente2: "du wächst", presente3: "er/sie/es wächst",
+        trennbar: "T", sustantivo: "das Wachstum", preposicion: "wachsen",
+        significadoPrepo: "crecer", ejemploDE: "Die Pflanzen wachsen schnell.", ejemploES: "Las plantas crecen rápido.",
+        fehlerFrase: "Der Baum wachste.", fehlerCorreccion: "wuchs"
+    },
+    {
+        infinitivo: "waschen", traduccion: "lavar", conjugacion: "wäscht - wusch - hat gewaschen",
+        presente2: "du wäschst", presente3: "er/sie/es wäscht",
+        trennbar: "T", sustantivo: "die Wäsche (lavado)", preposicion: "etwas waschen",
+        significadoPrepo: "lavar algo", ejemploDE: "Ich wasche meine Hände.", ejemploES: "Me lavo las manos.",
+        fehlerFrase: "Sie waschte das Auto.", fehlerCorreccion: "wusch"
+    },
+    {
+        infinitivo: "weichen", traduccion: "ceder", conjugacion: "weicht - wich - ist gewichen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Ausweichen", preposicion: "vor etwas weichen",
+        significadoPrepo: "ceder ante", ejemploDE: "Er weicht nicht von meiner Seite.", ejemploES: "No se aparta de mi lado.",
+        fehlerFrase: "Sie weichte zurück.", fehlerCorreccion: "wich"
+    },
+    {
+        infinitivo: "weisen", traduccion: "señalar", conjugacion: "weist - wies - hat gewiesen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Verweis", preposicion: "auf etwas weisen",
+        significadoPrepo: "señalar hacia", ejemploDE: "Er weist auf den Fehler hin.", ejemploES: "Señala el error.",
+        fehlerFrase: "Sie weisete mich aus.", fehlerCorreccion: "wies"
+    },
+    {
+        infinitivo: "wenden", traduccion: "girar", conjugacion: "wendet - wandte - hat gewandt",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Wendung (giro)", preposicion: "sich an jemanden wenden",
+        significadoPrepo: "dirigirse a", ejemploDE: "Ich wende mich an Sie.", ejemploES: "Me dirijo a usted.",
+        fehlerFrase: "Er wendete das Auto.", fehlerCorreccion: "wandte"
+    },
+    {
+        infinitivo: "werben", traduccion: "hacer publicidad", conjugacion: "wirbt - warb - hat geworben",
+        presente2: "du wirbst", presente3: "er/sie/es wirbt",
+        trennbar: "T", sustantivo: "die Werbung", preposicion: "für etwas werben",
+        significadoPrepo: "hacer publicidad", ejemploDE: "Die Firma wirbt für Produkte.", ejemploES: "La empresa hace publicidad.",
+        fehlerFrase: "Sie werbte um Kunden.", fehlerCorreccion: "warb"
+    },
+    {
+        infinitivo: "werden", traduccion: "convertirse", conjugacion: "wird - wurde - ist geworden",
+        presente2: "du wirst", presente3: "er/sie/es wird",
+        trennbar: "T", sustantivo: "die Entwicklung", preposicion: "zu etwas werden",
+        significadoPrepo: "convertirse en", ejemploDE: "Er wird zum Experten.", ejemploES: "Se convierte en experto.",
+        fehlerFrase: "Sie werdete Ärztin.", fehlerCorreccion: "wurde"
+    },
+    {
+        infinitivo: "werfen", traduccion: "lanzar", conjugacion: "wirft - warf - hat geworfen",
+        presente2: "du wirfst", presente3: "er/sie/es wirft",
+        trennbar: "T", sustantivo: "der Wurf (lanzamiento)", preposicion: "auf etwas werfen",
+        significadoPrepo: "lanzar sobre", ejemploDE: "Er wirft den Ball.", ejemploES: "Lanza el balón.",
+        fehlerFrase: "Sie werfete den Stein.", fehlerCorreccion: "warf"
+    },
+    {
+        infinitivo: "wiegen", traduccion: "pesar", conjugacion: "wiegt - wog - hat gewogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Gewicht (peso)", preposicion: "etwas wiegen",
+        significadoPrepo: "pesar algo", ejemploDE: "Ich wiege 70 Kilo.", ejemploES: "Peso 70 kilos.",
+        fehlerFrase: "Das Paket wiegte 5 Kilo.", fehlerCorreccion: "wog"
+    },
+    {
+        infinitivo: "winden", traduccion: "enrollar", conjugacion: "windet - wand - hat gewunden",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "die Windung (vuelta)", preposicion: "um etwas winden",
+        significadoPrepo: "enrollar alrededor", ejemploDE: "Sie windet das Seil um den Pfahl.", ejemploES: "Enrolla la cuerda.",
+        fehlerFrase: "Der Weg windete sich.", fehlerCorreccion: "wand"
+    },
+    {
+        infinitivo: "wissen", traduccion: "saber", conjugacion: "weiß - wusste - hat gewusst",
+        presente2: "du weißt", presente3: "er/sie/es weiß",
+        trennbar: "T", sustantivo: "das Wissen", preposicion: "von etwas wissen",
+        significadoPrepo: "saber de", ejemploDE: "Ich weiß nichts von diesem Problem.", ejemploES: "No sé nada de este problema.",
+        fehlerFrase: "Er wissete die Antwort nicht.", fehlerCorreccion: "wusste"
+    },
+    {
+        infinitivo: "wollen", traduccion: "querer", conjugacion: "will - wollte - hat gewollt",
+        presente2: "du willst", presente3: "er/sie/es will",
+        trennbar: "T", sustantivo: "der Wille (voluntad)", preposicion: "etwas wollen",
+        significadoPrepo: "querer algo", ejemploDE: "Ich will nach Hause gehen.", ejemploES: "Quiero ir a casa.",
+        fehlerFrase: "Sie wöllete mitkommen.", fehlerCorreccion: "wollte"
+    },
+    {
+        infinitivo: "wringen", traduccion: "escurrir", conjugacion: "wringt - wrang - hat gewrungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "das Wringen", preposicion: "etwas wringen",
+        significadoPrepo: "escurrir algo", ejemploDE: "Sie wringt das Handtuch aus.", ejemploES: "Escurre la toalla.",
+        fehlerFrase: "Er wringte die Wäsche.", fehlerCorreccion: "wrang"
+    },
+    {
+        infinitivo: "ziehen", traduccion: "tirar", conjugacion: "zieht - zog - hat gezogen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Zug (tirón)", preposicion: "an etwas ziehen",
+        significadoPrepo: "tirar de", ejemploDE: "Ich ziehe nach Berlin.", ejemploES: "Me mudo a Berlín.",
+        fehlerFrase: "Sie ziehte an meinem Arm.", fehlerCorreccion: "zog"
+    },
+    {
+        infinitivo: "zwingen", traduccion: "obligar", conjugacion: "zwingt - zwang - hat gezwungen",
+        presente2: null, presente3: null,
+        trennbar: "T", sustantivo: "der Zwang (coacción)", preposicion: "zu etwas zwingen",
+        significadoPrepo: "obligar a", ejemploDE: "Man zwang ihn zur Unterschrift.", ejemploES: "Le obligaron a firmar.",
+        fehlerFrase: "Sie zwingte mich dazu.", fehlerCorreccion: "zwang"
+    },
+];
+
+let currentView='compact',currentExerciseType='de-es',currentExercise=null,currentFocusedIndex=-1,correctas=0,total=0;
+document.addEventListener('DOMContentLoaded',()=>{renderCompactView();renderExtendedView();generateExercise();setupKeyboardNavigation();});
+function switchTab(t){document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));event.target.classList.add('active');document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.getElementById(t).classList.add('active');'lista'===t&&(currentFocusedIndex=-1)}
+function toggleView(){const e=document.getElementById('compactView'),t=document.getElementById('extendedView'),n=document.getElementById('viewToggleText'),o=document.getElementById('navHint');'compact'===currentView?(e.style.display='none',t.style.display='block',n.textContent='🔲 Ver Cuadrícula',o.style.display='block',currentView='extended'):(e.style.display='grid',t.style.display='none',n.textContent='📋 Ver Lista Extensa',o.style.display='none',currentView='compact',currentFocusedIndex=-1,document.querySelectorAll('.verb-item-extended').forEach(e=>e.classList.remove('focused')))}
+function renderCompactView(){const e=document.getElementById('compactView');e.innerHTML='',verbos.forEach(t=>{const n=document.createElement('div');n.className='verb-card',n.innerHTML=`<div class="verb-card-header"><div class="verb-card-title">${t.infinitivo}</div><div class="verb-badge">${t.trennbar}</div></div><div class="verb-card-subtitle">${t.traduccion}</div><div class="verb-tooltip"><div class="tooltip-title">${t.infinitivo}</div><div class="tooltip-section"><span class="tooltip-label">Traducción:</span> ${t.traduccion}</div><div class="tooltip-conjugacion">${t.conjugacion}</div>${t.presente2?`<div class="tooltip-section"><span class="tooltip-label">Presente irregular:</span><br>${t.presente2}<br>${t.presente3}</div>`:''}</div>`,e.appendChild(n)})}
+function renderExtendedView(){const e=document.getElementById('extendedView');e.innerHTML='',verbos.forEach((t,n)=>{const o=document.createElement('div');o.className='verb-item-extended',o.dataset.index=n;let r='';t.presente2&&t.presente3?r=`<div class="presente-irregular-box"><strong>Presente irregular:</strong><br>${t.presente2}<br>${t.presente3}</div>`:t.presente2&&(r=`<div class="presente-irregular-box"><strong>Presente irregular:</strong><br>${t.presente2}</div>`),o.innerHTML=`<div class="extended-header"><div class="extended-title">${t.infinitivo}</div><div class="extended-badge">${t.trennbar}</div></div><div class="conjugacion-display">${t.conjugacion}</div>${r}<div class="significado-box"><div class="significado-ordinario"><strong>Significado:</strong> ${t.traduccion}</div><div class="significado-prepo"><strong>${t.preposicion}</strong><br>${t.significadoPrepo}</div></div><div class="info-grid"><div class="info-box"><div class="info-label">SUSTANTIVO</div><div class="info-value">${t.sustantivo}</div></div></div><div class="ejemplo-section"><div class="ejemplo-de">🇩🇪 ${t.ejemploDE}</div><div class="ejemplo-es">🇪🇸 ${t.ejemploES}</div></div>`,e.appendChild(o)})}
+function setupKeyboardNavigation(){document.addEventListener('keydown',e=>{'extended'===currentView&&document.getElementById('lista').classList.contains('active')&&'Space'===e.code&&(e.preventDefault(),navigateNext())})}
+function navigateNext(){const e=document.querySelectorAll('.verb-item-extended');currentFocusedIndex>=0&&e[currentFocusedIndex].classList.remove('focused'),currentFocusedIndex++,currentFocusedIndex>=e.length&&(currentFocusedIndex=0),e[currentFocusedIndex].classList.add('focused'),e[currentFocusedIndex].scrollIntoView({behavior:'smooth',block:'center'})}
+function selectExerciseType(e){currentExerciseType=e,document.querySelectorAll('.exercise-type-btn').forEach(e=>e.classList.remove('active')),event.target.classList.add('active'),generateExercise()}
+function generateExercise(){currentExercise=verbos[Math.floor(Math.random()*verbos.length)];switch(currentExerciseType){case'de-es':renderExerciseDEtoES();break;case'es-de':renderExerciseEStoDE();break;case'fehler-forma':renderExerciseFehlerForma();break;case'fehler-frase':renderExerciseFehlerFrase()}}
+function renderExerciseDEtoES(){document.getElementById('exerciseContent').innerHTML=`<div class="question-box"><div class="question-title">🇩🇪 Traduce el verbo</div><div class="question-text">${currentExercise.infinitivo}</div><input type="text" class="answer-input" id="answerInput" placeholder="Escribe el significado" onkeypress="if(event.key==='Enter') checkExerciseDEtoES()"></div><button class="btn btn-primary" onclick="checkExerciseDEtoES()">Verificar</button>`,document.getElementById('answerInput').focus()}
+function checkExerciseDEtoES(){const e=document.getElementById('answerInput').value.trim().toLowerCase(),t=currentExercise.traduccion.toLowerCase();total++;const n=t.includes(e)||e.includes(t.split(',')[0].trim());n&&correctas++,updateScore(),showResult(n,`<div class="result-title">${n?'✅ ¡Correcto!':'❌ Incorrecto'}</div><div class="result-detail"><strong>Verbo:</strong> ${currentExercise.infinitivo}</div><div class="result-detail"><strong>Significado:</strong> ${currentExercise.traduccion}</div><div class="result-detail"><strong>Tu respuesta:</strong> ${document.getElementById('answerInput').value}</div>`)}
+function renderExerciseEStoDE(){document.getElementById('exerciseContent').innerHTML=`<div class="question-box"><div class="question-title">🇪🇸 Escribe el verbo y conjugación</div><div class="question-text">${currentExercise.traduccion}</div><div style="margin-bottom:20px;"><div class="answer-label">Infinitivo:</div><input type="text" class="answer-input" id="infinitivoInput" placeholder="ej: gehen"></div><div class="answer-grid"><div class="answer-field"><div class="answer-label">Presente:</div><input type="text" class="answer-input-small" id="presenteInput" placeholder="geht"></div><div class="answer-field"><div class="answer-label">Präteritum:</div><input type="text" class="answer-input-small" id="prateritumInput" placeholder="ging"></div><div class="answer-field"><div class="answer-label">Perfekt:</div><input type="text" class="answer-input-small" id="perfektInput" placeholder="ist gegangen"></div></div></div><button class="btn btn-primary" onclick="checkExerciseEStoDE()">Verificar</button>`,document.getElementById('infinitivoInput').focus()}
+function checkExerciseEStoDE(){const e=document.getElementById('infinitivoInput').value.trim().toLowerCase(),t=document.getElementById('presenteInput').value.trim().toLowerCase(),n=document.getElementById('prateritumInput').value.trim().toLowerCase(),o=document.getElementById('perfektInput').value.trim().toLowerCase(),r=currentExercise.conjugacion.split(' - '),a=r[0].split('/')[0].trim().toLowerCase(),c=r[1].split('/')[0].trim().toLowerCase(),i=r[2].split('/')[0].trim().toLowerCase();total++;const s=e===currentExercise.infinitivo.toLowerCase()&&a.includes(t)&&c.includes(n)&&i.includes(o);s&&correctas++,updateScore(),showResult(s,`<div class="result-title">${s?'✅ ¡Correcto!':'❌ Incorrecto'}</div><div class="result-detail"><strong>Correcto:</strong><br>${currentExercise.infinitivo} - ${currentExercise.conjugacion}</div><div class="result-detail"><strong>Tu respuesta:</strong><br>${e} - ${t} - ${n} - ${o}</div>`)}
+function renderExerciseFehlerForma(){const e=currentExercise.conjugacion.split(' - '),t=['Infinitivo','Presente','Präteritum','Perfekt'],n=Math.floor(3*Math.random())+1,o=t[n],r=e[n-1];document.getElementById('exerciseContent').innerHTML=`<div class="question-box"><div class="question-title">❌ Fehler: ¿Qué forma es?</div><div class="question-text" style="font-size:1.6em;color:#e91e63;">${r}</div><div style="margin:20px 0;color:#666;">Verbo: <strong>${currentExercise.infinitivo}</strong></div><div style="margin-top:20px;"><div class="answer-label">¿Qué forma verbal es?</div><select class="answer-input" id="formaSelect" style="cursor:pointer;"><option value="">Selecciona...</option><option value="Presente">Presente (3ª persona)</option><option value="Präteritum">Präteritum</option><option value="Perfekt">Perfekt</option></select></div></div><button class="btn btn-primary" onclick="checkExerciseFehlerForma('${o}')">Verificar</button>`}
+function checkExerciseFehlerForma(e){const t=document.getElementById('formaSelect').value;total++;const n=t===e;n&&correctas++,updateScore(),showResult(n,`<div class="result-title">${n?'✅ ¡Correcto!':'❌ Incorrecto'}</div><div class="result-detail"><strong>Forma correcta:</strong> ${e}</div><div class="result-detail"><strong>Conjugación:</strong><br>${currentExercise.conjugacion}</div><div class="result-detail"><strong>Tu respuesta:</strong> ${t||'(vacío)'}</div>`)}
+function renderExerciseFehlerFrase(){document.getElementById('exerciseContent').innerHTML=`<div class="question-box"><div class="question-title">❌ Fehler: Corrige el verbo</div><div class="question-text" style="font-size:1.3em;">${currentExercise.fehlerFrase}</div><div style="margin:20px 0;padding:15px;background:#fff3cd;border-radius:8px;"><strong>💡 Pista:</strong> Hay un error en la conjugación</div><input type="text" class="answer-input" id="fehlerInput" placeholder="Forma correcta" onkeypress="if(event.key==='Enter') checkExerciseFehlerFrase()"></div><button class="btn btn-primary" onclick="checkExerciseFehlerFrase()">Verificar</button>`,document.getElementById('fehlerInput').focus()}
+function checkExerciseFehlerFrase(){const e=document.getElementById('fehlerInput').value.trim().toLowerCase(),t=currentExercise.fehlerCorreccion.toLowerCase();total++;const n=e===t||t.includes(e);n&&correctas++,updateScore(),showResult(n,`<div class="result-title">${n?'✅ ¡Correcto!':'❌ Incorrecto'}</div><div class="result-detail"><strong>Frase:</strong><br>${currentExercise.fehlerFrase}</div><div class="result-detail"><strong>Correcto:</strong> ${currentExercise.fehlerCorreccion}</div><div class="result-detail"><strong>Verbo:</strong> ${currentExercise.infinitivo} - ${currentExercise.conjugacion}</div><div class="result-detail"><strong>Tu respuesta:</strong> ${document.getElementById('fehlerInput').value}</div>`)}
+function showResult(e,t){document.getElementById('exerciseContent').innerHTML=`<div class="result-box ${e?'result-correct':'result-incorrect'}">${t}</div><button class="btn btn-success" onclick="generateExercise()">➡️ Siguiente (ESPACIO)</button>`}
+function updateScore(){document.getElementById('correctas').textContent=correctas,document.getElementById('total').textContent=total;const e=total>0?Math.round(correctas/total*100):0;document.getElementById('porcentaje').textContent=e+'%'}
+document.addEventListener('keydown',e=>{if(document.getElementById('ejercicios').classList.contains('active')&&'Space'===e.code){const t=document.querySelector('.btn-success');t&&(e.preventDefault(),t.click())}});
+</script>
+</body>
+</html>

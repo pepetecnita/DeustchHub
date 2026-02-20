@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konnektoren Master - Alemán Avanzado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+
+        .left-panel {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .reference-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .reference-card.visible {
+            display: block;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .toggle-reference {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toggle-reference:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 0;
+        }
+
+        .mode-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .mode-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .mode-card.active .mode-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .mode-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .mode-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .mode-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .mode-desc {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .difficulty-btn {
+            padding: 10px 25px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .difficulty-btn:hover {
+            border-color: #667eea;
+        }
+
+        .difficulty-btn.easy { border-color: #4caf50; color: #4caf50; }
+        .difficulty-btn.medium { border-color: #ff9800; color: #ff9800; }
+        .difficulty-btn.hard { border-color: #f44336; color: #f44336; }
+
+        .difficulty-btn.active.easy { background: #4caf50; color: white; }
+        .difficulty-btn.active.medium { background: #ff9800; color: white; }
+        .difficulty-btn.active.hard { background: #f44336; color: white; }
+
+        .exercise-zone {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            padding: 40px;
+            border-radius: 20px;
+            min-height: 400px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .timer {
+            background: #764ba2;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .question-text {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.5s;
+        }
+
+        .option-card:hover::before {
+            left: 100%;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-card.correct {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-color: #4caf50;
+            color: white;
+            animation: correctPulse 0.5s;
+        }
+
+        .option-card.incorrect {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            border-color: #f44336;
+            color: white;
+            animation: incorrectShake 0.5s;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .input-zone {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.2em;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.1);
+        }
+
+        .sentence-builder {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            min-height: 60px;
+            padding: 15px;
+            background: #f5f7fa;
+            border-radius: 10px;
+        }
+
+        .word-chip {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: move;
+            user-select: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .word-chip:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .word-chip.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .drop-zone {
+            min-height: 80px;
+            padding: 20px;
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            background: white;
+        }
+
+        .drop-zone.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .feedback-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 5px solid;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-panel.correct {
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        }
+
+        .feedback-panel.incorrect {
+            border-color: #f44336;
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+        }
+
+        .feedback-panel.info {
+            border-color: #2196f3;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feedback-text {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .example-box {
+            background: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f5f7fa, #e8eef5);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .streak-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .konnektor-list {
+            margin-bottom: 20px;
+        }
+
+        .konnektor-category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-content {
+            padding: 0 10px;
+        }
+
+        .konnektor-item {
+            background: #f5f7fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .konnektor-de {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .konnektor-es {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .konnektor-kasus {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #2196f3;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .konnektor-beispiel {
+            margin-top: 8px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .error-highlighting {
+            font-size: 1.3em;
+            line-height: 2.5;
+        }
+
+        .word-error {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        .word-error:hover {
+            background: #fff3cd;
+            transform: scale(1.05);
+        }
+
+        .word-error.selected {
+            background: #ff9800;
+            color: white;
+        }
+
+        .word-error.correct-mark {
+            background: #4caf50;
+            color: white;
+        }
+
+        .word-error.wrong-mark {
+            background: #f44336;
+            color: white;
+        }
+
+        .achievements {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .achievement-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .right-panel {
+                order: -1;
+            }
+            
+            .toggle-reference {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mode-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .combo-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-reference" onclick="toggleReference()">
+        📚 <span id="referenceToggleText">Ver Lista de Conectores</span>
+    </button>
+
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="header">
+                <h1>🇩🇪 Konnektoren Master</h1>
+                <p class="subtitle">Sistema avanzado de práctica intensiva</p>
+            </div>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn easy active" onclick="setDifficulty('easy')">
+                    😊 Fácil
+                </button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('medium')">
+                    🤔 Medio
+                </button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('hard')">
+                    🔥 Difícil
+                </button>
+            </div>
+
+            <div class="mode-grid">
+                <div class="mode-card active" onclick="setMode('multiple')">
+                    <div class="mode-content">
+                        <div class="mode-icon">📝</div>
+                        <div class="mode-title">Múltiple</div>
+                        <div class="mode-desc">Selección de opciones</div>
+                    </div>
+                </div>
+                <div class="mode-card" onclick="setMode('completar')">
+                    <div class="mode-content">
+                        <div class="mode-icon">✍️</div>
+                        <div class="mode-title">Completar</div>
+                        <div class="mode-desc">Escribe el conector</div>
+                    </div>
+                </div>
+                <div class="mode-card" onclick="setMode('construir')">
+                    <div class="mode-content">
+                        <div class="mode-icon">🧩</div>
+                        <div class="mode-title">Construir</div>
+                        <div class="mode-desc">Ordena palabras</div>
+                    </div>
+                </div>
+                <div class="mode-card" onclick="setMode('fehler')">
+                    <div class="mode-content">
+                        <div class="mode-icon">🔍</div>
+                        <div class="mode-title">Fehler</div>
+                        <div class="mode-desc">Encuentra errores</div>
+                    </div>
+                </div>
+                <div class="mode-card" onclick="setMode('kasus')">
+                    <div class="mode-content">
+                        <div class="mode-icon">📚</div>
+                        <div class="mode-title">Kasus</div>
+                        <div class="mode-desc">Casos gramaticales</div>
+                    </div>
+                </div>
+                <div class="mode-card" onclick="setMode('contexto')">
+                    <div class="mode-content">
+                        <div class="mode-icon">🎯</div>
+                        <div class="mode-title">Contexto</div>
+                        <div class="mode-desc">Uso en contexto</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progreso de la sesión</span>
+                    <span id="progressText">0 / 20</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="exercise-zone" id="exerciseZone">
+                <div style="text-align: center; padding: 60px 20px; color: #999;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">🚀</div>
+                    <h2 style="color: #667eea; margin-bottom: 10px;">¡Comienza tu práctica!</h2>
+                    <p>Selecciona un modo y nivel de dificultad</p>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons" style="display: none;">
+                <button class="btn btn-primary" onclick="checkAnswer()">
+                    Comprobar Respuesta
+                </button>
+                <button class="btn btn-secondary" onclick="skipQuestion()">
+                    ⏭️ Saltar
+                </button>
+                <button class="btn btn-secondary" onclick="showHint()">
+                    💡 Pista
+                </button>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="reference-card" id="referenceCard">
+                <h3 style="margin-bottom: 20px; color: #667eea;">📖 Lista de Conectores</h3>
+                <div class="konnektor-list" id="konnektorenList"></div>
+            </div>
+
+            <div class="stats-card">
+                <h3 style="margin-bottom: 20px; color: #667eea; text-align: center;">📊 Estadísticas</h3>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="correctStat">0</div>
+                        <div class="stat-label">✅ Correctas</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="incorrectStat">0</div>
+                        <div class="stat-label">❌ Incorrectas</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="accuracyStat">0%</div>
+                        <div class="stat-label">🎯 Precisión</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="timeStat">0s</div>
+                        <div class="stat-label">⏱️ Tiempo promedio</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="streak-badge" id="streakBadge">
+                        🔥 Racha: <span id="streakCount">0</span>
+                    </div>
+                </div>
+                <div class="achievements" id="achievements" style="display: none;">
+                    <div class="achievement-icon" id="achievementIcon"></div>
+                    <div id="achievementText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de conectores
+        const konnektorenDB = {
+            nebenordnend: [
+                { de: "und", es: "y", beispiel: "Ich trinke Kaffee, und ich esse Kuchen.", translation: "Bebo café y como pastel.", type: "coordinante" },
+                { de: "aber", es: "pero", beispiel: "Es regnet, aber ich habe meinen Schirm dabei.", translation: "Llueve, pero tengo mi paraguas.", type: "coordinante" },
+                { de: "denn", es: "porque (explicativo)", beispiel: "Ich gehe früh ins Bett, denn ich bin müde.", translation: "Me acuesto temprano, porque estoy cansado.", type: "coordinante" },
+                { de: "oder", es: "o", beispiel: "Möchtest du Tee oder Kaffee?", translation: "¿Quieres té o café?", type: "coordinante" },
+                { de: "sondern", es: "sino", beispiel: "Ich trinke keinen Tee, sondern Kaffee.", translation: "No bebo té, sino café.", type: "coordinante" },
+                { de: "doch", es: "pero, sin embargo", beispiel: "Es regnet, doch wir gehen spazieren.", translation: "Llueve, pero salimos a caminar.", type: "coordinante" },
+                { de: "jedoch", es: "sin embargo", beispiel: "Es ist kalt, jedoch gehen wir spazieren.", translation: "Hace frío, sin embargo salimos a caminar.", type: "coordinante" }
+            ],
+            unterordnend: [
+                { de: "weil", es: "porque", beispiel: "Ich bleibe zu Hause, weil es regnet.", translation: "Me quedo en casa, porque llueve.", type: "subordinante", verbPosition: "final" },
+                { de: "da", es: "ya que, puesto que", beispiel: "Ich gehe schlafen, da ich müde bin.", translation: "Me voy a dormir, ya que estoy cansado.", type: "subordinante", verbPosition: "final" },
+                { de: "obwohl", es: "aunque", beispiel: "Ich gehe spazieren, obwohl es regnet.", translation: "Salgo a caminar, aunque llueva.", type: "subordinante", verbPosition: "final" },
+                { de: "wenn", es: "si / cuando", beispiel: "Ich rufe dich an, wenn ich Zeit habe.", translation: "Te llamo si/cuando tenga tiempo.", type: "subordinante", verbPosition: "final" },
+                { de: "während", es: "mientras", beispiel: "Ich lerne Deutsch, während du arbeitest.", translation: "Aprendo alemán mientras trabajas.", type: "subordinante", verbPosition: "final" },
+                { de: "nachdem", es: "después de que", beispiel: "Ich esse, nachdem ich gekocht habe.", translation: "Como después de que haya cocinado.", type: "subordinante", verbPosition: "final" },
+                { de: "bevor", es: "antes de que", beispiel: "Ich dusche, bevor ich zur Arbeit gehe.", translation: "Me ducho antes de que vaya al trabajo.", type: "subordinante", verbPosition: "final" },
+                { de: "falls", es: "en caso de que, si", beispiel: "Falls es regnet, nehmen wir einen Schirm mit.", translation: "En caso de que llueva, llevamos un paraguas.", type: "subordinante", verbPosition: "final" },
+                { de: "sofern", es: "siempre que", beispiel: "Du kannst gehen, sofern du fertig bist.", translation: "Puedes irte, siempre que hayas terminado.", type: "subordinante", verbPosition: "final" },
+                { de: "sobald", es: "tan pronto como", beispiel: "Ich rufe dich an, sobald ich zu Hause bin.", translation: "Te llamo tan pronto como llegue a casa.", type: "subordinante", verbPosition: "final" },
+                { de: "solange", es: "mientras que", beispiel: "Solange du lernst, wirst du Erfolg haben.", translation: "Mientras que estudies, tendrás éxito.", type: "subordinante", verbPosition: "final" },
+                { de: "seitdem", es: "desde que", beispiel: "Ich wohne hier, seitdem ich in Deutschland arbeite.", translation: "Vivo aquí desde que trabajo en Alemania.", type: "subordinante", verbPosition: "final" },
+                { de: "indem", es: "al, mientras", beispiel: "Du lernst Deutsch, indem du viele Bücher liest.", translation: "Aprendes alemán al leer muchos libros.", type: "subordinante", verbPosition: "final" },
+                { de: "damit", es: "para que", beispiel: "Ich lerne Deutsch, damit ich in Berlin arbeiten kann.", translation: "Aprendo alemán para que pueda trabajar en Berlín.", type: "subordinante", verbPosition: "final" },
+                { de: "als", es: "cuando (pasado)", beispiel: "Als ich jung war, lebte ich in Madrid.", translation: "Cuando era joven, vivía en Madrid.", type: "subordinante", verbPosition: "final" }
+            ],
+            konjunktionaladverbien: [
+                { de: "deshalb", es: "por eso, por lo tanto", beispiel: "Es regnet. Deshalb bleibe ich zu Hause.", translation: "Llueve. Por eso me quedo en casa.", type: "adverbio" },
+                { de: "trotzdem", es: "sin embargo, aún así", beispiel: "Es ist kalt. Trotzdem gehe ich spazieren.", translation: "Hace frío. Sin embargo salgo a caminar.", type: "adverbio" },
+                { de: "folglich", es: "por consiguiente", beispiel: "Er hat nicht gelernt. Folglich hat er die Prüfung nicht bestanden.", translation: "No estudió. Por consiguiente, no aprobó.", type: "adverbio" },
+                { de: "daher", es: "por eso", beispiel: "Ich habe Hunger. Daher esse ich etwas.", translation: "Tengo hambre. Por eso como algo.", type: "adverbio" },
+                { de: "außerdem", es: "además", beispiel: "Ich liebe Sprachen. Außerdem reise ich gerne.", translation: "Me encantan los idiomas. Además, me gusta viajar.", type: "adverbio" },
+                { de: "somit", es: "por lo tanto", beispiel: "Er hat die letzte Frage richtig beantwortet. Somit hat er bestanden.", translation: "Contestó bien la última pregunta. Por lo tanto, aprobó.", type: "adverbio" },
+                { de: "ansonsten", es: "de lo contrario", beispiel: "Du musst lernen, ansonsten wirst du nicht bestehen.", translation: "Debes estudiar, de lo contrario no aprobarás.", type: "adverbio" },
+                { de: "allerdings", es: "sin embargo, no obstante", beispiel: "Das Auto ist schön. Allerdings ist es sehr teuer.", translation: "El coche es bonito. Sin embargo, es muy caro.", type: "adverbio" },
+                { de: "dennoch", es: "no obstante, sin embargo", beispiel: "Es regnet. Dennoch gehen wir spazieren.", translation: "Llueve. No obstante, salimos a caminar.", type: "adverbio" }
+            ],
+            praepositional: [
+                { de: "aufgrund", es: "debido a", kasus: "Genitiv", beispiel: "Aufgrund des schlechten Wetters bleiben wir zu Hause.", translation: "Debido al mal tiempo, nos quedamos en casa.", type: "preposición" },
+                { de: "wegen", es: "por, a causa de", kasus: "Genitiv/Dativ", beispiel: "Wegen der Baustelle gibt es Stau.", translation: "A causa de las obras, hay atasco.", type: "preposición" },
+                { de: "infolge", es: "como consecuencia de", kasus: "Genitiv", beispiel: "Infolge des Unfalls war die Straße gesperrt.", translation: "Como consecuencia del accidente, la calle fue cerrada.", type: "preposición" },
+                { de: "trotz", es: "a pesar de", kasus: "Genitiv/Dativ", beispiel: "Trotz der Kälte gehen wir spazieren.", translation: "A pesar del frío, salimos a caminar.", type: "preposición" },
+                { de: "dank", es: "gracias a", kasus: "Genitiv/Dativ", beispiel: "Dank seiner Hilfe habe ich bestanden.", translation: "Gracias a su ayuda, aprobé.", type: "preposición" },
+                { de: "anhand", es: "basado en, mediante", kasus: "Genitiv", beispiel: "Anhand des Diagramms kann man die Daten analysieren.", translation: "Mediante el diagrama, se pueden analizar los datos.", type: "preposición" },
+                { de: "gemäß", es: "según, conforme a", kasus: "Dativ", beispiel: "Gemäß den Vorschriften ist das verboten.", translation: "Según las normas, eso está prohibido.", type: "preposición" },
+                { de: "entsprechend", es: "según, conforme a", kasus: "Dativ", beispiel: "Entsprechend dem Vertrag müssen wir pünktlich zahlen.", translation: "Según el contrato, debemos pagar a tiempo.", type: "preposición" },
+                { de: "laut", es: "según, de acuerdo con", kasus: "Dativ", beispiel: "Laut dem Gesetz ist das verboten.", translation: "Según la ley, eso está prohibido.", type: "preposición" },
+                { de: "zufolge", es: "según", kasus: "Dativ", beispiel: "Den Berichten zufolge wird es morgen regnen.", translation: "Según los informes, mañana lloverá.", type: "preposición" },
+                { de: "anlässlich", es: "con motivo de", kasus: "Genitiv", beispiel: "Anlässlich seines Geburtstags machen wir eine Feier.", translation: "Con motivo de su cumpleaños, hacemos una fiesta.", type: "preposición" }
+            ]
+        };
+
+        // Estado global
+        let currentMode = 'multiple';
+        let currentDifficulty = 'easy';
+        let currentQuestion = null;
+        let questionStartTime = 0;
+        let stats = {
+            correct: 0,
+            incorrect: 0,
+            total: 0,
+            totalTime: 0,
+            streak: 0,
+            maxStreak: 0
+        };
+        let sessionQuestions = 0;
+        const maxSessionQuestions = 20;
+        let usedQuestions = [];
+        let userAnswer = null;
+
+        // Inicialización
+        function init() {
+            renderKonnektorenList();
+            startNewSession();
+        }
+
+        // Renderizar lista de conectores
+        function renderKonnektorenList() {
+            const list = document.getElementById('konnektorenList');
+            let html = '';
+
+            const categories = [
+                { key: 'nebenordnend', title: '⚡ Coordinantes (Nebenordnend)', color: '#667eea' },
+                { key: 'unterordnend', title: '🔗 Subordinantes (Unterordnend)', color: '#764ba2' },
+                { key: 'konjunktionaladverbien', title: '🎯 Adverbios Conjuntivos', color: '#f093fb' },
+                { key: 'praepositional', title: '📚 Preposiciones con Kasus', color: '#4facfe' }
+            ];
+
+            categories.forEach(cat => {
+                html += `
+                    <div class="konnektor-category">
+                        <div class="category-title" style="background: ${cat.color};" onclick="toggleCategory(this)">
+                            ${cat.title}
+                            <span>▼</span>
+                        </div>
+                        <div class="category-content">
+                            ${konnektorenDB[cat.key].map(k => `
+                                <div class="konnektor-item">
+                                    <div class="konnektor-de">${k.de}</div>
+                                    <div class="konnektor-es">${k.es}</div>
+                                    ${k.kasus ? `<span class="konnektor-kasus">${k.kasus}</span>` : ''}
+                                    <div class="konnektor-beispiel">
+                                        ${k.beispiel}<br>
+                                        <small>${k.translation}</small>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+        }
+
+        function toggleCategory(element) {
+            const content = element.nextElementSibling;
+            const arrow = element.querySelector('span');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                arrow.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▶';
+            }
+        }
+
+        // Toggle referencia
+        function toggleReference() {
+            const card = document.getElementById('referenceCard');
+            const text = document.getElementById('referenceToggleText');
+            card.classList.toggle('visible');
+            text.textContent = card.classList.contains('visible') ? 'Ocultar Lista' : 'Ver Lista de Conectores';
+        }
+
+        // Cambiar modo
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('active'));
+            event.target.closest('.mode-card').classList.add('active');
+            generateQuestion();
+        }
+
+        // Cambiar dificultad
+        function setDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            startNewSession();
+        }
+
+        // Nueva sesión
+        function startNewSession() {
+            sessionQuestions = 0;
+            usedQuestions = [];
+            updateProgress();
+            generateQuestion();
+        }
+
+        // Obtener todos los conectores
+        function getAllKonnektoren() {
+            return [
+                ...konnektorenDB.nebenordnend,
+                ...konnektorenDB.unterordnend,
+                ...konnektorenDB.konjunktionaladverbien,
+                ...konnektorenDB.praepositional
+            ];
+        }
+
+        // Seleccionar pregunta aleatoria
+        function getRandomQuestion() {
+            const all = getAllKonnektoren();
+            let available = all.filter(k => !usedQuestions.includes(k.de));
+            
+            if (available.length === 0) {
+                usedQuestions = [];
+                available = all;
+            }
+
+            // Filtrar por dificultad
+            if (currentDifficulty === 'easy') {
+                available = available.filter(k => k.type !== 'preposición' || k.de.length <= 6);
+            } else if (currentDifficulty === 'hard') {
+                const hard = available.filter(k => k.type === 'preposición' || k.verbPosition === 'final');
+                if (hard.length > 0) available = hard;
+            }
+
+            const selected = available[Math.floor(Math.random() * available.length)];
+            usedQuestions.push(selected.de);
+            return selected;
+        }
+
+        // Generar pregunta
+        function generateQuestion() {
+            if (sessionQuestions >= maxSessionQuestions) {
+                showSessionComplete();
+                return;
+            }
+
+            currentQuestion = getRandomQuestion();
+            userAnswer = null;
+            questionStartTime = Date.now();
+            document.getElementById('actionButtons').style.display = 'flex';
+
+            switch(currentMode) {
+                case 'multiple':
+                    generateMultipleChoice();
+                    break;
+                case 'completar':
+                    generateCompletarExercise();
+                    break;
+                case 'construir':
+                    generateConstruirExercise();
+                    break;
+                case 'fehler':
+                    generateFehlerExercise();
+                    break;
+                case 'kasus':
+                    generateKasusExercise();
+                    break;
+                case 'contexto':
+                    generateContextoExercise();
+                    break;
+            }
+
+            sessionQuestions++;
+            updateProgress();
+        }
+
+        // Ejercicio de opción múltiple
+        function generateMultipleChoice() {
+            const isReverse = Math.random() > 0.5;
+            const options = generateOptions(currentQuestion, isReverse ? 'de' : 'es');
+            
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    ${isReverse ? 
+                        `¿Cómo se dice "<strong>${currentQuestion.es}</strong>" en alemán?` :
+                        `¿Qué significa "<strong>${currentQuestion.de}</strong>"?`
+                    }
+                </div>
+                <div class="options-grid" id="optionsGrid">
+                    ${options.map((opt, idx) => `
+                        <div class="option-card" onclick="selectOption(${idx}, '${opt}')">
+                            ${opt}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="example-box">
+                    <strong>💡 Contexto:</strong> ${currentQuestion.type} 
+                    ${currentQuestion.kasus ? `- Rige <strong>${currentQuestion.kasus}</strong>` : ''}
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            startTimer();
+        }
+
+        // Ejercicio de completar
+        function generateCompletarExercise() {
+            const sentence = currentQuestion.beispiel.replace(new RegExp(currentQuestion.de, 'gi'), '_______');
+            
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    Completa la oración con el conector correcto:
+                </div>
+                <div class="sentence-builder">
+                    <div style="font-size: 1.3em; line-height: 2; margin-bottom: 20px;">
+                        ${sentence}
+                    </div>
+                    <div class="input-zone">
+                        <input type="text" class="text-input" id="completarInput" 
+                               placeholder="Escribe el conector aquí..." 
+                               onkeypress="if(event.key==='Enter') checkAnswer()">
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>📝 Pista:</strong> ${currentQuestion.type === 'preposición' ? 
+                        `Preposición que rige ${currentQuestion.kasus}` : 
+                        `${currentQuestion.type} - Significa "${currentQuestion.es}"`}
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            document.getElementById('completarInput').focus();
+            startTimer();
+        }
+
+        // Ejercicio de construir oraciones
+        function generateConstruirExercise() {
+            const words = currentQuestion.beispiel.split(' ');
+            const shuffled = [...words].sort(() => Math.random() - 0.5);
+
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    Construye la oración correcta arrastrando las palabras:
+                </div>
+                <div class="sentence-builder">
+                    <div class="word-bank" id="wordBank">
+                        ${shuffled.map((word, idx) => `
+                            <div class="word-chip" draggable="true" 
+                                 ondragstart="drag(event, ${idx})" id="word-${idx}">
+                                ${word}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="drop-zone" id="dropZone" 
+                         ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <span style="color: #999;">Arrastra las palabras aquí...</span>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>🌍 Traducción:</strong> ${currentQuestion.translation}
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            startTimer();
+            window.constructedSentence = [];
+        }
+
+        // Ejercicio de encontrar errores
+        function generateFehlerExercise() {
+            const hasError = Math.random() > 0.3;
+            let sentence = currentQuestion.beispiel;
+            let wrongWord = '';
+
+            if (hasError) {
+                const wrongKonnektoren = getAllKonnektoren().filter(k => k.de !== currentQuestion.de);
+                wrongWord = wrongKonnektoren[Math.floor(Math.random() * wrongKonnektoren.length)].de;
+                sentence = sentence.replace(currentQuestion.de, wrongWord);
+            }
+
+            const words = sentence.split(' ');
+
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    🔍 ${hasError ? 'Encuentra y haz clic en el conector incorrecto:' : '¿Hay algún error en esta oración?'}
+                </div>
+                <div class="error-highlighting">
+                    ${words.map((word, idx) => `
+                        <span class="word-error" onclick="selectErrorWord(${idx}, '${word}', ${hasError}, '${hasError ? wrongWord : ''}')">
+                            ${word}
+                        </span>
+                    `).join(' ')}
+                </div>
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="markNoError(${!hasError})">
+                        ✅ No hay errores
+                    </button>
+                </div>
+                <div class="example-box">
+                    <strong>🌍 Traducción esperada:</strong> ${currentQuestion.translation}
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            document.getElementById('actionButtons').style.display = 'none';
+            startTimer();
+            window.currentFehlerData = { hasError, correctWord: currentQuestion.de, wrongWord };
+        }
+
+        // Ejercicio de kasus
+        function generateKasusExercise() {
+            const kasusKonnektoren = konnektorenDB.praepositional.filter(k => k.kasus);
+            if (kasusKonnektoren.length === 0) {
+                generateQuestion();
+                return;
+            }
+
+            currentQuestion = kasusKonnektoren[Math.floor(Math.random() * kasusKonnektoren.length)];
+            const allKasus = ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'];
+
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    ¿Qué caso gramatical rige la preposición "<strong>${currentQuestion.de}</strong>"?
+                    <br><small style="color: #666;">(${currentQuestion.es})</small>
+                </div>
+                <div class="options-grid">
+                    ${allKasus.map(kasus => `
+                        <div class="option-card" onclick="selectKasus('${kasus}')">
+                            ${kasus}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="example-box">
+                    <strong>📖 Ejemplo:</strong> ${currentQuestion.beispiel}<br>
+                    <strong>🌍 Traducción:</strong> ${currentQuestion.translation}
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            startTimer();
+        }
+
+        // Ejercicio de contexto
+        function generateContextoExercise() {
+            const situations = [
+                { context: 'expresar causa', filter: k => ['weil', 'da', 'denn', 'aufgrund', 'wegen'].includes(k.de) },
+                { context: 'expresar consecuencia', filter: k => ['deshalb', 'daher', 'folglich', 'somit'].includes(k.de) },
+                { context: 'expresar contraste', filter: k => ['aber', 'jedoch', 'trotzdem', 'obwohl', 'trotz'].includes(k.de) },
+                { context: 'expresar tiempo', filter: k => ['wenn', 'als', 'während', 'bevor', 'nachdem', 'sobald'].includes(k.de) }
+            ];
+
+            const situation = situations[Math.floor(Math.random() * situations.length)];
+            const validKonnektoren = getAllKonnektoren().filter(situation.filter);
+            currentQuestion = validKonnektoren[Math.floor(Math.random() * validKonnektoren.length)];
+
+            const allOptions = getAllKonnektoren();
+            const options = [currentQuestion.de];
+            while (options.length < 4) {
+                const random = allOptions[Math.floor(Math.random() * allOptions.length)].de;
+                if (!options.includes(random)) options.push(random);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            const html = `
+                <div class="question-header">
+                    <div class="question-number">Pregunta ${sessionQuestions + 1} / ${maxSessionQuestions}</div>
+                    <div class="timer" id="timer">0s</div>
+                </div>
+                <div class="question-text">
+                    ¿Qué conector usarías para <strong>${situation.context}</strong>?
+                </div>
+                <div class="options-grid">
+                    ${options.map(opt => `
+                        <div class="option-card" onclick="selectContexto('${opt}')">
+                            ${opt}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="example-box">
+                    <strong>💭 Piensa:</strong> ¿Qué conector encaja mejor con el contexto de "${situation.context}"?
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            startTimer();
+        }
+
+        // Generar opciones
+        function generateOptions(question, field) {
+            const all = getAllKonnektoren();
+            const options = [question[field]];
+            
+            while (options.length < 4) {
+                const random = all[Math.floor(Math.random() * all.length)][field];
+                if (!options.includes(random)) options.push(random);
+            }
+
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        // Seleccionar opción
+        function selectOption(idx, value) {
+            userAnswer = value;
+            document.querySelectorAll('.option-card').forEach((card, i) => {
+                if (i === idx) card.style.borderColor = '#667eea';
+                else card.style.borderColor = '#e0e0e0';
+            });
+        }
+
+        // Seleccionar kasus
+        function selectKasus(kasus) {
+            userAnswer = kasus;
+            checkAnswer();
+        }
+
+        // Seleccionar contexto
+        function selectContexto(konnektor) {
+            userAnswer = konnektor;
+            checkAnswer();
+        }
+
+        // Seleccionar palabra con error
+        function selectErrorWord(idx, word, hasError, wrongWord) {
+            const cleanWord = word.replace(/[,\.!?]/g, '');
+            const isWrongWord = hasError && cleanWord === wrongWord;
+            
+            const allWords = document.querySelectorAll('.word-error');
+            allWords.forEach(w => w.classList.remove('selected'));
+            event.target.classList.add('selected');
+
+            setTimeout(() => {
+                if (isWrongWord) {
+                    processAnswer(true, `¡Perfecto! Encontraste el error. Debería ser "<strong>${window.currentFehlerData.correctWord}</strong>"`);
+                } else {
+                    processAnswer(false, `Incorrecto. ${hasError ? `El error está en "<strong>${wrongWord}</strong>". Debería ser "<strong>${window.currentFehlerData.correctWord}</strong>"` : 'Esta oración no tiene errores.'}`);
+                }
+            }, 300);
+        }
+
+        // Marcar sin errores
+        function markNoError(isCorrect) {
+            processAnswer(isCorrect, isCorrect ? 
+                '¡Correcto! Esta oración no tiene errores.' : 
+                `Incorrecto. La oración tiene un error en "<strong>${window.currentFehlerData.wrongWord}</strong>"`
+            );
+        }
+
+        // Drag and drop
+        let draggedElement = null;
+
+        function drag(event, idx) {
+            draggedElement = event.target;
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+            document.getElementById('dropZone').classList.add('active');
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const dropZone = document.getElementById('dropZone');
+            dropZone.classList.remove('active');
+            
+            if (draggedElement) {
+                const text = draggedElement.textContent;
+                window.constructedSentence = window.constructedSentence || [];
+                window.constructedSentence.push(text);
+                
+                draggedElement.classList.add('disabled');
+                draggedElement.draggable = false;
+                
+                const newChip = document.createElement('div');
+                newChip.className = 'word-chip';
+                newChip.textContent = text;
+                newChip.style.cursor = 'pointer';
+                newChip.onclick = function() {
+                    dropZone.removeChild(newChip);
+                    window.constructedSentence = window.constructedSentence.filter(w => w !== text);
+                    draggedElement.classList.remove('disabled');
+                    draggedElement.draggable = true;
+                };
+                
+                const placeholder = dropZone.querySelector('span');
+                if (placeholder) dropZone.removeChild(placeholder);
+                dropZone.appendChild(newChip);
+            }
+        }
+
+        // Comprobar respuesta
+        function checkAnswer() {
+            stopTimer();
+
+            let isCorrect = false;
+            let feedback = '';
+
+            switch(currentMode) {
+                case 'multiple':
+                    const correctValue = userAnswer === currentQuestion.de || userAnswer === currentQuestion.es;
+                    isCorrect = correctValue;
+                    feedback = isCorrect ? 
+                        `¡Excelente! "<strong>${currentQuestion.de}</strong>" significa "<strong>${currentQuestion.es}</strong>"` :
+                        `Incorrecto. La respuesta correcta es "<strong>${currentQuestion.de}</strong>" = "<strong>${currentQuestion.es}</strong>"`;
+                    
+                    // Marcar opciones
+                    document.querySelectorAll('.option-card').forEach(card => {
+                        if (card.textContent.trim() === (currentQuestion.de || currentQuestion.es)) {
+                            card.classList.add('correct');
+                        } else if (card.textContent.trim() === userAnswer) {
+                            card.classList.add('incorrect');
+                        }
+                        card.style.pointerEvents = 'none';
+                    });
+                    break;
+
+                case 'completar':
+                    const input = document.getElementById('completarInput');
+                    const answer = input.value.trim().toLowerCase();
+                    isCorrect = answer === currentQuestion.de.toLowerCase();
+                    feedback = isCorrect ?
+                        `¡Perfecto! La respuesta correcta es "<strong>${currentQuestion.de}</strong>"` :
+                        `No es correcto. La respuesta correcta es "<strong>${currentQuestion.de}</strong>" (${currentQuestion.es})`;
+                    
+                    input.disabled = true;
+                    input.style.borderColor = isCorrect ? '#4caf50' : '#f44336';
+                    break;
+
+                case 'construir':
+                    const constructed = window.constructedSentence.join(' ');
+                    isCorrect = constructed === currentQuestion.beispiel;
+                    feedback = isCorrect ?
+                        `¡Increíble! Construiste la oración perfectamente.` :
+                        `La oración correcta es: "<strong>${currentQuestion.beispiel}</strong>"`;
+                    break;
+
+                case 'kasus':
+                    const correctKasus = currentQuestion.kasus.split('/');
+                    isCorrect = correctKasus.includes(userAnswer);
+                    feedback = isCorrect ?
+                        `¡Correcto! "<strong>${currentQuestion.de}</strong>" rige <strong>${currentQuestion.kasus}</strong>` :
+                        `Incorrecto. "<strong>${currentQuestion.de}</strong>" rige <strong>${currentQuestion.kasus}</strong>`;
+                    
+                    document.querySelectorAll('.option-card').forEach(card => {
+                        if (correctKasus.includes(card.textContent.trim())) {
+                            card.classList.add('correct');
+                        } else if (card.textContent.trim() === userAnswer) {
+                            card.classList.add('incorrect');
+                        }
+                        card.style.pointerEvents = 'none';
+                    });
+                    break;
+
+                case 'contexto':
+                    isCorrect = userAnswer === currentQuestion.de;
+                    feedback = isCorrect ?
+                        `¡Excelente elección! "<strong>${currentQuestion.de}</strong>" es perfecto para este contexto.` :
+                        `La mejor opción es "<strong>${currentQuestion.de}</strong>" (${currentQuestion.es})`;
+                    
+                    document.querySelectorAll('.option-card').forEach(card => {
+                        if (card.textContent.trim() === currentQuestion.de) {
+                            card.classList.add('correct');
+                        } else if (card.textContent.trim() === userAnswer) {
+                            card.classList.add('incorrect');
+                        }
+                        card.style.pointerEvents = 'none';
+                    });
+                    break;
+            }
+
+            processAnswer(isCorrect, feedback);
+        }
+
+        // Procesar respuesta
+        function processAnswer(isCorrect, feedback) {
+            const elapsed = (Date.now() - questionStartTime) / 1000;
+            stats.total++;
+            stats.totalTime += elapsed;
+
+            if (isCorrect) {
+                stats.correct++;
+                stats.streak++;
+                if (stats.streak > stats.maxStreak) {
+                    stats.maxStreak = stats.streak;
+                    if (stats.streak % 5 === 0) {
+                        showAchievement(stats.streak);
+                    }
+                }
+            } else {
+                stats.incorrect++;
+                stats.streak = 0;
+            }
+
+            updateStats();
+            showFeedback(isCorrect, feedback);
+
+            document.getElementById('actionButtons').style.display = 'none';
+            setTimeout(() => {
+                generateQuestion();
+            }, 3500);
+        }
+
+        // Mostrar feedback
+        function showFeedback(isCorrect, message) {
+            const feedbackHTML = `
+                <div class="feedback-panel ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div class="feedback-icon">${isCorrect ? '🎉' : '❌'}</div>
+                    <div class="feedback-title">${isCorrect ? '¡Correcto!' : 'Incorrecto'}</div>
+                    <div class="feedback-text">${message}</div>
+                    <div class="example-box">
+                        <strong>📖 Ejemplo completo:</strong><br>
+                        ${currentQuestion.beispiel}<br>
+                        <em>${currentQuestion.translation}</em>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML += feedbackHTML;
+        }
+
+        // Mostrar pista
+        function showHint() {
+            let hint = '';
+            
+            switch(currentMode) {
+                case 'multiple':
+                case 'completar':
+                    hint = `💡 <strong>Pista:</strong> Este conector significa "${currentQuestion.es}"`;
+                    break;
+                case 'kasus':
+                    hint = `💡 <strong>Pista:</strong> Observa el artículo en el ejemplo: "${currentQuestion.beispiel}"`;
+                    break;
+                case 'construir':
+                    hint = `💡 <strong>Pista:</strong> Traducción: "${currentQuestion.translation}"`;
+                    break;
+                default:
+                    hint = `💡 <strong>Pista:</strong> Tipo de conector: ${currentQuestion.type}`;
+            }
+
+            const existing = document.querySelector('.feedback-panel.info');
+            if (existing) existing.remove();
+
+            const hintHTML = `
+                <div class="feedback-panel info">
+                    <div class="feedback-icon">💡</div>
+                    <div class="feedback-text">${hint}</div>
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML += hintHTML;
+        }
+
+        // Saltar pregunta
+        function skipQuestion() {
+            stats.incorrect++;
+            stats.streak = 0;
+            stats.total++;
+            updateStats();
+            
+            showFeedback(false, `Pregunta saltada. La respuesta era "<strong>${currentQuestion.de}</strong>" = "<strong>${currentQuestion.es}</strong>"`);
+            
+            setTimeout(() => {
+                generateQuestion();
+            }, 2000);
+        }
+
+        // Actualizar estadísticas
+        function updateStats() {
+            document.getElementById('correctStat').textContent = stats.correct;
+            document.getElementById('incorrectStat').textContent = stats.incorrect;
+            
+            const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+            document.getElementById('accuracyStat').textContent = accuracy + '%';
+            
+            const avgTime = stats.total > 0 ? Math.round(stats.totalTime / stats.total) : 0;
+            document.getElementById('timeStat').textContent = avgTime + 's';
+            
+            document.getElementById('streakCount').textContent = stats.streak;
+        }
+
+        // Actualizar progreso
+        function updateProgress() {
+            const progress = (sessionQuestions / maxSessionQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${sessionQuestions} / ${maxSessionQuestions}`;
+        }
+
+        // Timer
+        let timerInterval = null;
+
+        function startTimer() {
+            let seconds = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                const timerElement = document.getElementById('timer');
+                if (timerElement) {
+                    timerElement.textContent = seconds + 's';
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        // Mostrar logro
+        function showAchievement(streak) {
+            const achievements = document.getElementById('achievements');
+            const icon = document.getElementById('achievementIcon');
+            const text = document.getElementById('achievementText');
+
+            const messages = {
+                5: { icon: '🌟', text: '¡5 respuestas seguidas!' },
+                10: { icon: '💎', text: '¡10 respuestas seguidas!' },
+                15: { icon: '👑', text: '¡15 respuestas seguidas!' },
+                20: { icon: '🏆', text: '¡Maestro de conectores!' }
+            };
+
+            const achievement = messages[streak];
+            if (achievement) {
+                icon.textContent = achievement.icon;
+                text.textContent = achievement.text;
+                achievements.style.display = 'block';
+
+                setTimeout(() => {
+                    achievements.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Sesión completada
+        function showSessionComplete() {
+            const accuracy = Math.round((stats.correct / stats.total) * 100);
+            const avgTime = Math.round(stats.totalTime / stats.total);
+
+            let grade = '';
+            let message = '';
+            
+            if (accuracy >= 90) {
+                grade = '🏆 ¡EXCELENTE!';
+                message = '¡Dominas los conectores alemanes!';
+            } else if (accuracy >= 75) {
+                grade = '🌟 ¡MUY BIEN!';
+                message = '¡Gran trabajo! Sigue practicando.';
+            } else if (accuracy >= 60) {
+                grade = '👍 ¡BIEN!';
+                message = 'Buen progreso, continúa mejorando.';
+            } else {
+                grade = '📚 NECESITAS PRÁCTICA';
+                message = 'Sigue practicando para mejorar.';
+            }
+
+            const html = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">✨</div>
+                    <h2 style="color: #667eea; margin-bottom: 20px;">¡Sesión Completada!</h2>
+                    <div style="font-size: 2em; font-weight: bold; color: #764ba2; margin-bottom: 30px;">
+                        ${grade}
+                    </div>
+                    <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">
+                        ${message}
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value">${stats.correct}</div>
+                            <div class="stat-label">Correctas</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${stats.incorrect}</div>
+                            <div class="stat-label">Incorrectas</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${accuracy}%</div>
+                            <div class="stat-label">Precisión</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${avgTime}s</div>
+                            <div class="stat-label">Tiempo medio</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="restartSession()">
+                            🔄 Nueva Sesión
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('exerciseZone').innerHTML = html;
+            document.getElementById('actionButtons').style.display = 'none';
+        }
+
+        // Reiniciar sesión
+        function restartSession() {
+            stats = {
+                correct: 0,
+                incorrect: 0,
+                total: 0,
+                totalTime: 0,
+                streak: 0,
+                maxStreak: 0
+            };
+            updateStats();
+            startNewSession();
+        }
+
+        // Iniciar aplicación
+        window.onload = init;
+    </script>
+</body>
+</html>

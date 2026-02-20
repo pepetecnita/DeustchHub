@@ -1,0 +1,187 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verben mit Präfix - Aplicación</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .tooltip { position: relative; }
+    .tooltip:hover .tooltiptext { display: block; }
+    .tooltiptext { display: none; position: absolute; z-index: 20; background: white; border: 1px solid #ddd; padding: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 260px; left: 0; top: 28px; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow p-6">
+    <header class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold">Verben mit Präfix — Estudio Alemán↔Español</h1>
+      <div class="text-sm text-gray-500">Archivo único — ejecutable en Chrome</div>
+    </header>
+
+    <nav class="mb-4">
+      <button id="btnLista" class="mr-2 px-3 py-2 bg-gray-200 rounded">Lista rápida</button>
+      <button id="btnEsDe" class="mr-2 px-3 py-2 bg-blue-500 text-white rounded">Ejercicio: ES → DE</button>
+      <button id="btnDeEs" class="px-3 py-2 bg-green-500 text-white rounded">Ejercicio: DE → ES</button>
+    </nav>
+
+    <main id="app">
+      <!-- Content injected by JS -->
+    </main>
+
+    <footer class="mt-6 text-sm text-gray-600">
+      <div>Contiene 119 entradas.</div>
+    </footer>
+  </div>
+
+<script>
+// Embedded data
+const VERB_DATA = [{"grundverb": "arbeiten", "verbMitPraefix": "abarbeiten", "deutsch": "erledigen", "espanol": "terminar tareas"}, {"grundverb": "arbeiten", "verbMitPraefix": "mitarbeiten", "deutsch": "mithelfen", "espanol": "colaborar"}, {"grundverb": "arbeiten", "verbMitPraefix": "Überarbeiten(sich)\nuberarbeiten", "deutsch": "zu viel arbeiten\nKorrigieran", "espanol": "Agotarse\nRevisar,editar"}, {"grundverb": "arbeiten", "verbMitPraefix": "zusammenarbeiten", "deutsch": "gemeinsam arbeiten", "espanol": "colaborar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "bringen", "verbMitPraefix": "durcheinanderbringen", "deutsch": "verwirren", "espanol": "confundir"}, {"grundverb": "bringen", "verbMitPraefix": "einbringen", "deutsch": "beitragen", "espanol": "aportar"}, {"grundverb": "bringen", "verbMitPraefix": "hervorbringen", "deutsch": "erzeugen", "espanol": "producir"}, {"grundverb": "bringen", "verbMitPraefix": "mitbringen", "deutsch": "etwas dabei haben", "espanol": "traer"}, {"grundverb": "bringen", "verbMitPraefix": "zurückbringen", "deutsch": "zurückgeben", "espanol": "devolver"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "fahren", "verbMitPraefix": "abfahren", "deutsch": "losfahren", "espanol": "salir (en coche)"}, {"grundverb": "fahren", "verbMitPraefix": "einfahren", "deutsch": "hineinfahren", "espanol": "entrar (con coche)"}, {"grundverb": "fahren", "verbMitPraefix": "zurückfahren", "deutsch": "retour fahren", "espanol": "volver (en coche)"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "fallen", "verbMitPraefix": "ausfallen", "deutsch": "nicht stattfinden", "espanol": "cancelarse"}, {"grundverb": "fallen", "verbMitPraefix": "umfallen", "deutsch": "kippen", "espanol": "caerse"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "fragen", "verbMitPraefix": "abfragen", "deutsch": "testen", "espanol": "interrogar"}, {"grundverb": "fragen", "verbMitPraefix": "ausfragen", "deutsch": "genau befragen", "espanol": "interrogar"}, {"grundverb": "fragen", "verbMitPraefix": "nachfragen", "deutsch": "genauer fragen", "espanol": "pedir aclaración"}, {"grundverb": "fragen", "verbMitPraefix": "überfragen", "deutsch": "zu viel fragen", "espanol": "abrumar con preguntas"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "geben", "verbMitPraefix": "aufgeben", "deutsch": "nicht mehr versuchen", "espanol": "rendirse"}, {"grundverb": "geben", "verbMitPraefix": "zurückgeben", "deutsch": "retournieren", "espanol": "devolver"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "gehen", "verbMitPraefix": "ausgehen", "deutsch": "das Haus verlassen", "espanol": "salir"}, {"grundverb": "gehen", "verbMitPraefix": "mitgehen", "deutsch": "zusammen gehen", "espanol": "acompañar"}, {"grundverb": "gehen", "verbMitPraefix": "umgehen mit", "deutsch": "behandeln, kontrollieren", "espanol": "tratar"}, {"grundverb": "gehen", "verbMitPraefix": "vergehen", "deutsch": "Zeit vergeht", "espanol": "pasar"}, {"grundverb": "gehen", "verbMitPraefix": "weitergehen", "deutsch": "fortsetzen", "espanol": "continuar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "halten", "verbMitPraefix": "anhalten", "deutsch": "stoppen", "espanol": "detener"}, {"grundverb": "halten", "verbMitPraefix": "einhalten", "deutsch": "Regeln beachten", "espanol": "cumplir"}, {"grundverb": "halten", "verbMitPraefix": "festhalten", "deutsch": "nicht loslassen", "espanol": "Sujetar,detener"}, {"grundverb": "halten", "verbMitPraefix": "behalten", "deutsch": "nicht hergeben", "espanol": "conservar"}, {"grundverb": "halten", "verbMitPraefix": "zurückhalten", "deutsch": "stoppen / nicht geben", "espanol": "retener"}, {"grundverb": "helfen", "verbMitPraefix": "nachhelfen", "deutsch": "korrigieren", "espanol": "ayudar"}, {"grundverb": "helfen", "verbMitPraefix": "weiterhelfen", "deutsch": "zusätzliche Hilfe geben", "espanol": "ayudar más"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "hören", "verbMitPraefix": "anhören", "deutsch": "sich etwas anhören", "espanol": "escuchar algo"}, {"grundverb": "hören", "verbMitPraefix": "aufhören mit", "deutsch": "stoppen", "espanol": "dejar de hacer algo"}, {"grundverb": "hören", "verbMitPraefix": "zuhören", "deutsch": "aufmerksam hören", "espanol": "escuchar con atención"}, {"grundverb": "kaufen", "verbMitPraefix": "einkaufen", "deutsch": "shoppen", "espanol": "ir de compras"}, {"grundverb": "kaufen", "verbMitPraefix": "verkaufen", "deutsch": "verkaufen", "espanol": "vender"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "kommen", "verbMitPraefix": "ankommen", "deutsch": "irgendwo eintreffen", "espanol": "llegar"}, {"grundverb": "kommen", "verbMitPraefix": "auskommen mit", "deutsch": "sich verstehen", "espanol": "llevarse bien"}, {"grundverb": "kommen", "verbMitPraefix": "mitkommen", "deutsch": "begleiten", "espanol": "acompañar"}, {"grundverb": "kommen", "verbMitPraefix": "zurückkommen", "deutsch": "wieder da sein", "espanol": "regresar"}, {"grundverb": "kommen", "verbMitPraefix": "zurechtkommen", "deutsch": "sich anpassen", "espanol": "arreglárselas"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "lassen", "verbMitPraefix": "hinterlassen", "deutsch": "zurücklassen", "espanol": "dejar atrás"}, {"grundverb": "lassen", "verbMitPraefix": "loslassen", "deutsch": "freigeben", "espanol": "soltar"}, {"grundverb": "lassen", "verbMitPraefix": "verlassen", "deutsch": "weggehen", "espanol": "abandonar"}, {"grundverb": "lassen", "verbMitPraefix": "zulassen", "deutsch": "erlauben", "espanol": "permitir"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "laufen", "verbMitPraefix": "ablaufen", "deutsch": "zu Ende gehen", "espanol": "expirar"}, {"grundverb": "laufen", "verbMitPraefix": "durchlaufen", "deutsch": "absolvieren", "espanol": "completar"}, {"grundverb": "laufen", "verbMitPraefix": "verlaufen", "deutsch": "den Weg verlieren", "espanol": "perderse"}, {"grundverb": "laufen", "verbMitPraefix": "weglaufen", "deutsch": "fliehen", "espanol": "huir"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "legen", "verbMitPraefix": "ablegen", "deutsch": "hinlegen / Prüfung machen", "espanol": "rendir examen"}, {"grundverb": "legen", "verbMitPraefix": "festlegen", "deutsch": "bestimmen", "espanol": "definir"}, {"grundverb": "legen", "verbMitPraefix": "zulegen", "deutsch": "sich etwas anschaffen", "espanol": "adquirir"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "machen", "verbMitPraefix": "aufmachen", "deutsch": "öffnen", "espanol": "abrir"}, {"grundverb": "machen", "verbMitPraefix": "ausmachen", "deutsch": "ausschalten", "espanol": "apagar"}, {"grundverb": "machen", "verbMitPraefix": "kaputtmachen", "deutsch": "zerstören", "espanol": "romper"}, {"grundverb": "machen", "verbMitPraefix": "mitmachen", "deutsch": "teilnehmen", "espanol": "participar"}, {"grundverb": "machen", "verbMitPraefix": "vormachen", "deutsch": "zeigen, wie man’s macht", "espanol": "mostrar"}, {"grundverb": "machen", "verbMitPraefix": "weitermachen", "deutsch": "fortsetzen", "espanol": "continuar"}, {"grundverb": "machen", "verbMitPraefix": "zumachen", "deutsch": "schließen", "espanol": "cerrar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "nehmen", "verbMitPraefix": "abnehmen", "deutsch": "Gewicht verlieren", "espanol": "adelgazar"}, {"grundverb": "nehmen", "verbMitPraefix": "herausnehmen", "deutsch": "entnehmen", "espanol": "sacar"}, {"grundverb": "nehmen", "verbMitPraefix": "übernehmen", "deutsch": "Verantwortung tragen", "espanol": "asumir"}, {"grundverb": "nehmen", "verbMitPraefix": "teilnehmen an", "deutsch": "mitmachen", "espanol": "participar"}, {"grundverb": "nehmen", "verbMitPraefix": "wegnehmen", "deutsch": "entfernen", "espanol": "quitar"}, {"grundverb": "nehmen", "verbMitPraefix": "zunehmen", "deutsch": "dicker werden", "espanol": "engordar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "rufen", "verbMitPraefix": "anrufen", "deutsch": "telefonieren", "espanol": "llamar"}, {"grundverb": "rufen", "verbMitPraefix": "abrufen", "deutsch": "Informationen holen", "espanol": "consultar datos"}, {"grundverb": "rufen", "verbMitPraefix": "zurückrufen", "deutsch": "zurücktelefonieren", "espanol": "devolver la llamada"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "sagen", "verbMitPraefix": "absagen", "deutsch": "nicht teilnehmen", "espanol": "cancelar"}, {"grundverb": "sehen", "verbMitPraefix": "ansehen", "deutsch": "anschauen", "espanol": "mirar"}, {"grundverb": "sehen", "verbMitPraefix": "aussehen", "deutsch": "das Aussehen haben", "espanol": "parecer"}, {"grundverb": "sehen", "verbMitPraefix": "fernsehen", "deutsch": "TV schauen", "espanol": "ver la tele"}, {"grundverb": "sehen", "verbMitPraefix": "nachsehen", "deutsch": "kontrollieren", "espanol": "revisar"}, {"grundverb": "sehen", "verbMitPraefix": "übersehen", "deutsch": "etwas nicht sehen", "espanol": "pasar por alto"}, {"grundverb": "sehen", "verbMitPraefix": "zusehen", "deutsch": "aufmerksam schauen", "espanol": "observar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "setzen", "verbMitPraefix": "aussetzen", "deutsch": "unterbrechen", "espanol": "suspender"}, {"grundverb": "setzen", "verbMitPraefix": "umsetzen", "deutsch": "realisieren", "espanol": "implementar"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "schreiben", "verbMitPraefix": "abschreiben", "deutsch": "kopieren", "espanol": "copiar"}, {"grundverb": "schreiben", "verbMitPraefix": "aufschreiben", "deutsch": "notieren", "espanol": "anotar"}, {"grundverb": "schreiben", "verbMitPraefix": "umschreiben", "deutsch": "neu formulieren", "espanol": "reformular"}, {"grundverb": "schreiben", "verbMitPraefix": "zurückschreiben", "deutsch": "antworten", "espanol": "responder"}, {"grundverb": "schreiben", "verbMitPraefix": "weiterschreiben", "deutsch": "weiter schreiben", "espanol": "seguir escribiendo"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "sprechen", "verbMitPraefix": "ansprechen", "deutsch": "ein Thema beginnen", "espanol": "abordar"}, {"grundverb": "sprechen", "verbMitPraefix": "besprechen", "deutsch": "diskutieren", "espanol": "discutir"}, {"grundverb": "sprechen", "verbMitPraefix": "versprechen", "deutsch": "ein Versprechen geben", "espanol": "prometer"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "stehen", "verbMitPraefix": "anstehen", "deutsch": "in der Schlange stehen", "espanol": "hacer cola"}, {"grundverb": "stehen", "verbMitPraefix": "aufstehen", "deutsch": "hochgehen / aufwachen", "espanol": "levantarse"}, {"grundverb": "stehen", "verbMitPraefix": "überstehen", "deutsch": "überleben", "espanol": "resistir"}, {"grundverb": "stehen", "verbMitPraefix": "verstehen", "deutsch": "begreifen", "espanol": "comprender"}, {"grundverb": "", "verbMitPraefix": "", "deutsch": "", "espanol": ""}, {"grundverb": "stellen", "verbMitPraefix": "abstellen", "deutsch": "hinstellen / ausschalten", "espanol": "colocar"}, {"grundverb": "stellen", "verbMitPraefix": "feststellen", "deutsch": "bemerken", "espanol": "constatar"}, {"grundverb": "stellen", "verbMitPraefix": "hinstellen", "deutsch": "platzieren", "espanol": "poner"}, {"grundverb": "stellen", "verbMitPraefix": "vorstellen", "deutsch": "präsentieren / sich vorstellen", "espanol": "presentar"}, {"grundverb": "suchen", "verbMitPraefix": "versuchen", "deutsch": "probieren", "espanol": "intentar"}, {"grundverb": "ziehen", "verbMitPraefix": "ausziehen", "deutsch": "wegziehen / Kleidung ausziehen", "espanol": "mudarse / desvestirse"}, {"grundverb": "ziehen", "verbMitPraefix": "einziehen", "deutsch": "neu einziehen", "espanol": "mudarse dentro"}, {"grundverb": "ziehen", "verbMitPraefix": "umziehen", "deutsch": "den Wohnort wechseln", "espanol": "mudarse"}];
+
+// Utility functions
+function q(sel){return document.querySelector(sel)}
+function qa(sel){return Array.from(document.querySelectorAll(sel))}
+
+function renderLista(){
+  const app = q('#app');
+  app.innerHTML = `
+    <h2 class="text-xl font-medium mb-3">Lista rápida — Verb mit Präfix</h2>
+    <div class="overflow-x-auto border rounded">
+      <table class="min-w-full divide-y">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm">Grundverb</th>
+            <th class="px-4 py-2 text-left text-sm">Verb mit Präfix</th>
+            <th class="px-4 py-2 text-left text-sm">Deutsch</th>
+            <th class="px-4 py-2 text-left text-sm">Español</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y">
+          ${VERB_DATA.map(v=>`
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-2 text-sm">${escapeHtml(v.grundverb)}</td>
+              <td class="px-4 py-2 text-sm tooltip">
+                <strong>${escapeHtml(v.verbMitPraefix)}</strong>
+                <div class="tooltiptext text-sm">
+                  <div class="font-semibold">${escapeHtml(v.verbMitPraefix)}</div>
+                  <div class="text-xs text-gray-600 mt-1">${escapeHtml(v.deutsch)} — ${escapeHtml(v.espanol)}</div>
+                </div>
+              </td>
+              <td class="px-4 py-2 text-sm">${escapeHtml(v.deutsch)}</td>
+              <td class="px-4 py-2 text-sm">${escapeHtml(v.espanol)}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4">
+      <button id="backToMenu" class="px-3 py-2 bg-gray-300 rounded">Volver</button>
+    </div>
+  `;
+  q('#backToMenu').addEventListener('click', ()=>{ renderMenu(); });
+}
+
+function renderMenu(){
+  const app = q('#app');
+  app.innerHTML = `
+    <div class="text-center py-12">
+      <p class="text-gray-700">Elige un modo de práctica o consulta la lista rápida.</p>
+    </div>
+  `;
+}
+
+// Exercise templates
+let currentIndex = 0;
+let score = 0;
+let total = 0;
+
+function pickRandomIndex(){ return Math.floor(Math.random()*VERB_DATA.length); }
+
+function renderEsToDe(){
+  currentIndex = pickRandomIndex();
+  const v = VERB_DATA[currentIndex];
+  const app = q('#app');
+  app.innerHTML = `
+    <div class="mb-4 flex justify-between items-center">
+      <h2 class="text-xl font-medium">Ejercicio — Español → Alemán</h2>
+      <div class="text-sm">Puntuación: <span id="score">${score}</span> / <span id="total">${total}</span></div>
+    </div>
+    <div class="p-4 bg-gray-50 rounded">
+      <div class="mb-2 text-gray-600">Traduce al alemán (verbo con prefijo):</div>
+      <div class="text-2xl font-semibold mb-4">${escapeHtml(v.espanol)}</div>
+      <input id="answer" class="w-full border p-2 rounded" placeholder="Escribe el verbo en alemán (ej: mitarbeiten)">
+      <div class="mt-3 flex gap-2">
+        <button id="checkBtn" class="px-3 py-2 bg-blue-600 text-white rounded">Comprobar</button>
+        <button id="skipBtn" class="px-3 py-2 bg-gray-200 rounded">Siguiente</button>
+        <button id="hintBtn" class="px-3 py-2 bg-yellow-200 rounded">Mostrar verbo base</button>
+      </div>
+      <div id="feedback" class="mt-3 text-sm"></div>
+    </div>
+  `;
+  q('#checkBtn').onclick = ()=>{
+    const ans = q('#answer').value.trim().toLowerCase();
+    total += 1;
+    if(ans === (v.verbMitPraefix || '').toLowerCase()){
+      score += 1;
+      q('#feedback').innerHTML = `<div class="text-green-700">Correcto ✅ — ${escapeHtml(v.verbMitPraefix)} (${escapeHtml(v.grundverb)})</div>`;
+    } else {
+      q('#feedback').innerHTML = `<div class="text-red-700">Incorrecto ❌ — Respuesta correcta: <strong>${escapeHtml(v.verbMitPraefix)}</strong> — ${escapeHtml(v.espanol)}</div>`;
+    }
+    q('#score').textContent = score;
+    q('#total').textContent = total;
+  };
+  q('#skipBtn').onclick = ()=>{ renderEsToDe(); };
+  q('#hintBtn').onclick = ()=>{ q('#feedback').innerHTML = `<div class="text-gray-700">Verbo base: <strong>${escapeHtml(v.grundverb)}</strong></div>`; };
+}
+
+function renderDeToEs(){
+  currentIndex = pickRandomIndex();
+  const v = VERB_DATA[currentIndex];
+  const app = q('#app');
+  app.innerHTML = `
+    <div class="mb-4 flex justify-between items-center">
+      <h2 class="text-xl font-medium">Ejercicio — Alemán → Español</h2>
+      <div class="text-sm">Puntuación: <span id="score">${score}</span> / <span id="total">${total}</span></div>
+    </div>
+    <div class="p-4 bg-gray-50 rounded">
+      <div class="mb-2 text-gray-600">Traduce al español (significado principal):</div>
+      <div class="text-2xl font-semibold mb-4">${escapeHtml(v.verbMitPraefix)}</div>
+      <input id="answer" class="w-full border p-2 rounded" placeholder="Escribe la traducción en español (ej: colaborar)">
+      <div class="mt-3 flex gap-2">
+        <button id="checkBtn" class="px-3 py-2 bg-green-600 text-white rounded">Comprobar</button>
+        <button id="skipBtn" class="px-3 py-2 bg-gray-200 rounded">Siguiente</button>
+        <button id="hintBtn" class="px-3 py-2 bg-yellow-200 rounded">Mostrar verbo base</button>
+      </div>
+      <div id="feedback" class="mt-3 text-sm"></div>
+    </div>
+  `;
+  q('#checkBtn').onclick = ()=>{
+    const ans = q('#answer').value.trim().toLowerCase();
+    total += 1;
+    if(ans === (v.espanol || '').toLowerCase()){
+      score += 1;
+      q('#feedback').innerHTML = `<div class="text-green-700">Correcto ✅ — ${escapeHtml(v.espanol)} (${escapeHtml(v.grundverb)})</div>`;
+    } else {
+      q('#feedback').innerHTML = `<div class="text-red-700">Incorrecto ❌ — Respuesta correcta: <strong>${escapeHtml(v.espanol)}</strong> — ${escapeHtml(v.deutsch)}</div>`;
+    }
+    q('#score').textContent = score;
+    q('#total').textContent = total;
+  };
+  q('#skipBtn').onclick = ()=>{ renderDeToEs(); };
+  q('#hintBtn').onclick = ()=>{ q('#feedback').innerHTML = `<div class="text-gray-700">Verbo base: <strong>${escapeHtml(v.grundverb)}</strong></div>`; };
+}
+
+// Escape helper to avoid injection
+function escapeHtml(str){ return (str||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+
+// Hook up nav
+q('#btnLista').addEventListener('click', renderLista);
+q('#btnEsDe').addEventListener('click', ()=>{ renderEsToDe(); });
+q('#btnDeEs').addEventListener('click', ()=>{ renderDeToEs(); });
+
+// Initial render
+renderMenu();
+
+</script>
+</body>
+</html>
